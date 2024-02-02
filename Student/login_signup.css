@@ -6,14 +6,12 @@ body{
 	align-items: center;
 	min-height: 100vh;
 	font-family: 'Jost', sans-serif;
-	background: linear-gradient(to bottom, #0c2329, #4f99b7, #425e4eea);
+	background: linear-gradient(to bottom, #205a69, #63bbde, #425e4eea);
 }
 .main{
 	width: 350px;
-	height: 500px;
-	background: red;
+	height: 800px;
 	overflow: hidden;
-	background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;
 	border-radius: 10px;
 	box-shadow: 5px 20px 50px #000;
 }
@@ -35,6 +33,9 @@ label{
 	cursor: pointer;
 	transition: .5s ease-in-out;
 }
+input[type="date"]:valid{
+	color: #8d8787;
+}
 input{
 	width: 60%;
 	height: 20px;
@@ -43,6 +44,7 @@ input{
 	display: flex;
 	margin: 20px auto;
 	padding: 10px;
+	color: #8d8787;
 	border: none;
 	outline: none;
 	border-radius: 5px;
@@ -67,20 +69,36 @@ button{
 button:hover{
 	background: #142e47;
 }
+.ip{
+	width: 60%;
+	height: 20px;
+	background: #55898a;
+	justify-content: center;
+	display: flex;
+	margin: 20px auto;
+	padding: 10px;
+	color: #eee;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+}
+.ip::placeholder{
+	color: #eee;
+}
 .login{
-	height: 460px;
+	height: 700px;
 	background: #eee;
 	border-radius: 60% / 10%;
-	transform: translateY(-180px);
+	transform: translateY(-170px);
 	transition: .8s ease-in-out;
 }
 .login label{
-	color: #225456;
+	color: #2e5658;
 	transform: scale(.6);
 }
 
 #chk:checked ~ .login{
-	transform: translateY(-500px);
+	transform: translateY(-770px);
 }
 #chk:checked ~ .login label{
 	transform: scale(1);	
