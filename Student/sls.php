@@ -1,6 +1,7 @@
 <?php
 $today=new DateTime('now');
 $today=$today->format('Y-m-d');
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,8 +36,8 @@ $today=$today->format('Y-m-d');
 					<label for="chk" aria-hidden="true">Login</label>
 					<input class="ip" type="email" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required="">
 					<input class="ip" type="password" name="pswd" placeholder="Password" required="">
-					<button>Login</button>
-					<a href="" style="text-align:center">Forgot Password</a>
+					<button>Login</button><br>
+					<a href="" ><p style="text-align:center">Forgot Password</p></a>
 				</form>
 			</div>
 	</div>
