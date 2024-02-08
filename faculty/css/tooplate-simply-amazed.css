@@ -2,6 +2,8 @@
 
 /* <<< Reset CSS >>> */
 body {
+    overflow-x: hidden;
+
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 18px;
   color: #6c757d;
@@ -56,7 +58,7 @@ a:hover {
 
 a:focus {
   outline: 0;
-  color: rgb(215, 151, 12);
+  color: green;
 }
 
 /* <<< btn override >>> */
@@ -601,6 +603,15 @@ textarea.form-control {
   #content-box { width: 100%; }
 }
 
+#content-boxl {
+  overflow: hidden;
+  width: 100%;
+}
+
+@media (max-width: 991px) {
+  #content-boxl { width: 100%; }
+}
+
 .section {
   height: 100vh;
   min-height: 700px;
@@ -617,11 +628,12 @@ textarea.form-control {
   align-items: flex-start;
 }
 
+
 .bg-blue-transparent { background-color: rgb(102 153 204 / 0.8); }
 
 .banner-section .logo-fa {  
   color: #fff;
-  max-width: 800px;
+  max-width: 100%;
   margin-left: 5px;
   padding-top: 43px;
   padding-bottom: 35px;
@@ -775,7 +787,7 @@ textarea.form-control {
 .gallery-slider figure {
 	position: relative;
 	float: left;
-  left:-200px;
+  left: -200px;
   overflow: hidden;
   margin: 0;
   max-width: 400px;
@@ -855,9 +867,6 @@ textarea.form-control {
   margin-bottom: 80px;
 }
 
-
-
-/* CSS */
 .button-91 {
   color: #fff;
   padding: 15px 25px;
@@ -885,8 +894,8 @@ figure.effect-julia {
 }
 
 figure.effect-julia img {
-  width: 100%;
-  height: 100%;
+  /* width: 100%;
+  height: 100%; */
 	-webkit-transition: opacity 1s, -webkit-transform 1s;
 	transition: opacity 1s, transform 1s;
 	-webkit-backface-visibility: hidden;
@@ -965,7 +974,7 @@ figure.effect-julia:hover p {
 }
 
 .gallery-section .title h2 { color: #006699; }
-/* .gallery-section .slick-list { margin-bottom: 40px; } */
+.gallery-section .slick-list { margin-bottom: 40px; } 
 
 .gallery-section .item {
   text-align: center;
@@ -989,9 +998,9 @@ figure.effect-julia:hover p {
 .gallery-section .slick-dots li.slick-active,
 .gallery-section .slick-dots li:hover {
   background-color: #006699;
-}*/
+}
 
-.gallery-section .slick-dots li button { display: none; } 
+.gallery-section .slick-dots li button { display: none; }*/ 
 
 .contact-section {
   background-color: #6699cc;
