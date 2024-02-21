@@ -1,14 +1,49 @@
 <?php
 $today=new DateTime('now');
 $today=$today->format('Y-m-d');
+$con=mysqli_connect("localhost","root","","apoint");
+if(isset($_POST['login']))
+{
+$password=$_POST['password'];
+$email=$_POST['email'];
+$sql="SELECT * from faculty where email='$email' and password='$password'";
+$result = mysqli_query($con,$sql);
+$data = mysqli_fetch_array($result);
+if($result->num_rows != 0) {
+  $userid=$data['id'];
+  header("Location: /activity_monitor/fhome.php?userid=".$data['id']);    
+}else{?>
+<script>
+  alert("User not found");
+</script>
+<?php 
+}
+echo mysqli_error($con);
+}
 
+if(isset($_POST['signup'])){
+    $name=$_POST['name'];
+    $college=$_POST['college'];
+    $uid=$_POST['uid'];
+    $email=$_POST['email'];
+    $password=$_POST['password']; 
+    $rr=mysqli_query($con,"SELECT * from faculty where email='$email' ");
+    if($rr->num_rows != 0) { ?>
+        <script> alert("registration failed....change your email"); </script>
+    <?php }else{
+            $sql="INSERT INTO faculty(name , uid, college, email , password) VALUES('$name','$uid','$college',$email','$password') ";
+            mysqli_query($con,$sql);
+            echo mysqli_error($con);
+            header("Location:/actitivity_monitor/fhome.php");
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>AMCS</title>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="loginf.css">
+	<link rel="stylesheet" type="text/css" href="css/flogin.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -16,26 +51,26 @@ $today=$today->format('Y-m-d');
 		<input type="checkbox" id="chk" aria-hidden="true">
 
 			<div class="signup">
-				<form >
+                <form  method="post" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data">   
 					<label for="chk" aria-hidden="true">Sign up</label>
 					<div class="user-details">
                     <input type="text" name="name" placeholder="Name" pattern="[a-zA-Z ]{1,32}" required>
                     <input type="text" name="college" placeholder="College" pattern="[a-zA-Z ]{1,}" required>
-                    <input type="text" name="ui" placeholder="University ID" pattern="[a-zA-Z0-9 ]{1,}" required>
+                    <input type="text" name="uid" placeholder="University ID" pattern="[a-zA-Z0-9 ]{1,}" required>
                     <input type="text" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
                     <input type="password" name="pswd" placeholder="Password" required>
                     <input type="password" name="pswd" placeholder="Confirm Password" required>
-					<button type="Submit" name="Submit">Sign up</button>
+					<button type="Submit" name="signup">Sign up</button>
 					</div>
 				</form>
 			</div>
 
 			<div class="login">
-				<form>
+                <form  method="post" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data">   
 					<label for="chk" aria-hidden="true">Login</label>
 					<input type="email" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required="">
 					<input type="password" name="pswd" placeholder="Password" required="">
-					<button>Login</button><br>
+					<button type="submit" name="login">Login</button><br>
 					<a href="" ><p style="text-align:center">Forgot Password</p></a>
 				</form>
 			</div>
