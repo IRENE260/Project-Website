@@ -2,9 +2,25 @@
 $today=new DateTime('now');
 $today=$today->format('Y-m-d');
 $con=mysqli_connect("localhost","root","","apoint");
+if(isset($_POST['signup'])){
+    $name=$_POST['name'];
+    $college=$_POST['college'];
+    $uid=$_POST['uid'];
+    $email=$_POST['email'];
+    $password=$_POST['pswd'];
+			mysqli_query($con,"insert into faculty(name,uid,college,email,password) values('$name','$uid','$college','$email','$password')");
+            // $sql="INSERT INTO faculty(name,uid,college,email,password) VALUES('$name','$uid','$college',$email','$password') ";
+            // mysqli_query($con,$sql);
+            // echo mysqli_error($con);
+            // $sql2="SELECT * from faculty where email='$email' and password='$password'";
+            // $result = mysqli_query($con,$sql2);
+            // $data = mysqli_fetch_array($result);
+            header("Location:/activity_monitor/flogin.php");
+    }
+
 if(isset($_POST['login']))
 {
-$password=$_POST['password'];
+$password=$_POST['pswd'];
 $email=$_POST['email'];
 $sql="SELECT * from faculty where email='$email' and password='$password'";
 $result = mysqli_query($con,$sql);
@@ -21,25 +37,7 @@ if($result->num_rows != 0) {
 echo mysqli_error($con);
 }
 
-if(isset($_POST['signup'])){
-    $name=$_POST['name'];
-    $college=$_POST['college'];
-    $uid=$_POST['uid'];
-    $email=$_POST['email'];
-    $password=$_POST['password']; 
-    $rr=mysqli_query($con,"SELECT * from faculty where email='$email' ");
-    if($rr->num_rows != 0) { ?>
-        <script> alert("registration failed....change your email"); </script>
-    <?php }else{
-            $sql="INSERT INTO faculty(name , uid, college, email , password) VALUES('$name','$uid','$college',$email','$password') ";
-            mysqli_query($con,$sql);
-            echo mysqli_error($con);
-            $sql2="SELECT * from faculty where email='$email' and password='$password'";
-            $result = mysqli_query($con,$sql2);
-            $data = mysqli_fetch_array($result);
-            header("Location:/actitivity_monitor/fhome.php?userid=".$data['id']);
-    }
-}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -62,7 +60,7 @@ if(isset($_POST['signup'])){
                     <input type="text" name="uid" placeholder="University ID" pattern="[a-zA-Z0-9 ]{1,}" required>
                     <input type="text" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
                     <input type="password" name="pswd" placeholder="Password" required>
-                    <input type="password" name="pswd" placeholder="Confirm Password" required>
+                    <input type="password" name="cpswd" placeholder="Confirm Password" required>
 					<button type="Submit" name="signup">Sign up</button>
 					</div>
 				</form>
