@@ -1,3 +1,17 @@
+<?php
+$userid=$_GET["userid"];
+//$id=$_GET["id"];
+$today = new DateTime('now'); 
+$today = $today->format('Y-m-d');
+$con=mysqli_connect("localhost","root","","apoint");
+if(isset($userid)){
+    $query="select * from faculty where id=$userid";
+    $value=mysqli_query($con,$query);
+    $result=mysqli_fetch_array($value);
+}
+echo mysqli_error($con); 
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +24,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="fontawesome/css/all.min.css" type="text/css" /> 
     <link rel="stylesheet" href="css/tooplate-simply-amazed.css" type="text/css" />
+    <!-- Add your custom CSS styles for the profile editing page here -->
     <style>
         body {
             margin: 0;
@@ -51,6 +66,15 @@
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+
+        /* button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        } */
     </style>
 </head>
 
@@ -60,7 +84,7 @@
     </header>
 
     <main>
-        <form>
+        <form  method="post" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" value="name">
 
@@ -73,7 +97,7 @@
             <label for="designation">Designation:</label>
             <input type="text" id="designation" name="designation" value="designation">
 
-            <button class="button-91" role="button">Save</button>
+            <button class="button-91" role="button" name="save">Save</button>
         </form>
     </main>
 
@@ -83,3 +107,16 @@
 </body>
 
 </html>
+<?php
+    if(isset($_POST["save"])){
+        $name=$_POST['name'];
+        $college=$_POST['college'];
+        $uid=$_POST['uid'];
+        $email=$_POST['email'];
+        $password=$_POST['password']; 
+        $sql="update faculty set name='$name',college='$college',uid='$uid',email='$email',password='$password' where id=$userid ";
+        mysqli_query($con,$sql);
+        header("Location:/activity_monitor/fhome.php?userid=".$userid);
+        echo mysqli_error($con);
+        }
+?>
