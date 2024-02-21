@@ -34,7 +34,10 @@ if(isset($_POST['signup'])){
             $sql="INSERT INTO faculty(name , uid, college, email , password) VALUES('$name','$uid','$college',$email','$password') ";
             mysqli_query($con,$sql);
             echo mysqli_error($con);
-            header("Location:/actitivity_monitor/fhome.php");
+            $sql2="SELECT * from faculty where email='$email' and password='$password'";
+            $result = mysqli_query($con,$sql2);
+            $data = mysqli_fetch_array($result);
+            header("Location:/actitivity_monitor/fhome.php?userid=".$data['id']);
     }
 }
 ?>
