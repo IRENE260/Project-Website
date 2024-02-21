@@ -97,7 +97,7 @@ button:hover{
 	color: #eee;
 }
 .login{
-	height: 550px;
+	height: 650px;
 	background: #eee;
 	border-radius: 60% / 10%;
 	transform: translateY(-150px);
@@ -109,7 +109,11 @@ button:hover{
 }
 
 #chk:checked ~ .login{
-	transform: translateY(-570px);
+	transform: translateY(-640px);
+	-webkit-transform: translateY(-640px);
+	-moz-transform: translateY(-640px);
+	-ms-transform: translateY(-640px);
+	-o-transform: translateY(-640px);
 }
 #chk:checked ~ .login label{
 	transform: scale(1);	
