@@ -1,7 +1,7 @@
 <?php
 $userid=$_GET["userid"];
 $con=mysqli_connect("localhost","root","","apoint");
-$sql2="SELECT * from faculty where email='$email' and password='$password'";
+$sql2="SELECT * from faculty where id='$userid'";
 $result = mysqli_query($con,$sql2);
 $data = mysqli_fetch_array($result);
 if(isset($_POST["editprofile"])){
