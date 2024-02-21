@@ -86,16 +86,16 @@ echo mysqli_error($con);
     <main>
         <form  method="post" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" value="name">
+            <input type="text" id="name" name="name" value="<?php echo $result["name"] ?>">
 
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="email">
+            <input type="email" id="email" name="email" value="<?php echo $result["email"] ?>">
 
-            <label for="phone">Phone:</label>
-            <input type="tel" id="phone" name="phone" value="phone">
+            <label for="phone">College:</label>
+            <input type="tel" id="phone" name="phone" value="<?php echo $result["college"] ?>">
 
-            <label for="designation">Designation:</label>
-            <input type="text" id="designation" name="designation" value="designation">
+            <label for="designation">University Id:</label>
+            <input type="text" id="designation" name="designation" value="<?php echo $result["uid"] ?>">
 
             <button class="button-91" role="button" name="save">Save</button>
         </form>
