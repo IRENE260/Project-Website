@@ -28,7 +28,7 @@
     <link href="bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="student.css" rel="stylesheet">
+    <link href="css/student.css" rel="stylesheet">
 </head>
 
 <body>
@@ -44,7 +44,7 @@
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
         <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>Student_Name</h2>
+            <h2 class="m-0 text-primary"><i class='fas fa-user-graduate' style='font-size:40px;'></i>&nbsp;Student_Name</h2>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
@@ -53,8 +53,8 @@
             <h5 class="m-0 text-primary">Total Points: </h5>
         </a>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="shompage.html" class="nav-item nav-link active">Home</a>
+            <div class="navbar-nav ms-auto  p-lg-0">
+                <a href="homepage.html" class="nav-item nav-link active">Home</a>
                 <a href="" class="nav-item nav-link">Profile</a>
                 <a href="" class="nav-item nav-link">Logout</a>
             </div>
