@@ -60,6 +60,17 @@ input{
 	outline: none;
 	border-radius: 5px;
 }
+.errorMessage{
+  width: 60%;
+	height: 4px;
+	justify-content: center;
+	display: flex;
+	margin: 4px auto;
+	padding: 1px;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+}
 button{
 	width: 60%;
 	height: 40px;

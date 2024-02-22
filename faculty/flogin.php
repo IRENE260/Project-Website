@@ -15,7 +15,7 @@ if(isset($_POST['signup'])){
             // $sql2="SELECT * from faculty where email='$email' and password='$password'";
             // $result = mysqli_query($con,$sql2);
             // $data = mysqli_fetch_array($result);
-            header("Location:/activity_monitor/flogin.php");
+            header("Location:/amcs/flogin.php");
     }
 
 if(isset($_POST['login']))
@@ -27,7 +27,7 @@ $result = mysqli_query($con,$sql);
 $data = mysqli_fetch_array($result);
 if($result->num_rows != 0) {
   $userid=$data['id'];
-  header("Location: /activity_monitor/fhome.php?userid=".$data['id']);    
+  header("Location: /amcs/fhome.php?userid=".$data['id']);    
 }else{?>
 <script>
   alert("User not found");
@@ -37,14 +37,13 @@ if($result->num_rows != 0) {
 echo mysqli_error($con);
 }
 
-
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>AMCS</title>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="css/flogin.css">
+	<link rel="stylesheet" type="text/css" href="flogin.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -58,10 +57,11 @@ echo mysqli_error($con);
                     <input type="text" name="name" placeholder="Name" pattern="[a-zA-Z ]{1,32}" required>
                     <input type="text" name="college" placeholder="College" pattern="[a-zA-Z ]{1,}" required>
                     <input type="text" name="uid" placeholder="University ID" pattern="[a-zA-Z0-9 ]{1,}" required>
-                    <input type="text" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
-                    <input type="password" name="pswd" placeholder="Password" required>
-                    <input type="password" name="cpswd" placeholder="Confirm Password" required>
-					<button type="Submit" name="signup">Sign up</button>
+                    <input type="text" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" onchange="emailCheck()" required>
+                    <input type="password" name="pswd" id="pswd" placeholder="Password" required>
+                    <input type="password" name="cpswd" id="cpswd" placeholder="Confirm Password" required>
+					<p id="errorMessage" class="errorMessage" style="color: red;"></p>
+					<button type="Submit" name="signup" onclick="return checkPassword()" >Sign Up</button>
 					</div>
 				</form>
 			</div>
@@ -78,6 +78,39 @@ echo mysqli_error($con);
 	</div>
 </body>
 </html>
+<script>
+	function checkPassword(form){
+  var pass1=document.getElementById("pswd");
+  var pass2=document.getElementById("cpswd");
+  var errorMessage = document.getElementById("errorMessage");
+  if(pass1.value!=pass2.value){
+	errorMessage.textContent = "Passwords do not match";
+    return false;
+  }
+  return true;
+}
+</script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="ajax-script.js"></script>
+<script>
+	function emailCheck() {
+  var email = document.getElementById('email').value;
+  $.ajax({
+    url: "emailcheck.php",
+    method: "POST",
+    data: {
+        mail: email
+    },
+    success: function(result){
+      if (result == "Failed") {
+        document.getElementById('errmsg').style.display = "block";
+        document.getElementById('email').value = "";
+      } else {
+        document.getElementById('errmsg').style.display = "none";
+      }
+  }});
+}
+</script> -->
 <!-- <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
