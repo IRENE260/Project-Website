@@ -4,21 +4,8 @@ $today=$today->format('Y-m-d');
 $con=mysqli_connect("localhost","root","","apoint");
 if($con)
 {
-	session_start();
 	if(isset($_POST['signup']))
 	{
-		$name=$_POST["name"];
-		$dob=$_POST["dob"];
-		$reg=$_POST['regno'];
-		$branch=$_POST["branch"];
-		$college=$_POST["college"];
-		$year=$_POST['year'];
-		$email=$_POST['email'];
-		$password =$_POST['pswd'];
-		$cpassword=$_POST['cpswd'];
-		if ($password !== $cpassword) {
-			//code for retainind the signup page with values
-		}
 		$sql="insert into student(name,dob,regno,branch,college,yearj,email,password) values('$name','$dob','$reg','$branch','$college','$year','$email','$password')";
 		mysqli_query($con,$sql);
 		header("Location:/amcs/sls.php");
@@ -38,6 +25,7 @@ if($con)
 	        window.location.href = 'sls.php';</script>
 		<?php   }
 		else{
+			session_start();
 			$_SESSION['user_id']=$value['id'];
 			header("Location:/amcs/homepage.php");
             exit();
@@ -69,11 +57,12 @@ if($con)
 						<div class="input-box"><input type="text" name="college" placeholder="College" pattern="[a-zA-Z ]{1,}" required=""></div>
 						<div class="input-box"><input type="number" min="2010" max="2099" step="1" name="year" placeholder="Year Of Joining" required=""></div>
 						<div class="input-box"><input type="email" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required=""></div>
-						<div class="input-box"><input type="password" name="pswd" placeholder="Password" required=""></div>
-						<div class="input-box"><input type="password" name="cpswd" placeholder="Confirm Password" required=""></div>
+						<div class="input-box"><input type="password" name="pswd" placeholder="Password" id="pswd" required=""></div>
+						<div class="input-box"><input type="password" name="cpswd" placeholder="Confirm Password" id="cpswd" required=""></div>
+						<p id="errorMessage" class="errorMessage" style="color: red;"></p>
 					</div>
 					
-					<button type="submit" name="signup" >Sign up</button>
+					<button type="submit" name="signup" onclick="return checkPassword()">Sign up</button>
 				</form>
 			</div>
 
@@ -88,4 +77,16 @@ if($con)
 			</div>
 	</div>
 </body>
+<script>
+	function checkPassword(form){
+  var pass1=document.getElementById("pswd");
+  var pass2=document.getElementById("cpswd");
+  var errorMessage = document.getElementById("errorMessage");
+  if(pass1.value!=pass2.value){
+	errorMessage.textContent = "Passwords do not match";
+    return false;
+  }
+  return true;
+}
+</script>
 </html>
