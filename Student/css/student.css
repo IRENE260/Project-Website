@@ -456,8 +456,8 @@ caption{
 
 [role="progressbar"] {
   --percentage: var(--value);
-  --primary: #369;
-  --secondary: #adf;
+  --primary: #63cede;
+  --secondary: rgb(169, 232, 255);
   --size: 80px; /* Adjust the size as needed */
   animation: progress 2s 0.5s forwards;
   width: var(--size);
@@ -493,4 +493,9 @@ caption{
   font-family: Helvetica, Arial, sans-serif;
   font-size: calc(var(--size) / 5);
   color: var(--primary);
+}
+.p-4{
+    display: grid;
+    justify-content: center;
+    align-items: center;
 }
