@@ -2,7 +2,7 @@
 $today=new DateTime('now');
 $today=$today->format('Y-m-d');
 $con=mysqli_connect("localhost","root","","apoint");
-if($conn)
+if($con)
 {
 	session_start();
 	if(isset($_POST['signup']))
@@ -17,22 +17,33 @@ if($conn)
 		$password =$_POST['pswd'];
 		$cpassword=$_POST['cpswd'];
 		if ($password !== $cpassword) {
-			$_SESSION['signup_error'] = 'Passwords do not match';
-			$_SESSION['signup_values'] = [
-				'name' => $name,
-				'dob' =>$dob,
-				'reg' =>$reg,
-				
-				'email' => $email,
-			];
-			header('Location: signup.php'); // Redirect back to the signup page
-			exit;
+			//code for retainind the signup page with values
 		}
 		$sql="insert into student(name,dob,regno,branch,college,yearj,email,password) values('$name','$dob','$reg','$branch','$college','$year','$email','$password')";
 		mysqli_query($con,$sql);
 		header("Location:/amcs/sls.php");
 		exit();
 	}
+	if(isset($_POST['login']))
+	{
+		$email=$_POST['email'];
+		$password=$_POST['pswd'];
+		$sql="select * from student where email='$email' and password='$password'";
+		$res=mysqli_query($con,$sql);
+		$value=mysqli_fetch_array($res);
+    	if($res->num_rows==0)
+    	{?>
+        <script> 
+		    alert("User not Found/Incorrect Email or Password ");
+	        window.location.href = 'sls.php';</script>
+		<?php   }
+		else{
+			$_SESSION['user_id']=$value['id'];
+			header("Location:/amcs/homepage.php");
+            exit();
+		}
+	}
+	echo mysqli_error($con);
 }
 ?>
 <!DOCTYPE html>
@@ -48,10 +59,10 @@ if($conn)
 		<input type="checkbox" id="chk" aria-hidden="true">
 
 			<div class="signup">
-				<form method="post" action="<?php $_SERVER['PHP_SELF']?>"]>
+				<form method="post" action="<?php $_SERVER['PHP_SELF']?>">
 					<label for="chk" aria-hidden="true">Sign up</label>
 					<div class="user-details">
-						<div class="input-box"><input type="text" name="name" placeholder="Name" pattern="[a-zA-Z ]{1,32}" required=""></div>
+						<div class="input-box"><input type="text" name="name"  placeholder="Name" pattern="[a-zA-Z ]{1,32}" required=""></div>
 						<div class="input-box"><input type="date" name="dob" max=<?php echo $today;?> required=""></div>
 						<div class="input-box"><input type="text" name="regno" placeholder="Register Number" pattern="[a-zA-Z0-9 ]{1,}" required=""></div>
 						<div class="input-box"><input type="text" name="branch" placeholder="Branch" pattern="[a-zA-Z ]{1,}" required=""></div>
@@ -62,16 +73,16 @@ if($conn)
 						<div class="input-box"><input type="password" name="cpswd" placeholder="Confirm Password" required=""></div>
 					</div>
 					
-					<button><input type="submit" name="signup">Sign up</button>
+					<button type="submit" name="signup" >Sign up</button>
 				</form>
 			</div>
 
 			<div class="login">
-				<form>
+				<form method="post" action="<?php $_SERVER['PHP_SELF']?>">
 					<label for="chk" aria-hidden="true">Login</label>
 					<input class="ip" type="email" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required="">
 					<input class="ip" type="password" name="pswd" placeholder="Password" required="">
-					<button>Login</button><br>
+					<button type="submit" name="login">Login</button><br>
 					<a href="" ><p style="text-align:center">Forgot Password</p></a>
 				</form>
 			</div>

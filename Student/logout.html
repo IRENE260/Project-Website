@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout </title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Jost', sans-serif;
+            background: linear-gradient(to bottom, #404db5, #a0cacf, #6ebdd4);
+
+        }
+
+        .logout-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .success-message {
+            display: none; /* Initially hidden */
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #4f0022;
+        }
+     </style>
+</head>
+<body>
+    <div class="logout-container">
+        <h1>Confirm Logout</h1>
+        <p>Are you sure you want to log out?</p>
+        <button id="confirm-logout">Yes, Log Out</button>
+        <button id="no-logout">No,Back to Home</button>
+    </div>
+    <div class="success-message">
+    </div>
+    <script src="js/logout.js"></script>
+</body>
+</html>

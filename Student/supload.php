@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 
 <head>
     <meta charset="utf-8">
-    <title>Points</title>
+    <title>Upload Page</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -56,9 +56,6 @@ if (!isset($_SESSION['user_id'])) {
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <h5 class="m-0 text-primary">Total Points: </h5>
-        </a>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto  p-lg-0">
                 <a href="homepage.php" class="nav-item nav-link active">Home</a>
@@ -67,18 +64,52 @@ if (!isset($_SESSION['user_id'])) {
             </div>
         </div>
     </nav>
-    <!-- Tables Start -->
-    <div class="table-container"> 
-        <table class="table"> 
-            <caption>CERTIFICATES AND POINTS</caption>
-            <th>Sl. No</th>
-            <th>Certificate</th>
-            <th>Status</th>
-            <th>Points</th>
-        </table>
+    <!-- Navbar End -->
+
+    <!-- Upload Start -->
+    <div class="zone">
+
+        <div id="dropZ">
+          <i class="fa fa-cloud-upload"></i>
+          <div>Drag and drop your file here</div>                    
+          <span>OR</span>
+          <div class="selectFile">       
+            <label for="file">Select file</label>                   
+            <input type="file" name="files[]" id="file">
+          </div>
+        </div>
+        <script>
+            $(document).bind('dragover', function (e) {
+    var dropZone = $('.zone'),
+        timeout = window.dropZoneTimeout;
+    if (!timeout) {
+        dropZone.addClass('in');
+    } else {
+        clearTimeout(timeout);
+    }
+    var found = false,
+        node = e.target;
+    do {
+        if (node === dropZone[0]) {
+            found = true;
+            break;
+        }
+        node = node.parentNode;
+    } while (node != null);
+    if (found) {
+        dropZone.addClass('hover');
+    } else {
+        dropZone.removeClass('hover');
+    }
+    window.dropZoneTimeout = setTimeout(function () {
+        window.dropZoneTimeout = null;
+        dropZone.removeClass('in hover');
+    }, 100);
+});
+        </script>
     </div>
-    
-    <!-- Tables End -->
+    <!-- Upload End -->
+
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

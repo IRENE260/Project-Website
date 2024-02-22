@@ -2,13 +2,31 @@
 $today=new DateTime('now');
 $today=$today->format('Y-m-d');
 $con=mysqli_connect("localhost","root","","apoint");
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location:/amcs/sls.php');
+    exit;
+}
+if($con)
+{
+    $sql="select * from student where id=".$_SESSION['user_id'];
+	$res=mysqli_query($con,$sql);
+	$value=mysqli_fetch_array($res);
+    $_SESSION['user_name']=$value['name'];
+    $_SESSION['dob']=$value['dob'];
+    $_SESSION['branch']=$value['branch'];
+    $_SESSION['college']=$value['college'];
+    $_SESSION['year']=$value['yearj'];
+    $_SESSION['regno']=$value['regno'];
+    $_SESSION['email']=$value['email'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title> Studenthomepage</title>
+    <title>Student Home</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -49,7 +67,7 @@ $con=mysqli_connect("localhost","root","","apoint");
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
         <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-         <h2 class="m-0 text-primary"><i class='fas fa-user-graduate' style='font-size:40px;'></i>&nbsp;Student_Name</h2>
+         <h2 class="m-0 text-primary"><i class='fas fa-user-graduate' style='font-size:40px;'></i>&nbsp;<?php echo $value['name'];?></h2>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
@@ -57,8 +75,8 @@ $con=mysqli_connect("localhost","root","","apoint");
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto  p-lg-0">
                 <a href="homepage.php" class="nav-item nav-link active">Home</a>
-                <a href="profilepage.html" class="nav-item nav-link">Profile</a>
-                <a href="courses.html" class="nav-item nav-link">Logout</a>
+                <a href="profilepage.php" class="nav-item nav-link">Profile</a>
+                <a href="logout.html" class="nav-item nav-link">Logout</a>
             </div>
         </div>
     </nav>
@@ -97,7 +115,7 @@ $con=mysqli_connect("localhost","root","","apoint");
             <div class="row g-4">
                 <div class="class3" data-wow-delay="0.1s">
                     <div class="service-item text-center pt-3">
-                            <a href="scertificate.html"><i class="fa fa-3x fa-graduation-cap text-primary mb-4"></i>
+                            <a href="scertificate.php"><i class="fa fa-3x fa-graduation-cap text-primary mb-4"></i>
                             <h5 class="mb-3">CERTIFICATES</h5></a>
                     </div>
                 </div>

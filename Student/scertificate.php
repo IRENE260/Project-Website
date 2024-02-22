@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 
 <head>
     <meta charset="utf-8">
-    <title>Points</title>
+    <title>Upload Page</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -56,9 +56,6 @@ if (!isset($_SESSION['user_id'])) {
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <h5 class="m-0 text-primary">Total Points: </h5>
-        </a>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto  p-lg-0">
                 <a href="homepage.php" class="nav-item nav-link active">Home</a>
@@ -67,15 +64,26 @@ if (!isset($_SESSION['user_id'])) {
             </div>
         </div>
     </nav>
+    <!-- Navbar End -->
+
+    <!--Upload button-->
+    <button class="upload" role="button" onclick="location.href = 'supload.php';">
+    <span class="text">Upload</span>
+    </button>
+
     <!-- Tables Start -->
     <div class="table-container"> 
         <table class="table"> 
-            <caption>CERTIFICATES AND POINTS</caption>
-            <th>Sl. No</th>
-            <th>Certificate</th>
-            <th>Status</th>
-            <th>Points</th>
-        </table>
+            <caption>UPLOADED CERTIFICATES</caption>
+            <tr><td>file-1</td></tr> 
+            <tr><td>file-2</td></tr>
+        </table> 
+  
+        <table class="table"> 
+            <caption>APPROVED CERTIFICATES</caption>
+            <tr><td>file-1</td></tr> 
+            <tr><td>file-2</td></tr> 
+        </table> 
     </div>
     
     <!-- Tables End -->
