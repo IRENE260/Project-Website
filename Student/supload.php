@@ -4,6 +4,17 @@ if (!isset($_SESSION['user_id'])) {
     header('Location:/amcs/homepage.php');
     exit;
 }
+$con=mysqli_connect("localhost","root","","apoint");
+if($con)
+{
+	if(isset($_POST['upload']))
+	{
+		$sql="insert into files(sid,filelink) values('".$_POST['userid']."','".$_FILES['file']['name']."')";
+		mysqli_query($con,$sql);
+		header("Location:/amcs/scertificate.php");
+		exit();
+	}
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,45 +79,48 @@ if (!isset($_SESSION['user_id'])) {
 
     <!-- Upload Start -->
     <div class="zone">
-
-        <div id="dropZ">
-          <i class="fa fa-cloud-upload"></i>
-          <div>Drag and drop your file here</div>                    
-          <span>OR</span>
-          <div class="selectFile">       
-            <label for="file">Select file</label>                   
-            <input type="file" name="files[]" id="file">
-          </div>
-        </div>
-        <script>
+        <form action="supload.php" method="post" enctype="multipart/form-data">
+            <div id="dropZ">
+                <i class="fa fa-cloud-upload"></i>
+                <div>Drag and drop your file here</div>                    
+                <span>OR</span>
+                <div class="selectFile">       
+                    <label for="file">Select file</label>                   
+                    <input type="file" name="file" id="file">
+                </div>
+            </div>
+            <input type="hidden" name="userid" value="<?php echo $_SESSION['user_id']?>">
+            <input type="submit" value="Upload File" name="upload">
+        </form>
+        <!-- <script>
             $(document).bind('dragover', function (e) {
-    var dropZone = $('.zone'),
-        timeout = window.dropZoneTimeout;
-    if (!timeout) {
-        dropZone.addClass('in');
-    } else {
-        clearTimeout(timeout);
-    }
-    var found = false,
-        node = e.target;
-    do {
-        if (node === dropZone[0]) {
-            found = true;
-            break;
-        }
-        node = node.parentNode;
-    } while (node != null);
-    if (found) {
-        dropZone.addClass('hover');
-    } else {
-        dropZone.removeClass('hover');
-    }
-    window.dropZoneTimeout = setTimeout(function () {
-        window.dropZoneTimeout = null;
-        dropZone.removeClass('in hover');
-    }, 100);
-});
-        </script>
+                var dropZone = $('.zone'),
+                    timeout = window.dropZoneTimeout;
+                if (!timeout) {
+                    dropZone.addClass('in');
+                } else {
+                    clearTimeout(timeout);
+                }
+                var found = false,
+                    node = e.target;
+                do {
+                    if (node === dropZone[0]) {
+                        found = true;
+                        break;
+                    }
+                    node = node.parentNode;
+                } while (node != null);
+                if (found) {
+                    dropZone.addClass('hover');
+                } else {
+                    dropZone.removeClass('hover');
+                }
+                window.dropZoneTimeout = setTimeout(function () {
+                    window.dropZoneTimeout = null;
+                    dropZone.removeClass('in hover');
+                }, 100);
+            });
+        </script> -->
     </div>
     <!-- Upload End -->
 

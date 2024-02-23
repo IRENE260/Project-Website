@@ -4,6 +4,17 @@ if (!isset($_SESSION['user_id'])) {
     header('Location:/amcs/homepage.php');
     exit;
 }
+$con=mysqli_connect("localhost","root","","apoint");
+if($con)
+{
+        $id=$_SESSION['user_id'];
+		$sql1="select * from files where sid='$id' and status='Not Verified'";
+		$res=mysqli_query($con,$sql1);
+        $value=mysqli_fetch_all($res);
+        $sql2="select * from files where sid='$id' and status='Verified'";	
+        $res2=mysqli_query($con,$sql2);
+        $value2=mysqli_fetch_all($res2);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,14 +86,32 @@ if (!isset($_SESSION['user_id'])) {
     <div class="table-container"> 
         <table class="table"> 
             <caption>UPLOADED CERTIFICATES</caption>
-            <tr><td>file-1</td></tr> 
-            <tr><td>file-2</td></tr>
+            <?php if ($value ==null){?>
+                <tr>
+                    <td>No files found...</td>
+                </tr>
+            <?php } 
+            else{
+             foreach($value as $data){?>
+            <tr>
+                <td><?php echo $data[2];?></td>
+            </tr>
+            <?php }} ?>
         </table> 
   
         <table class="table"> 
             <caption>APPROVED CERTIFICATES</caption>
-            <tr><td>file-1</td></tr> 
-            <tr><td>file-2</td></tr> 
+            <?php if ($value2 == null){?>
+                <tr>
+                    <td>No files found...</td>
+                </tr>
+            <?php } 
+            else{
+             foreach($value2 as $approved){?>
+            <tr>
+                <td><?php echo $approved[2];?></td>
+            </tr>
+            <?php }} ?>
         </table> 
     </div>
     
