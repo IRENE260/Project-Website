@@ -1,29 +1,8 @@
-<?php
-$userid=$_GET["userid"];
-$con=mysqli_connect("localhost","root","","apoint");
-$sql="SELECT * from faculty where id='$userid'";
-$result = mysqli_query($con,$sql);
-$data = mysqli_fetch_array($result);
-if(isset($_GET['userid'])){
-    $sq="select * from student order by id";
-    $res=mysqli_query($con,$sq);
-    $row=mysqli_fetch_all($res);
-}
-// $currentYear = (int)$today->format('Y');
-// if(isset($_POST["applyfilter"])){
-//     $branch = $_POST['branch'];
-//     $year = $_POST['year'];
-//     $sql2="SELECT * from student where branch='$branch' and yearj='$year'";
-//     $result2 = mysqli_query($con, $sql2);
-//     $data2 = mysqli_fetch_array($result2);
-
-// }
-?>
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Student List-Automated Activity Metric Computation System</title>
+    <title>Automated Activity Metric Computation System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
@@ -110,29 +89,7 @@ if(isset($_GET['userid'])){
 .filter-result-table th {
     background-color: #f2f2f2;
 }
-.sl{
-    margin: 10px 70px 70px;
-    box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
-}
-table{
-    border-radius: 5px;
-    font-size: 20px;
-    font-weight: normal;
-    border: none;
-    border-collapse: collapse;
-    width: 100%;
-    max-width: 100%;
-    white-space: nowrap;
-    background-color: white;
-}
-table td, table th {
-    text-align: center;
-    padding: 8px;
-}
-table td {
-    border-right: 1px solid #f8f8f8;
-    font-size: 12px;
-}
+
 </style>
     <!--
 
@@ -185,58 +142,27 @@ https://www.tooplate.com/view/2123-simply-amazed
                     </div>
                     <div class="filter-container">
                         <div class="filter-bar">
-                            <select id="branch" name="branch">
+                            <select id="branchInput">
                                 <option value="" disabled selected>Select Branch</option>
-                                <option value="branch1">CSE</option>
-                                <option value="branch2">ECE</option>
-                                <option value="branch1">EEE</option>
-                                <option value="branch1">Mech.E</option>
-                                <option value="branch1">EIE</option>
-                                <option value="branch1">Civil</option>
-                                <option value="branch1">MCA</option>
+                                <option value="branch1">Branch 1</option>
+                                <option value="branch2">Branch 2</option>
                                 <!-- Add more options as needed -->
                             </select>
                             
-                            <select id="year" name="year">
+                            <select id="yearInput">
                                 <option value="" disabled selected>Select Year of Admission</option>
-                                <?php
-    for ($year = 1980; $year <= $currentYear; $year++) {
-        echo '<option value="' . $year . '">' . $year . '</option>';
-    }
-    ?>
+                                <option value="2021">2021</option>
+                                <option value="2020">2020</option>
                                 <!-- Add more options as needed -->
                             </select>
-                            <button onclick="applyFilter()" name="applyfilter">Apply Filter</button>
+                            <button onclick="applyFilter()">Apply Filter</button>
                         </div>
                         <form action="#" method="GET" class="search-form">
                             <input type="text" name="search" placeholder="Search..." />
                             <button type="submit"><i class="fas fa-search"></i></button>
                         </form>
                     </div>
-
-                    <div class="sl" id="sl">
-                        <table>
-                                    <tr>
-                                        <th>Sl No.</th>
-                                        <th>Name</th>
-                                        <th>Branch</th>
-                                        <th>Year</th>
-                                        <!-- <th>Points</th> -->
-                                    </tr>
-                            <?php
-                                foreach ($row as $data ) {
-                            ?>
-                            <tr>
-                                <td><?php echo $data[0]?></td>
-                                <td><?php echo $data[1]?></td>
-                                <td><?php echo $data[4]?></td>
-                                <td><?php echo $data[6]?></td>
-                            </tr>
-                            <?php
-                                }
-                            ?>
-                        </table>
-                    </div>
+                    
                 <!-- <section class="work-section section" id="section-2"> -->
                   <!--  <div class="container">
                     <div class="row">                        
@@ -462,16 +388,11 @@ https://www.tooplate.com/view/2123-simply-amazed
     <script>
         function applyFilter() {
             // Get the values from the filter inputs
-            var branch = document.getElementById("branch").value;
-            var year = document.getElementById("year").value;
+            var branch = document.getElementById("branchInput").value;
+            var year = document.getElementById("yearInput").value;
     
             // Check if both inputs are filled
             if (branch && year) {
-                <?php
-                     $sql2="SELECT * from student where branch='$branch' and yearj='$year'";
-                     $result2 = mysqli_query($con, $sql2);
-                     $data2 = mysqli_fetch_all($result2,MYSQLI_ASSOC);
-                ?>
                 // Create a table element
                 var table = document.createElement("table");
                 table.classList.add("filter-result-table");
@@ -487,19 +408,16 @@ https://www.tooplate.com/view/2123-simply-amazed
                 buttonHeader.innerHTML = "<b>Action</b>";
     
                 // Create a table row for the data
-                for (var i = 0; i < data2.length; i++) {
-                    var dataRow = table.insertRow();
-            
-                    var nameCell = dataRow.insertCell(0);
-                    nameCell.innerHTML = data2[i]['name'];
-
-                    var pointsCell = dataRow.insertCell(1);
-                    pointsCell.innerHTML = data2[i]['tpoints'];
-
-                    var buttonCell = dataRow.insertCell(2);
-                    buttonCell.innerHTML = "<button onclick='viewDetails()'>View Details</button>";
-                }
-                
+                var dataRow = table.insertRow();
+                var profileCell = dataRow.insertCell(0);
+                var pointsCell = dataRow.insertCell(1);
+                var buttonCell = dataRow.insertCell(2);
+    
+                // Set sample data (replace this with your actual data)
+                profileCell.innerHTML = "John Doe";
+                pointsCell.innerHTML = "150";
+                buttonCell.innerHTML = "<button onclick='viewDetails()'>View Details</button>";
+    
                 // Append the table to the document body
                 document.body.appendChild(table);
             } else {
