@@ -101,7 +101,7 @@ https://www.tooplate.com/view/2123-simply-amazed
                         </div>
                         <div class="item col-md-4 two">
                             <div class="tm-work-item-inner">
-                                <a style="text-decoration:none;" href="studentlist,php?userid=".$userid> <div class="icn"><i class="fab fa-2x fa-phoenix-framework"></i></div>
+                                <a style="text-decoration:none;" href="studentlist.php?userid=".$userid> <div class="icn"><i class="fab fa-2x fa-phoenix-framework"></i></div>
                                     <h4>Students List</h4>
                                     <p>view detailed list of students with their current activity points</p></a>
 										
