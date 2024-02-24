@@ -217,8 +217,9 @@ https://www.tooplate.com/view/2123-simply-amazed
             echo "<tr><th>Name</th><th>Current Points</th><th>Actions</th></tr>";
 
             // Output data of each row
-            while ($row = $resultf->fetch_assoc()) {
-                echo "<tr><td>" . $row["name"] . "</td><td>" . $row["yearj"] . "</td><td> <button>View Details</button> </td></tr>";
+            while ($rowf = $resultf->fetch_assoc()) {
+                $studentid = $rowf['id'];
+                echo "<tr><td>" . $rowf["name"] . "</td><td>" . $rowf["yearj"] . "</td><td> <a href='viewcertificate.php?userid=".$userid."&studentid=".$studentid."'><button>View Details</button></a> </td></tr>";
             }
 
             echo "</table>";
@@ -242,8 +243,10 @@ https://www.tooplate.com/view/2123-simply-amazed
             echo "<tr><th>Name</th><th>Current Points</th><th>Actions</th></tr>";
 
             // Output data of each row
-            while ($row = $results->fetch_assoc()) {
-                echo "<tr><td>" . $row["name"] . "</td><td>" . $row["yearj"] . "</td><td> <button>View Details</button> </td></tr>";
+            while ($rows = $results->fetch_assoc()) {
+                $studentid = $rows['id'];
+                echo "<tr><td>" . $rows["name"] . "</td><td>" . $rows["yearj"] . "</td>";
+                echo "<td> <a href='viewcertificate.php?userid=".$userid."&studentid=".$studentid."'><button>View Details</button></a> </td></tr>";
             }
 
             echo "</table>";
@@ -252,7 +255,6 @@ https://www.tooplate.com/view/2123-simply-amazed
             $showAlert = true;
         }
     }
-
     // Close connection
     // $conn->close();
 
@@ -260,8 +262,6 @@ https://www.tooplate.com/view/2123-simply-amazed
     if (isset($showAlert) && $showAlert) {
         echo "<script>alert('No matching data');</script>";
     }
-    ?>
-   
-    
+    ?>    
 </body>
 </html>
