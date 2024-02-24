@@ -53,8 +53,25 @@ if($con)
 						<div class="input-box"><input type="text" name="name"  placeholder="Name" pattern="[a-zA-Z ]{1,32}" required=""></div>
 						<div class="input-box"><input type="date" name="dob" max=<?php echo $today;?> required=""></div>
 						<div class="input-box"><input type="text" name="regno" placeholder="Register Number" pattern="[a-zA-Z0-9 ]{1,}" required=""></div>
-						<div class="input-box"><input type="text" name="branch" placeholder="Branch" pattern="[a-zA-Z ]{1,}" required=""></div>
-						<div class="input-box"><input type="text" name="college" placeholder="College" pattern="[a-zA-Z ]{1,}" required=""></div>
+						<div class="input-box">
+							<select name="branch" id="branch" class="selectclass"  required>
+								<option value="" disabled selected>Branch</option>
+								<option value="CSE">CSE</option>
+								<option value="EC">EC</option>
+								<option value="EEE">EEE</option>
+								<option value="EI">EI</option>
+							</select>
+						</div>
+						<div class="input-box">
+							<select name="college" id="college" class="selectclass"  required>
+								<option value="" disabled selected>College</option>
+								<option value="CEA">College Of Engineering Adoor</option>
+								<option value="AEC">College Of Engineering Aranmula</option>
+								<option value="CEC">College Of Engineering Chengannur</option>
+								<option value="CEK">College Of Engineering Kallooppara</option>
+								<option value="CET">College Of Engineering Trivandrum</option>
+							</select>
+						</div>
 						<div class="input-box"><input type="number" min="2010" max="2099" step="1" name="year" placeholder="Year Of Joining" required=""></div>
 						<div class="input-box"><input type="email" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required=""></div>
 						<div class="input-box"><input type="password" name="pswd" placeholder="Password" id="pswd" required=""></div>
