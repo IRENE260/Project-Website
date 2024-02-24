@@ -60,6 +60,19 @@ input{
 	outline: none;
 	border-radius: 5px;
 }
+.selectclass{
+	width: 64%;
+	height: 50%;
+	background: #e0dede;
+	justify-content: center;
+	display: flex;
+	margin: 15px auto;
+	padding: 5px;
+	color: #8d8787;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+}
 button{
 	width: 60%;
 	height: 40px;
