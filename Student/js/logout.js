@@ -13,7 +13,7 @@ logoutButton.addEventListener('click', () => {
 
             // Redirect after a delay (adjust as needed)
             setTimeout(() => {
-                window.location.href = 'sls.php'; // Adjust the actual login page URL
+                window.location.href = '../Front Page/frontpage.html'; // Adjust the actual login page URL
             }, 2000); // Redirect after 2 seconds (customize the delay)
         }
     })
