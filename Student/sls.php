@@ -22,12 +22,12 @@ if($con)
     	{?>
         <script> 
 		    alert("User not Found/Incorrect Email or Password ");
-	        window.location.href = 'sls.php';</script>
+	        window.location.href = '../Student/sls.php';</script>
 		<?php   }
 		else{
 			session_start();
 			$_SESSION['user_id']=$value['id'];
-			header("Location:/amcs/homepage.php");
+			header("Location:/amcs/Student/homepage.php");
             exit();
 		}
 	}

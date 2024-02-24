@@ -59,8 +59,8 @@ if (!isset($_SESSION['user_id'])) {
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto  p-lg-0">
-                <a href="homepage.php" class="nav-item nav-link active">Home</a>
-                <a href="profilepage.php" class="nav-item nav-link">Profile</a>
+                <a href="homepage.php" class="nav-item nav-link ">Home</a>
+                <a href="profilepage.php" class="nav-item nav-link active">Profile</a>
                 <a href="logout.html" class="nav-item nav-link">Logout</a>
             </div>
         </div>
