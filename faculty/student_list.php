@@ -4,7 +4,12 @@ $con=mysqli_connect("localhost","root","","apoint");
 $sql="SELECT * from faculty where id='$userid'";
 $result = mysqli_query($con,$sql);
 $data = mysqli_fetch_array($result);
-$currentYear = (int)$today->format('Y');
+if(isset($_GET['userid'])){
+    $sq="select * from student order by id";
+    $res=mysqli_query($con,$sq);
+    $row=mysqli_fetch_all($res);
+}
+// $currentYear = (int)$today->format('Y');
 // if(isset($_POST["applyfilter"])){
 //     $branch = $_POST['branch'];
 //     $year = $_POST['year'];
@@ -105,7 +110,29 @@ $currentYear = (int)$today->format('Y');
 .filter-result-table th {
     background-color: #f2f2f2;
 }
-
+.sl{
+    margin: 10px 70px 70px;
+    box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
+}
+table{
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: normal;
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+    background-color: white;
+}
+table td, table th {
+    text-align: center;
+    padding: 8px;
+}
+table td {
+    border-right: 1px solid #f8f8f8;
+    font-size: 12px;
+}
 </style>
     <!--
 
@@ -186,7 +213,30 @@ https://www.tooplate.com/view/2123-simply-amazed
                             <button type="submit"><i class="fas fa-search"></i></button>
                         </form>
                     </div>
-                    
+
+                    <div class="sl" id="sl">
+                        <table>
+                                    <tr>
+                                        <th>Sl No.</th>
+                                        <th>Name</th>
+                                        <th>Branch</th>
+                                        <th>Year</th>
+                                        <!-- <th>Points</th> -->
+                                    </tr>
+                            <?php
+                                foreach ($row as $data ) {
+                            ?>
+                            <tr>
+                                <td><?php echo $data[0]?></td>
+                                <td><?php echo $data[1]?></td>
+                                <td><?php echo $data[4]?></td>
+                                <td><?php echo $data[6]?></td>
+                            </tr>
+                            <?php
+                                }
+                            ?>
+                        </table>
+                    </div>
                 <!-- <section class="work-section section" id="section-2"> -->
                   <!--  <div class="container">
                     <div class="row">                        
