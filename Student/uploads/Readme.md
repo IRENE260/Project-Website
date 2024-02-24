@@ -1,1 +1,1 @@
-TO store uploaded certificates of students
+To store uploaded certificates of students
