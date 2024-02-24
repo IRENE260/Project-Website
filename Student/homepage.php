@@ -19,6 +19,9 @@ if($con)
     $_SESSION['year']=$value['yearj'];
     $_SESSION['regno']=$value['regno'];
     $_SESSION['email']=$value['email'];
+    $sql2="select sum(point) as total from spoints where sid=".$_SESSION['user_id'];
+    $res2=mysqli_query($con,$sql2);
+    $value2=mysqli_fetch_array($res2);
 }
 ?>
 <!DOCTYPE html>
@@ -122,7 +125,7 @@ if($con)
                 <div class="class3" data-wow-delay="0.3s">
                 <div class="p-4">
                     <div class="service-item text-center pt-3">
-                            <div role="progressbar" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100" style="--value: 50"></div>
+                            <div role="progressbar" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100" style="--value:<?php echo $value2[0]?>"></div>
                             <a href="points.php"><h5 class="mb-3">POINTS</h5></a>
                     </div>
                 </div></div>

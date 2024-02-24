@@ -67,9 +67,6 @@ if($con)
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <h5 class="m-0 text-primary">Total Points: </h5>
-        </a>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto  p-lg-0">
                 <a href="homepage.php" class="nav-item nav-link active">Home</a>
