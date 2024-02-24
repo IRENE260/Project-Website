@@ -213,7 +213,7 @@
 /***UPLOAD BUTTON***/
 
 .upload {
-  background-color: #067a6c;
+  background-color: #32267b;
   border: 0;
   border-radius: 56px;
   color: #fff;
@@ -265,115 +265,80 @@
 .table-container {
     display: flex;
     justify-content: space-between;
-    margin: 20px;
+}
+.t{
+  flex:1;
+  min-width: 0;
+  margin: 20px;
 }
 .table {
     border-collapse: collapse;
     width:100%;
     margin-right: 10px;
 }
+th{
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  background:linear-gradient(to left,#454447,#454447);
+  background:linear-gradient(to right,#454447,#454447);
+  color: #ddd;
+}
 td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
-    background: -webkit-linear-gradient(left, #25c481, #25b7c4);
-    background: linear-gradient(to right, #25c481, #25b7c4);
+    background: -webkit-linear-gradient(left, #c6cffd, #c6cffd);
+    background: linear-gradient(to right, #c6cffd, #c6cffd);
 }
-
-
+.pdfa{
+  text-decoration: none; /* Remove underline */
+  color: inherit;
+}
+.pdfa:hover{
+  text-decoration: none; /* Remove underline */
+  color: inherit;
+}
 caption{
     caption-side: top;
     text-align: center;
 }
 
 /*** Upload ***/
-.zone {
-    margin: auto;
-    position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
-    background: radial-gradient(ellipse at center,#425e4eea 0,#205a69 100%);
-    width:80%;
-    height:50%;
-    border:5px dashed white;
-    text-align:center;
-    color: white;
-    z-index: 20;
-    transition: all 0.3s ease-out;
-    box-shadow: 0 0 0 1px rgba(255,255,255,.05),inset 0 0 .25em 0 rgba(0,0,0,.25);
-    .btnCompression {
-      .active {
-        background: #425e4eea;
-        color:white;
-      }
-    }
-    i {
-      text-align: center;
-      font-size: 10em;
-      color:#fff;
-      margin-top: 50px;
-    }
-    .selectFile {
-      height: 50px;
-      margin: 20px auto;
-      position: relative;
-      width: 200px;
-    }
-    label, input {
-      cursor: pointer;
-      display: block;
-      height: 50px;
-      left: 0;
-      position: absolute;
-      top: 0;
-      width: 100%;
-      border-radius: 5px;
-    }
-    label {
-      background: #fff;
-      color:#425e4eea;
-      display: inline-block;
-      font-size: 1.2em;
-      line-height: 50px;
-      padding: 0;
-      text-align: center;
-      white-space: nowrap;
-      text-transform: uppercase;
-      font-weight: 400;
-      box-shadow: 0 1px 1px gray;
-    }
-    input[type=file] {
-      opacity: 0;
+.zone{
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: radial-gradient(ellipse at center,#425e4eea 0,#205a69 100%);
+  width:50%;
+  height:50%;
+  border:5px dashed white;
+  text-align:center;
+  color: white;
+  z-index: 20;
+  transition: all 0.3s ease-out;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.05),inset 0 0 .25em 0 rgba(0,0,0,.25);
+  .btnCompression {
+    .active {
+      background: #425e4eea;
+      color:white;
     }
   }
-  .zone.in {
-    color:white;
-    border-color:white;
-    background: radial-gradient(ellipse at center,#EB6A5A 0,#c9402f 100%);
-    i {
-      color:#fff;
-    }
-    label {
-      background: #fff;
-      color:#EB6A5A;
-    }
+  i {
+    text-align: center;
+    font-size: 10em;
+    color:#fff;
+    margin-top: 50px;
   }
-  .zone.hover {
-    color:gray;
-    border-color:white;
-    background:#fff;
-    border:5px dashed gray;
-    i {
-      color:#EB6A5A;
-    }
-    label {
-      background: #fff;
-      color:#EB6A5A;
-    }
+  .selectFile {
+    height: 50px;
+    margin: 20px auto;
+    position: relative;
+    width: 200px;
   }
-  .zone.fade {
-    transition: all 0.3s ease-out;
-    opacity: 1;
-  }
+}
+
+
 
 /*** Footer ***/
 .footer .btn.btn-social {
