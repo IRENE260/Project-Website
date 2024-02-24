@@ -84,35 +84,50 @@ if($con)
 
     <!-- Tables Start -->
     <div class="table-container"> 
+        <div class="t">
         <table class="table"> 
-            <caption>UPLOADED CERTIFICATES</caption>
+            <caption><b>UPLOADED CERTIFICATES</b></caption>
             <?php if ($value ==null){?>
                 <tr>
                     <td>No files found...</td>
                 </tr>
             <?php } 
-            else{
+            else{?>
+            <tr>
+                <th>FileName</th>
+                <th>Points</th>
+            </tr>
+            <?php
              foreach($value as $data){?>
             <tr>
-                <td><?php echo $data[2];?></td>
+                <td><a href="view_pdf.php?file_id=<?php echo$data[0];?>" class="pdfa"><?php echo $data[2];?></a></td>
+                <td><?php echo $data[3];?></td>
             </tr>
             <?php }} ?>
         </table> 
-  
+        </div>
+        <div class="t">
         <table class="table"> 
-            <caption>APPROVED CERTIFICATES</caption>
+            <caption><b>APPROVED CERTIFICATES</b></caption>
             <?php if ($value2 == null){?>
                 <tr>
                     <td>No files found...</td>
                 </tr>
             <?php } 
-            else{
-             foreach($value2 as $approved){?>
+            else{?>
+                <tr>
+                    <th>FileName</th>
+                    <th>Points</th>
+                </tr>
+            <?php
+            foreach($value2 as $approved){?>
             <tr>
-                <td><?php echo $approved[2];?></td>
+                <td><a href="view_pdf.php?file_id=<?php echo$data[0];?>" class="pdfa"><?php echo $approved[2];?></a></td>
+                <td><?php echo $data[3];?></td>
             </tr>
             <?php }} ?>
-        </table> 
+        </table>
+        </div> 
     </div>
     
     <!-- Tables End -->

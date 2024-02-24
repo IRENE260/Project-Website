@@ -4,6 +4,18 @@ if (!isset($_SESSION['user_id'])) {
     header('Location:/amcs/homepage.php');
     exit;
 }
+$con=mysqli_connect("localhost","root","","apoint");
+if($con)
+{
+        $id=$_SESSION['user_id'];
+		$sql1="select * from spoints where sid='$id'";
+		$res=mysqli_query($con,$sql1);
+        $value=mysqli_fetch_all($res);
+        $sql2="select sum(point) as total from spoints where sid='$id'";
+        $res2=mysqli_query($con,$sql2);
+        $value2=mysqli_fetch_array($res2);
+}
+?>
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,12 +81,31 @@ if (!isset($_SESSION['user_id'])) {
     </nav>
     <!-- Tables Start -->
     <div class="table-container"> 
-        <table class="table"> 
+        <table class="table" > 
             <caption>CERTIFICATES AND POINTS</caption>
-            <th>Sl. No</th>
-            <th>Certificate</th>
-            <th>Status</th>
-            <th>Points</th>
+            <tr>
+                <th>Sl. No</th>
+                <th>Category</th>
+                <th>Points</th>
+            </tr>
+            <?php if ($value ==null){?>
+                <tr></tr>
+            <?php } 
+            else{
+             $sl=1;
+             foreach($value as $data){
+            ?>
+            <tr>
+                <td><?php echo $sl;?></td>
+                <td><?php echo $data[2];?></td>
+                <td><?php echo $data[3];?></td>
+            </tr>
+            <?php 
+            $sl+=1;}} ?>
+            <tr>
+                <th colspan="2">Total Points</th>
+                <th><?php echo $value2[0];?></th>
+            </tr>
         </table>
     </div>
     

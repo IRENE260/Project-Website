@@ -9,7 +9,12 @@ if($con)
 {
 	if(isset($_POST['upload']))
 	{
-		$sql="insert into files(sid,filelink) values('".$_POST['userid']."','".$_FILES['file']['name']."')";
+        $pdfName = $_FILES['file']['name'];
+        $pdfTmp = $_FILES['file']['tmp_name'];
+        $targetDir = 'uploads/';
+        $targetFile = $targetDir . basename($pdfName);
+        move_uploaded_file($pdfTmp, $targetFile);
+		$sql="insert into files(sid,filelink) values('".$_POST['userid']."','$pdfName')";
 		mysqli_query($con,$sql);
 		header("Location:/amcs/scertificate.php");
 		exit();
@@ -84,9 +89,8 @@ if($con)
                 <i class="fa fa-cloud-upload"></i>
                 <div>Drag and drop your file here</div>                    
                 <span>OR</span>
-                <div class="selectFile">       
-                    <label for="file">Select file</label>                   
-                    <input type="file" name="file" id="file">
+                <div class="selectFile">                       
+                    <input type="file" name="file" id="file" value="Select file"required ><br><br><br>
                 </div>
             </div>
             <input type="hidden" name="userid" value="<?php echo $_SESSION['user_id']?>">
