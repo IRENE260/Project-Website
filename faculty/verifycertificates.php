@@ -183,11 +183,13 @@ $result = mysqli_query($con, $sql);
 <?php
 while ($row = mysqli_fetch_array($result)) {
     $sid = $row['sid'];
-    $student_name_query = "SELECT * FROM student WHERE sid = $sid";
-    $student_name_result = mysqli_query($con, $student_name_query);
-    $student_name = mysqli_fetch_array($student_name_result)['name'];
-    $current_points = $student_details['tpoints'];
+    $student_details_query = "SELECT * FROM student WHERE id = $sid";
+    $student_details_result = mysqli_query($con, $student_details_query);
+    $student_details = mysqli_fetch_array($student_details_result, MYSQLI_ASSOC);
 
+    $student_name = $student_details['name'];
+    $current_points = $student_details['tpoints'];
+    
     // Retrieve all id values for the current sid where status is 0
     $sql2 = "SELECT * FROM files WHERE sid = $sid AND status = 0";
     $result2 = mysqli_query($con, $sql2);
