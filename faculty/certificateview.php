@@ -22,13 +22,13 @@ if($con)
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="all.min.css" type="text/css" /> 
-    <link rel="stylesheet" href="slick.css" type="text/css" />   
-    <link rel="stylesheet" href="tooplate-simply-amazed.css" type="text/css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="fontawesome/css/all.min.css" type="text/css" /> 
+    <link rel="stylesheet" href="css/slick.css" type="text/css" />   
+    <link rel="stylesheet" href="css/tooplate-simply-amazed.css" type="text/css" />
     <style>
         body {
-            background-image: url("images/i2.jpg"); 
+            background-image: url("img/i2.jpg"); 
             background-size: cover;
             background-position: center; 
             font-family: 'Source Sans Pro', sans-serif; 
@@ -94,8 +94,8 @@ if($con)
                     if($result->num_rows > 0){ 
                         while($row = $result->fetch_assoc()){ ?>
                             <div class="pdf-item">
-                                <a href="http://localhost/Project_S8/images/<?php echo $row['filelink'];?>" target="_blank">
-                                    <img src="images/pdf_icon.png" alt="<?php echo $data[2]; ?>">
+                                <a href="http://localhost/Project_S8/img/<?php echo $row['filelink'];?>" target="_blank">
+                                    <img src="img/pdf_icon.png" alt="<?php echo $data[2]; ?>">
                                 </a>
                                 <span style="color:#246c7d"><?php echo $row['filelink'];?></span>
                             </div>
