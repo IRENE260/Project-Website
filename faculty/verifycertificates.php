@@ -181,11 +181,11 @@ $result = mysqli_query($con, $sql);
         </div>
     </header>
 <?php
-while ($row = mysqli_fetch_assoc($result)) {
+while ($row = mysqli_fetch_array($result)) {
     $sid = $row['sid'];
     $student_name_query = "SELECT * FROM student WHERE sid = $sid";
     $student_name_result = mysqli_query($con, $student_name_query);
-    $student_name = mysqli_fetch_assoc($student_name_result)['name'];
+    $student_name = mysqli_fetch_array($student_name_result)['name'];
     $current_points = $student_details['tpoints'];
 
     // Retrieve all id values for the current sid where status is 0
@@ -193,7 +193,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $result2 = mysqli_query($con, $sql2);
     $id_values = [];
 
-    while ($row2 = mysqli_fetch_assoc($result2)) {
+    while ($row2 = mysqli_fetch_array($result2)) {
         $id_values[] = $row2['id'];
     }
 
