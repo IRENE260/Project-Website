@@ -1,9 +1,9 @@
 <?php
-// session_start();
-// if (!isset($_SESSION['user_id'])) {
-//     header('Location:/Project_S8/certificateview.php');
-//     exit;
-// }
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location:/Project_S8/certificateview.php');
+    exit;
+}
 $con=mysqli_connect("localhost","root","","apoint");
 if($con)
 {
