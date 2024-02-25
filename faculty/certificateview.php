@@ -1,19 +1,34 @@
+<?php
+// session_start();
+// if (!isset($_SESSION['user_id'])) {
+//     header('Location:/Project_S8/certificateview.php');
+//     exit;
+// }
+$con=mysqli_connect("localhost","root","","apoint");
+if($con)
+{
+ 
+        $sql1="select * from files where status='Not Verified'";
+        $result =$con->query($sql1); 
+
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/viewcertificate.css">
+    <link rel="stylesheet" href="viewcertificate.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="fontawesome/css/all.min.css" type="text/css" /> 
-    <link rel="stylesheet" href="css/slick.css" type="text/css" />   
-    <link rel="stylesheet" href="css/tooplate-simply-amazed.css" type="text/css" />
+    <link rel="stylesheet" href="bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="all.min.css" type="text/css" /> 
+    <link rel="stylesheet" href="slick.css" type="text/css" />   
+    <link rel="stylesheet" href="tooplate-simply-amazed.css" type="text/css" />
     <style>
         body {
-            /*background-image: url("images/i1.jpg");*/ 
+            background-image: url("images/i2.jpg"); 
             background-size: cover;
             background-position: center; 
             font-family: 'Source Sans Pro', sans-serif; 
@@ -75,18 +90,18 @@
         </header>
         <h1>CERTIFICATES</h1>
         <div class="pdf-grid">
-            <div class="pdf-item">
-                <a href="images/anna.pdf" target="_blank">
-                    <img src="images/pdf_icon.png" alt="anna">
-                    <p>Anna</p>
-                </a>
-            </div>
-            <div class="pdf-item">
-                <a href="images/anna.pdf" target="_blank">
-                    <img src="images/pdf_icon.png" alt="anna1">
-                    <p>Anna</p>
-                </a>
-            </div>
+                <?php
+                    if($result->num_rows > 0){ 
+                        while($row = $result->fetch_assoc()){ ?>
+                            <div class="pdf-item">
+                                <a href="http://localhost/Project_S8/images/<?php echo $row['filelink'];?>" target="_blank">
+                                    <img src="images/pdf_icon.png" alt="<?php echo $data[2]; ?>">
+                                </a>
+                                <span style="color:#246c7d"><?php echo $row['filelink'];?></span>
+                            </div>
+                        <?php }
+                    }
+                ?>    
         </div>
     </div>
 </body>
