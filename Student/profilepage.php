@@ -1,7 +1,11 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header('Location:/amcs/homepage.php');
+    header('Location:/amcs/Student/homepage.php');
+    exit;
+}
+if(isset($_POST['cp'])){
+    header('Location:/amcs/Student/changepassword.php');
     exit;
 }
 ?>
@@ -69,7 +73,7 @@ if (!isset($_SESSION['user_id'])) {
 
     <!--Details-->
     <div class="container emp-profile">
-        <form method="post">
+        <form method="post" action="<?php $_SERVER['PHP_SELF']?>">
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
@@ -82,9 +86,7 @@ if (!isset($_SESSION['user_id'])) {
                     </div>
                 </div>
                 <div class="col-md-2">
-                <button class="cp" role="button" onclick="location.href = 'changepassword.php';">
-                    <span class="text">Change Password</span>
-                </button>
+                    <input type="submit" class="profile-edit-btn" name="cp" value="Change Password"/>
                 </div>
             </div>
            

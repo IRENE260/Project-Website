@@ -4,7 +4,7 @@ $today=$today->format('Y-m-d');
 $con=mysqli_connect("localhost","root","","apoint");
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header('Location:/amcs/sls.php');
+    header('Location:/amcs/Student/sls.php');
     exit;
 }
 if($con)

@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header('Location:/amcs/homepage.php');
+    header('Location:/amcs/Student/homepage.php');
     exit;
 }
 $con=mysqli_connect("localhost","root","","apoint");
