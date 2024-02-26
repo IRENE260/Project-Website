@@ -1,32 +1,49 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header('Location:/amcs/homepage.php');
-    exit;
-}
-$con=mysqli_connect("localhost","root","","apoint");
-if($con)
-{
-	if(isset($_POST['upload']))
-	{
+   $dbHost = 'localhost';
+   $dbUser = 'root';
+   $dbPass = '';
+   $dbName = 'apoint';
+   $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
+   if ($conn->connect_error) {
+       die("Connection failed: " . $conn->connect_error);
+   }
+   session_start();
+   $sql1="select id,name from faculty where college='".$_SESSION['college']."'and department='".$_SESSION['branch']."'";
+   $res=mysqli_query($conn,$sql1);
+   if($res){
+   $value=mysqli_fetch_all($res);
+   }
+   else{
+    $value=null;
+   }
+   if (isset($_POST['submit'])){
+
+        $studentId = $_POST['sid'];
+        $studentName = $_POST['sname'];
+        $fId = $_POST['fid'];
+        $requestText = $_POST['requestText'];
         $pdfName = $_FILES['file']['name'];
         $pdfTmp = $_FILES['file']['tmp_name'];
         $targetDir = 'uploads/';
         $targetFile = $targetDir . basename($pdfName);
         move_uploaded_file($pdfTmp, $targetFile);
-		$sql="insert into files(sid,filelink) values('".$_POST['userid']."','$pdfName')";
-		mysqli_query($con,$sql);
+        // Insert request into the database
+        $sql = "insert into request (sid,fid,sname,file,request) VALUES ('$studentId','$fId','$studentName','$pdfName','$requestText')";
+        mysqli_query($conn,$sql);
+        $sql2="insert into files(sid,filelink) values('$studentId','$pdfName')";
+		mysqli_query($conn,$sql2);
 		header("Location:/amcs/Student/scertificate.php");
 		exit();
-	}
-}
-?>
-<!DOCTYPE html>
+   }
+
+   $conn->close();
+   ?>
+   <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>Upload Page</title>
+    <title>Points</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -52,6 +69,7 @@ if($con)
 
     <!-- Template Stylesheet -->
     <link href="css/student.css" rel="stylesheet">
+    <link href="css/form_req.css" rel="stylesheet">
 </head>
 
 <body>
@@ -80,55 +98,39 @@ if($con)
             </div>
         </div>
     </nav>
-    <!-- Navbar End -->
-
-    <!-- Upload Start -->
-    <div class="zone">
-        <form action="supload.php" method="post" enctype="multipart/form-data">
-            <div id="dropZ">
-                <i class="fa fa-cloud-upload"></i>
-                <div>Drag and drop your file here</div>                    
-                <span>OR</span>
-                <div class="selectFile">                       
-                    <input type="file" name="file" id="file" value="Select file"required ><br><br><br>
-                </div>
-            </div>
-            <input type="hidden" name="userid" value="<?php echo $_SESSION['user_id']?>">
-            <input type="submit" value="Upload File" name="upload">
-        </form>
-        <!-- <script>
-            $(document).bind('dragover', function (e) {
-                var dropZone = $('.zone'),
-                    timeout = window.dropZoneTimeout;
-                if (!timeout) {
-                    dropZone.addClass('in');
-                } else {
-                    clearTimeout(timeout);
-                }
-                var found = false,
-                    node = e.target;
-                do {
-                    if (node === dropZone[0]) {
-                        found = true;
-                        break;
-                    }
-                    node = node.parentNode;
-                } while (node != null);
-                if (found) {
-                    dropZone.addClass('hover');
-                } else {
-                    dropZone.removeClass('hover');
-                }
-                window.dropZoneTimeout = setTimeout(function () {
-                    window.dropZoneTimeout = null;
-                    dropZone.removeClass('in hover');
-                }, 100);
-            });
-        </script> -->
+    <!-- REQUEST FORM START -->
+    <div class="testbox">
+      <form action="<?php $_SERVER['PHP_SELF']?>" method="post"  enctype="multipart/form-data">
+        <h1>Request Form</h1>
+        <div class="item">
+          <p>Faculty Name</p>
+            <div class="city-item">
+            <select name="fid" required>
+                <option value="">Name</option>
+                <?php if($value==null){?>
+                <option value="">No faculty found</option>
+                <?php } else{
+                 foreach($value as $data){?>
+                    <option value="<?php echo $data[0];?>"><?php echo $data[1];?></option>
+                <?php }}?>
+            </select>
+          </div>
+          <input type="hidden" name="sid" value="<?php echo $_SESSION['user_id']?>">
+          <input type="hidden" name="sname" value="<?php echo $_SESSION['user_name']?>">
+        </div>
+        <div class="item">
+          <p>Your Request</p>
+          <textarea rows="10" name="requestText" required></textarea>
+        </div>
+        <div class="item">
+            <input type="file" name="file" id="file" value="Select file"required >
+        </div>
+        <div class="btn-block">
+          <button type="submit" name="submit">SEND</button>
+        </div>
+      </form>
     </div>
-    <!-- Upload End -->
-
-
+    <!-- REQUEST FORM ENDS -->
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>

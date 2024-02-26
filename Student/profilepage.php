@@ -82,7 +82,9 @@ if (!isset($_SESSION['user_id'])) {
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Change Password"/>
+                <button class="cp" role="button" onclick="location.href = 'changepassword.php';">
+                    <span class="text">Change Password</span>
+                </button>
                 </div>
             </div>
            
@@ -132,7 +134,6 @@ if (!isset($_SESSION['user_id'])) {
                             </div>
                         </div>
                     </div>
-                    <!-- ... (Continue updating other tab panes) ... -->
                 </div>
             </div>
         </form>

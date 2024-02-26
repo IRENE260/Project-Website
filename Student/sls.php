@@ -6,9 +6,22 @@ if($con)
 {
 	if(isset($_POST['signup']))
 	{
+		$name=$_POST['name'];
+		$dob=$_POST['dob'];
+		$reg=$_POST['regno'];
+		$branch=$_POST['branch'];
+		$college=$_POST['college'];
+		$year=$_POST['year'];
+		$email=$_POST['email'];
+		$password=$_POST['pswd'];
 		$sql="insert into student(name,dob,regno,branch,college,yearj,email,password) values('$name','$dob','$reg','$branch','$college','$year','$email','$password')";
 		mysqli_query($con,$sql);
-		header("Location:/amcs/sls.php");
+		$sql2="select id from student where regno='$reg'";
+		$res=mysqli_query($con,$sql2);
+		$value=mysqli_fetch_array($res);
+		$sql3="insert into spoint values('$value[0]',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)";
+		mysqli_query($con,$sql3);
+		header("Location:/amcs/Student/sls.php");
 		exit();
 	}
 	if(isset($_POST['login']))

@@ -81,7 +81,9 @@ if($con)
     <button class="upload" role="button" onclick="location.href = 'supload.php';">
     <span class="text">Upload</span>
     </button>
-
+    <button class="upload" role="button" onclick="location.href = 'srequest.php';">
+    <span class="text">Request</span>
+    </button>
     <!-- Tables Start -->
     <div class="table-container"> 
         <div class="t">

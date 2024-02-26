@@ -19,7 +19,7 @@ if($con)
     $_SESSION['year']=$value['yearj'];
     $_SESSION['regno']=$value['regno'];
     $_SESSION['email']=$value['email'];
-    $sql2="select sum(point) as total from spoints where sid=".$_SESSION['user_id'];
+    $sql2="select tpoint from spoint where sid=".$_SESSION['user_id'];
     $res2=mysqli_query($con,$sql2);
     $value2=mysqli_fetch_array($res2);
 }
