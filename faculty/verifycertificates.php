@@ -1,25 +1,26 @@
 <?php
 $userid=$_GET["userid"];
-// Assuming you have a valid database connection $con
 $con=mysqli_connect("localhost","root","","apoint");
+// $sql="SELECT * from faculty where id='$userid'";
+// $result = mysqli_query($con,$sql);
+// $data = mysqli_fetch_array($result);
 
 $sql = "SELECT DISTINCT sid FROM files WHERE status = 0";
 $result = mysqli_query($con, $sql);
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Display PDF Icons</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <meta charset="utf-8" />
+    <title>Request Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
         }
 
@@ -47,45 +48,72 @@ $result = mysqli_query($con, $sql);
             transition: all 0.3s ease;
         }
 
-        .container {
-            width: 80%;
-            background-color: #fff;
-            margin: 20px auto;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-        .pdf-icon {
-            margin-right: 10px;
-            color: #3498db;
-            font-size: 40px;
+        .header-links:hover {
+            color: #ecf0f1;
+            transform: scale(1.1);
         }
 
-        /* .request-container {
-            margin: 20px;
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+
+        .request-container {
+            margin: 26px;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             transition: box-shadow 0.3s ease;
             display: flex;
             align-items: stretch;
-        } */
-        /* .buttons {
+        }
+        .top-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .bottom-line {
+            text-align: center;
+            padding: 10px;
+        }
+        .icon,
+        .details,
+        .student-details,
+        .buttons {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .icon {
+            background-color: rgba(52, 152, 219, 0.8);
+            color: #fff;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .icon i {
+            font-size: 3em;
+        }
+
+        .details,
+        .student-details {
+            text-align: left;
+        }
+
+        .buttons {
             border-top-right-radius: 10px;
             border-bottom-right-radius: 10px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: flex-end;
-            height: 100%; 
+            height: 100%; /* Adjusted to take full height */
         }
 
         .accept-button,
@@ -97,8 +125,8 @@ $result = mysqli_query($con, $sql);
             border-radius: 5px;
             font-size: 14px;
             font-weight: bold;
-            width: 75%; 
-            height: 30%; 
+            width: 75%; /* Adjusted width */
+            height: 30%; /* Adjusted height */
         }
 
         .accept-button {
@@ -109,22 +137,26 @@ $result = mysqli_query($con, $sql);
         .reject-button {
             background-color: #e74c3c;
             color: #fff;
-        } */
+        }
 
-        .pdf-modal {
+        h3 {
+            margin-top: 0;
+        }
+
+        .modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
 
-        .pdf-modal-content {
+        .modal-content {
             background: #fff;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -135,35 +167,7 @@ $result = mysqli_query($con, $sql);
             position: relative;
             text-align: center;
         }
-        .pdf-details-container {
-            width: 60%;
-        }
 
-        .pdf-actions-container {
-            width: 35%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .pdf-actions-container button {
-            margin-top: 10px;
-            padding: 10px;
-            width: 80%;
-            cursor: pointer;
-            border: none;
-            border-radius: 4px;
-            color: #fff;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        .reject-btn {
-            background-color: #e74c3c;
-        }
-
-        .accept-btn {
-            background-color: #2ecc71;
-        }
         .close-btn {
             position: absolute;
             top: 10px;
@@ -172,15 +176,16 @@ $result = mysqli_query($con, $sql);
         }
     </style>
 </head>
+
 <body>
-<header>
+    <header>
         <h1>Certificate Verification</h1>
         <div class="header-links">
             <a href="fhome.php?userid=".$userid>Home</a> |
             <a href="flogin.php">Logout</a>
         </div>
     </header>
-<?php
+    <?php
 while ($row = mysqli_fetch_array($result)) {
     $sid = $row['sid'];
     $student_details_query = "SELECT * FROM student WHERE id = $sid";
@@ -188,7 +193,7 @@ while ($row = mysqli_fetch_array($result)) {
     $student_details = mysqli_fetch_array($student_details_result, MYSQLI_ASSOC);
 
     $student_name = $student_details['name'];
-    $current_points = $student_details['tpoints'];
+    // $current_points = $student_details['tpoints'];
     
     // Retrieve all id values for the current sid where status is 0
     $sql2 = "SELECT * FROM files WHERE sid = $sid AND status = 0";
@@ -198,85 +203,71 @@ while ($row = mysqli_fetch_array($result)) {
     while ($row2 = mysqli_fetch_array($result2)) {
         $id_values[] = $row2['id'];
     }
+$n = count($id_values) + 1;
 
-    // Display container for each sid
-    echo '<div class="container">';
-    echo '<div>';
-    echo '<h2>' . $student_name . '</h2>';
-    echo '</div>';
-    echo '<div>';
-    echo '<p>Current Total Points: ' . $current_points . '</p>';
-    echo '</div>';
-    // Display PDF icons for each id value
-    foreach ($id_values as $id) {
-        // echo '<i class="fas fa-file-pdf pdf-icon"></i>';
-        echo '<i class="fas fa-file-pdf pdf-icon" onclick="openPdfModal(\'' . $id['pathlink'] . '\', \'' . $student_name . '\', \'' . $id['id'] . '\')"></i>';
-    }
-
-    echo '</div>';
-}
+    ?>
+    <div class="container">
+        <div class="request-container" >
+        <!-- <div class="top-line"> -->
+    <div class="name" style="flex: 1;"><h2><?php echo $student_name; ?></h2></div>
+    
+<?php
+foreach ($id_values as $id ) {
+             // Fetch filelink for the current ID
+    $pdfPathQuery = "SELECT * FROM files WHERE id = $id";
+    $pdfPathResult = mysqli_query($con, $pdfPathQuery);
+    $pdfPathRow = mysqli_fetch_array($pdfPathResult);
+    $pdfPath = $pdfPathRow['filelink'];
 ?>
-<div class="pdf-modal" id="pdfModal">
-    <div class="pdf-modal-content">
-        <div class="pdf-details-container">
-            <span class="close-btn" onclick="closePdfModal">&times;</span>
-            <iframe id="pdfViewer" width="100%" height="500px" frameborder="0"></iframe>
-            <!-- Display any 3 details about the PDF -->
-            <p>Detail 1: ...</p>
-            <p>Detail 2: ...</p>
-            <p>Detail 3: ...</p>
+<!-- <div class="bottom-line"> -->
+<div style=" display: flex; flex-direction: row;">
+   <div class="icon" onclick="openModal('pdf-content-<?php echo $id; ?>')"><i class="far fa-file-pdf"></i></div>
+<!-- </div> -->
+<!-- Details section -->
+<div class="details" style="flex: 1; text-align: left;">
+                        <h3>Certificate Details</h3>
+                        <p>Category: Achievement</p>
+                        <p>Issue Date: 2022-02-15</p>
+                    </div>
+                    <!-- Buttons section -->
+                    <div class="buttons" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end;">
+                        <button class="accept-button">Accept</button>
+                        <button class="reject-button">Reject</button>
+                    </div>
+                </div>
+<?php //} ?>
+            <!-- <div class="icon"><i class="far fa-file-pdf"></i></div> -->
+            
         </div>
-        <div class="pdf-actions-container">
-            <button class="reject-btn" onclick="rejectPdf()">Reject</button>
-            <button class="accept-btn" onclick="acceptPdf()">Accept</button>
-        </div>
+
+    </div>
+    <?php
+//foreach ($id_values as $id ) {
+    ?>
+    <div id="pdf-content-<?php echo $id; ?>" class="modal" onclick="closeModal('pdf-content-<?php echo $id; ?>')">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('pdf-content-<?php echo $id; ?>')">&times;</span>
+        <iframe src="<?php echo $pdfPath; ?>" width="100%" height="100%"></iframe>
     </div>
 </div>
+<?php
+ }
+}
+ ?>
+
+
+
 
 <script>
-    function openPdfModal(pdfPath, studentName, pdfId) {
-        document.getElementById('pdfViewer').src = pdfPath;
-        document.getElementById('pdfModal').style.display = 'flex';
-        // Set the details about the PDF (replace with actual details)
-        document.querySelector('.pdf-details-container').innerHTML = `
-            <span class="close-btn" onclick="closePdfModal">&times;</span>
-            <iframe id="pdfViewer" width="100%" height="500px" frameborder="0"></iframe>
-            <p>Student: ${studentName}</p>
-            <p>Section: ...</p>
-            <p>Achievement: ...</p>
-            <p>Allowable points: ...</p>
-        `;
-        document.getElementById('pdfId').value = pdfId;
+    function openModal(modalId) {
+        console.log()
+        document.getElementById(modalId).style.display = "flex";
     }
 
-    function closePdfModal() {
-        document.getElementById('pdfModal').style.display = 'none';
-        document.getElementById('pdfViewer').src = ''; // Reset the PDF viewer src
-    }
-    function rejectPdf() {
-        // Handle PDF rejection logic here
-        alert('PDF Rejected!');
-        closePdfModal();
-    }
-
-    function acceptPdf() {
-        // Handle PDF acceptance logic here
-        var pdfId = document.getElementById('pdfId').value;
-
-        <?php
-            // Update the status value to 1 for the specified PDF id in PHP
-            $updateQuery = "UPDATE files SET status = 1 WHERE id = $pdfId";
-            mysqli_query($con, $updateQuery);
-        ?>
-        alert('PDF Accepted!');
-        closePdfModal();
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
     }
 </script>
-
 </body>
-</html>
 
-<?php
-// Close the database connection
-mysqli_close($con);
-?>
+</html>
