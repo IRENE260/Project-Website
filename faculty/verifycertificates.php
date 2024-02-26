@@ -210,7 +210,16 @@ $n = count($id_values) + 1;
         <div class="request-container" >
         <!-- <div class="top-line"> -->
     <div class="name" style="flex: 1;"><h2><?php echo $student_name; ?></h2></div>
-    
+    <!-- <div class="details">
+        <h3>Certificate Details</h3>
+        <p>Category: Achievement</p>
+        <p>Achievement: </p>
+    </div>
+    <div class="buttons">
+        <button class="accept-button">Accept</button>
+        <button class="reject-button">Reject</button>
+    </div> -->
+    <!-- </div> -->
 <?php
 foreach ($id_values as $id ) {
              // Fetch filelink for the current ID
@@ -231,8 +240,8 @@ foreach ($id_values as $id ) {
                     </div>
                     <!-- Buttons section -->
                     <div class="buttons" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end;">
-                        <button class="accept-button">Accept</button>
-                        <button class="reject-button">Reject</button>
+                        <button class="accept-button" onclick="acceptPdf(<?php echo $id; ?>)">Accept</button>
+                        <button class="reject-button"onclick="rejectPdf(<?php echo $id; ?>)">Reject</button>
                     </div>
                 </div>
 <?php //} ?>
@@ -255,7 +264,15 @@ foreach ($id_values as $id ) {
 }
  ?>
 
+<!-- Modal overlay -->
+<!-- <div id="pdf-content-1" class="modal" onclick="closeModal('pdf-content-1')">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('pdf-content-1')">&times;</span>
+        <iframe src="<?php //echo $pdfPath ?>" width="100%" height="100%"></iframe>
+    </div>
+</div> -->
 
+<!-- Additional modal overlay for the second PDF -->
 
 
 <script>
@@ -267,6 +284,28 @@ foreach ($id_values as $id ) {
     function closeModal(modalId) {
         document.getElementById(modalId).style.display = "none";
     }
+    function rejectPdf() {
+            // Handle PDF rejection logic here
+            alert('PDF Rejected!');
+            window.history.back();
+
+            // closePdfModal();
+        }
+
+        function acceptPdf() {
+            // Handle PDF acceptance logic here
+            var pdfId = document.getElementById('pdfId').value;
+
+            <?php
+            // Update the status value to 1 for the specified PDF id in PHP
+            $updateQuery = "UPDATE files SET status = 1 WHERE id = $pdfId";
+            mysqli_query($con, $updateQuery);
+            ?>
+            alert('PDF Accepted!');
+            window.history.back();
+
+            // closePdfModal();
+        }
 </script>
 </body>
 
