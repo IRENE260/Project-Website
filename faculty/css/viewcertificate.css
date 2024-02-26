@@ -35,3 +35,7 @@
 .pdf-item:hover img {
     opacity: 0.7; /* Example opacity change */
 }
+.excels{
+    font-style: darkblue;
+    border:1px;
+}
