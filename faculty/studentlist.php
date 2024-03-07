@@ -9,6 +9,16 @@ $data = mysqli_fetch_array($result);
 $today = new DateTime('now'); 
 $today = $today->format('Y-m-d');
 $currentYear = (int)(new DateTime())->format('Y');
+
+// $currentYear = (int)$today->format('Y');
+// if(isset($_POST["applyfilter"])){
+//     $branch = $_POST['branchInput'];
+//     $year = $_POST['yearInput'];
+//     $sql2="SELECT * from student where branch='$branch' and yearj='$year'";
+//     $result2 = mysqli_query($con, $sql2);
+//     $data2 = mysqli_fetch_all($result2, MYSQLI_ASSOC);
+
+// }
 ?>
 <!doctype html>
 <html lang="en">
@@ -255,6 +265,7 @@ https://www.tooplate.com/view/2123-simply-amazed
             $showAlert = true;
         }
     }
+
     // Close connection
     // $conn->close();
 
@@ -262,6 +273,60 @@ https://www.tooplate.com/view/2123-simply-amazed
     if (isset($showAlert) && $showAlert) {
         echo "<script>alert('No matching data');</script>";
     }
-    ?>    
+    ?>
+    <!-- <script>
+        function applyFilter() {
+            // Get the values from the filter inputs
+            var branch = document.getElementById("branchInput").value;
+            var year = document.getElementById("yearInput").value;
+    
+            // Check if both inputs are filled
+            if (branch && year) {
+                
+                // Create a table element
+                var table = document.createElement("table");
+                table.classList.add("filter-result-table");
+                
+                // Create a table row for the header
+                var headerRow = table.insertRow();
+                var profileHeader = headerRow.insertCell(0);
+                var pointsHeader = headerRow.insertCell(1);
+                var buttonHeader = headerRow.insertCell(2);
+    
+                profileHeader.innerHTML = "<b>Profile</b>";
+                pointsHeader.innerHTML = "<b>Current Points</b>";
+                buttonHeader.innerHTML = "<b>Action</b>";
+                <?php
+                    //  $sql2="SELECT * from student where branch='$branch' and yearj='$year'";
+                    //  $result2 = mysqli_query($con, $sql2);
+                    //  $data2 = mysqli_fetch_all($result2,MYSQLI_ASSOC);
+                ?>
+                // Create a table row for the data
+                for (var i = 0; i < data2.length; i++) {
+                    var dataRow = table.insertRow();
+            
+                    var nameCell = dataRow.insertCell(0);
+                    nameCell.innerHTML = data2[i]['name'];
+
+                    var pointsCell = dataRow.insertCell(1);
+                    pointsCell.innerHTML = data2[i]['tpoints'];
+
+                    var buttonCell = dataRow.insertCell(2);
+                    buttonCell.innerHTML = "<button onclick='viewDetails()'>View Details</button>";
+                }
+                
+                // Append the table to the document body
+                document.body.appendChild(table);
+            } else {
+                alert("Please fill in both Branch and Year inputs.");
+            }
+        }
+    
+        function viewDetails() {
+            // Replace this function with the action you want when the button is clicked
+            alert("View Details button clicked!");
+        }
+    </script> -->
+    
 </body>
 </html>
