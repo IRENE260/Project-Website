@@ -15,7 +15,7 @@ if(isset($_POST['signup'])){
             // $sql2="SELECT * from faculty where email='$email' and password='$password'";
             // $result = mysqli_query($con,$sql2);
             // $data = mysqli_fetch_array($result);
-            header("Location:/amcs/flogin.php");
+            header("Location:/activity_monitor/flogin.php");
     }
 
 if(isset($_POST['login']))
@@ -27,7 +27,7 @@ $result = mysqli_query($con,$sql);
 $data = mysqli_fetch_array($result);
 if($result->num_rows != 0) {
   $userid=$data['id'];
-  header("Location: /amcs/fhome.php?userid=".$data['id']);    
+  header("Location: /activity_monitor/fhome.php?userid=".$data['id']);    
 }else{?>
 <script>
   alert("User not found");
@@ -72,7 +72,7 @@ echo mysqli_error($con);
 					<input type="email" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required="">
 					<input type="password" name="pswd" placeholder="Password" required="">
 					<button type="submit" name="login">Login</button><br>
-					<a href="" ><p style="text-align:center">Forgot Password</p></a>
+					<a href="forgot.php" ><p style="text-align:center">Forgot Password</p></a>
 				</form>
 			</div>
 	</div>
