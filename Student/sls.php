@@ -102,7 +102,7 @@ if($con)
 					<input class="ip" type="email" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required="">
 					<input class="ip" type="password" name="pswd" placeholder="Password" required="">
 					<button type="submit" name="login">Login</button><br>
-					<a href="" ><p style="text-align:center">Forgot Password</p></a>
+					<a href="forgot.php" ><p style="text-align:center">Forgot Password</p></a>
 				</form>
 			</div>
 	</div>
