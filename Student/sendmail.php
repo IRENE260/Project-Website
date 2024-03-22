@@ -44,7 +44,7 @@ if (isset($_POST["email"])) {
                                      
 
     //Recipients
-    $mail->setFrom('aabdi79011@gmail.com', 'Your Name');
+    $mail->setFrom('aabdi79011@gmail.com', 'AABDI');
     $mail->addAddress($_POST["email"]);     //Add a recipient email  
     $mail->addReplyTo($_POST["email"]); // reply to sender email
 
