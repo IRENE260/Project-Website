@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Redirect from .php URL to without extension
+RewriteCond %{THE_REQUEST} \s/+(.*?/)?(?:index)?(.*?)\.php[\s?/] [NC]
+RewriteRule ^ /%1%2 [R=302,L,NE]
+
+# Rewrite to serve .php file when extension is not provided
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*?)/?$ $1.php [L]
