@@ -19,8 +19,8 @@ if($con)
         $sql2="select * from student where id=$studentid";
         //$sql2="select * from student where name='Anna'";
         $result1 =$con->query($sql2);
-       // print_r($result1);die;
-       $id=$_SESSION['user_id'];
+        // print_r($result1);die;
+        $id=$_GET['user_id'];
 		$sql1="select * from spoint where sid='$id'";
 		$res=mysqli_query($con,$sql1);
         $value=mysqli_fetch_array($res);
@@ -32,17 +32,9 @@ if($con)
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="viewcertificate.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="all.min.css" type="text/css" /> 
-    <link rel="stylesheet" href="slick.css" type="text/css" />   
-    <link rel="stylesheet" href="tooplate-simply-amazed.css" type="text/css" />
     <style>
         body {
-            background-image: url("images/i3.jpg"); 
+            background-image: url("images/i4.jpg"); 
             background-size: cover;
             background-position: center; 
             font-family: 'Source Sans Pro', sans-serif; 
@@ -75,33 +67,37 @@ if($con)
             margin-top: 20px;
         }
         .pdf-item img {
-            max-width: 100%;
+            max-width: 30%;
             height: auto;
         }
         .excels{
             border-style: solid;
             border-color: lightblue;
-            width: 200px;
+            width: 300px;
             height: 150px;
             color:darkblue;
+            margin:auto;
+            font-size: 40px;
         }
+        /* .button{
+            font-size: 40px;
+        } */
+
         /* .file{
             padding-top:5px;
 
         } */
+        .table{
+            display:none;
+        }
+        h1{
+            font-size : 60px;
+            text-align : left;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>CERTIFICATES</h1>
-        <!-- <ul>
-            <li>
-                <a href="http://localhost/Project_S8/login.php">
-                    <i class="fa fa-sign-out" aria-hidden="true" style="width: 50px;;height:50px;"></i>
-                </a>
-            </li>
-        </ul> -->
-        <div class="excels">
+<div class="excels">
         <table>
             <tbody class="file">
             <?php
@@ -114,21 +110,31 @@ if($con)
                         </tr>
                         <tr>
                             <td><button onclick="downloadExcel()">Download Excel</button></td>
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>                        
                         </tr>
-                
                 <?php }
-                    }
+                }
                 ?>   
             </tbody>
         </table>
-        </div>
+</div>
+    <div class="container">
+        <h1>CERTIFICATES</h1>
+        <!-- <ul>
+            <li>
+                <a href="http://localhost/Project_S8/login.php">
+                    <i class="fa fa-sign-out" aria-hidden="true" style="width: 50px;;height:50px;"></i>
+                </a>
+            </li>
+        </ul> -->
+        
             <div class="pdf-grid">
                 <?php
                     if($result->num_rows > 0){ 
                         while($row = $result->fetch_assoc()){ ?>
                             <div class="pdf-item">
-                                <a href="http://localhost/Project_S8/images/<?php echo $row['filelink'];?>" target="_blank">
-                                    <img src="images/pdf_icon.png" alt="<?php echo $data[2]; ?>">
+                                <a href="http://localhost/activity_monitor/img/<?php echo $row['filelink'];?>" target="_blank">
+                                    <img src="img/pdf_icon.png" alt="<?php echo $data[2]; ?>">
                                 </a>
                                 <span style="color:#246c7d"><?php echo $row['filelink'];?></span>
                             </div>
@@ -138,7 +144,7 @@ if($con)
         </div>
     </div>
     <div class="container">
-    <table class="table" > 
+    <table class="table" id="demo" > 
             <caption>CERTIFICATES AND POINTS</caption>
             <tr>
                 <th>Sl. No</th>
@@ -320,24 +326,33 @@ if($con)
 </html>
 <script>
     function downloadExcel() {
-            // Select the table element
-            var table = document.getElementById('demo'); // Replace 'your-table-id' with the actual ID of your table
-        
-            // Create a new Workbook
-            var wb = XLSX.utils.table_to_book(table);
-        
-            // Convert the workbook to a binary string
-            var wbBinary = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
-        
-            // Create a Blob containing the Excel file
-            var blob = new Blob([s2ab(wbBinary)], { type: 'application/octet-stream' });
-        
-            // Create a download link and trigger the download
-            var link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'table_data.xlsx'; // Specify the filename for the downloaded file
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
+    // Select the table element
+    var table = document.getElementById('demo'); // Replace 'your-table-id' with the actual ID of your table
+
+    // Create a new Workbook
+    var wb = XLSX.utils.table_to_book(table);
+
+    // Convert the workbook to a binary string
+    var wbBinary = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
+
+    // Convert binary string to array buffer
+    var s2ab = function(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+    };
+
+    // Create a Blob containing the Excel file
+    var blob = new Blob([s2ab(wbBinary)], { type: 'application/octet-stream' });
+
+    // Create a download link and trigger the download
+    var link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'table_data.xlsx'; // Specify the filename for the downloaded file
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
 </script>
