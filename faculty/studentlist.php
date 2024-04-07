@@ -117,10 +117,10 @@ $con=mysqli_connect("localhost","root","","apoint");
                                     <option value="CSE">CSE</option>
                                     <option value="ECE">ECE</option>
                                     <option value="branch1">EEE</option>
-                                <option value="branch1">Mech.E</option>
-                                <option value="branch1">EIE</option>
-                                <option value="branch1">Civil</option>
-                                <option value="branch1">MCA</option>
+                                    <option value="branch1">Mech.E</option>
+                                    <option value="branch1">EIE</option>
+                                    <option value="branch1">Civil</option>
+                                    <option value="branch1">MCA</option>
                                     <!-- Add more options as needed -->
                                 </select>
                                 <select id="yearInput" name="yearInput">
