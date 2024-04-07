@@ -9,6 +9,16 @@ $data = mysqli_fetch_array($result);
 $today = new DateTime('now'); 
 $today = $today->format('Y-m-d');
 $currentYear = (int)(new DateTime())->format('Y');
+
+// $currentYear = (int)$today->format('Y');
+// if(isset($_POST["applyfilter"])){
+//     $branch = $_POST['branchInput'];
+//     $year = $_POST['yearInput'];
+//     $sql2="SELECT * from student where branch='$branch' and yearj='$year'";
+//     $result2 = mysqli_query($con, $sql2);
+//     $data2 = mysqli_fetch_all($result2, MYSQLI_ASSOC);
+
+// }
 ?>
 <!doctype html>
 <html lang="en">
@@ -164,7 +174,7 @@ https://www.tooplate.com/view/2123-simply-amazed
                             <select id="yearInput" name="yearInput">
                                 <option value="" disabled selected>Select Year of Admission</option>
                                 <?php
-    for ($year = 1980; $year <= $currentYear; $year++) {
+    for ($year = 1986; $year <= $currentYear; $year++) {
         echo '<option value="' . $year . '">' . $year . '</option>';
     }
     ?>
@@ -179,9 +189,59 @@ https://www.tooplate.com/view/2123-simply-amazed
                             <button type="submit" name="searchByName"><i class="fas fa-search"></i></button>
                         </form>
                     </div>
-                    <div id="resultTable" style="display: none;">
-        
-    </div>
+                    <div id="resultTable" >
+                        <?php
+                        if (isset($_POST['filter'])) {
+                            $branch = $_POST['branchInput'];
+                            $yearj = $_POST['yearInput'];
+
+                            // Query to retrieve matching students
+                            $queryf = "SELECT * FROM student WHERE branch = '$branch' AND yearj = '$yearj'";
+                            $resultf = $con->query($queryf);
+
+                            // Check if any matching data is found
+                            if ($resultf->num_rows > 0) {
+                                echo "<table>";
+                                echo "<tr><th>Name</th><th>Year</th><th>Action</th></tr>";
+
+                                // Output data of each row
+                                while ($rowf = $resultf->fetch_assoc()) {
+                                    echo "<tr><td>" . $rowf["name"] . "</td><td>" . $rowf["yearj"] . "</td><td><button>View Details</button></td></tr>";
+                                }
+
+                                echo "</table>";
+                            } else {
+                                echo "<p>No matching data found.</p>";
+                            }
+                        }
+
+                        if (isset($_POST['searchByName'])) {
+                            $studentName = $_POST['studentName'];
+
+                            // Query to retrieve matching students by name
+                            $querys = "SELECT * FROM student WHERE name LIKE '%$studentName%'";
+                            $results = $con->query($querys);
+
+                            // Check if any matching data is found
+                            if ($results->num_rows > 0) {
+                                echo "<table>";
+                                echo "<tr><th>Name</th><th>Year</th><th>Action</th></tr>";
+
+                                // Output data of each row
+                                while ($rows = $results->fetch_assoc()) {
+                                    echo "<tr><td>" . $rows["name"] . "</td><td>" . $rows["yearj"] . "</td><td><button>View Details</button></td></tr>";
+                                }
+
+                                echo "</table>";
+                            } else {
+                                echo "<p>No matching data found.</p>";
+                            }
+                        }
+                        if (isset($showAlert) && $showAlert) {
+                            echo "<script>alert('No matching data');</script>";
+                        }
+                        ?>
+                    </div>
               
                 
                     </div>
@@ -195,73 +255,6 @@ https://www.tooplate.com/view/2123-simply-amazed
     <script src="js/jquery.singlePageNav.min.js"></script>
     <script src="js/slick.js"></script>
     <script src="js/parallax.min.js"></script>
-    <script src="js/templatemo-script.js"></script>
-
-    <?php
-    // Initialize variable to track whether to show the table or alert
-    $showTable = false;
-
-    // Handle form submission
-    if (isset($_POST['filter'])) {
-        $branch = $_POST['branchInput'];
-        $yearj = $_POST['yearInput'];
-
-        // Query to retrieve matching students
-        $queryf = "SELECT * FROM student WHERE branch = '$branch' AND yearj = '$yearj'";
-        $resultf = $con->query($queryf);
-
-        // Check if any matching data is found
-        if ($resultf->num_rows > 0) {
-            $showTable = true;
-            echo "<table>";
-            echo "<tr><th>Name</th><th>Current Points</th><th>Actions</th></tr>";
-
-            // Output data of each row
-            while ($rowf = $resultf->fetch_assoc()) {
-                $studentid = $rowf['id'];
-                echo "<tr><td>" . $rowf["name"] . "</td><td>" . $rowf["yearj"] . "</td><td> <a href='viewcertificate.php?userid=".$userid."&studentid=".$studentid."'><button>View Details</button></a> </td></tr>";
-            }
-
-            echo "</table>";
-        } else {
-            // Set variable to show alert
-            $showAlert = true;
-        }
-    }
-
-    if (isset($_POST['searchByName'])) {
-        $studentName = $_POST['studentName'];
-
-        // Query to retrieve matching students by name
-        $querys = "SELECT * FROM student WHERE name LIKE '%$studentName%'";
-        $results = $con->query($querys);
-
-        // Check if any matching data is found
-        if ($results->num_rows > 0) {
-            $showTable = true;
-            echo "<table>";
-            echo "<tr><th>Name</th><th>Current Points</th><th>Actions</th></tr>";
-
-            // Output data of each row
-            while ($rows = $results->fetch_assoc()) {
-                $studentid = $rows['id'];
-                echo "<tr><td>" . $rows["name"] . "</td><td>" . $rows["yearj"] . "</td>";
-                echo "<td> <a href='viewcertificate.php?userid=".$userid."&studentid=".$studentid."'><button>View Details</button></a> </td></tr>";
-            }
-
-            echo "</table>";
-        } else {
-            // Set variable to show alert
-            $showAlert = true;
-        }
-    }
-    // Close connection
-    // $conn->close();
-
-    // Display alert if no matching data is found
-    if (isset($showAlert) && $showAlert) {
-        echo "<script>alert('No matching data');</script>";
-    }
-    ?>    
+    <script src="js/templatemo-script.js"></script>    
 </body>
 </html>
