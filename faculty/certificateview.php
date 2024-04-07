@@ -20,7 +20,7 @@ if($con)
         //$sql2="select * from student where name='Anna'";
         $result1 =$con->query($sql2);
         // print_r($result1);die;
-        $id=$_GET['user_id'];
+        $id=$_GET['userid'];
 		$sql1="select * from spoint where sid='$id'";
 		$res=mysqli_query($con,$sql1);
         $value=mysqli_fetch_array($res);
