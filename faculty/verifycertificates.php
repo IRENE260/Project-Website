@@ -173,11 +173,12 @@ foreach ($id_values as $id ) {
                 <!-- Buttons container -->
                 <!-- Buttons container -->
 <div class="button-container mt-3">
-    <form id="statusForm" method="post" action="update_status.php">
-        <button type="submit" name="status" onclick="acceptfile(this)" value="accepted" class="btn btn-success">Accept</button>
-        <button type="submit" name="status" value="rejected" onclick="rejectfile(this)" class="btn btn-danger" data-dismiss="modal">Reject</button>
-        <input type="hidden" id="fileid" name="fileid" value="">
-    </form>
+<form id="statusForm" method="post">
+    <button type="submit" name="status" value="accepted" class="btn btn-success">Accept</button>
+    <button type="submit" name="status" value="rejected" class="btn btn-danger" data-dismiss="modal">Reject</button>
+    <input type="hidden" id="fileid" name="fileid" value="">
+</form>
+
 </div>
 
                 <div class="details-container">
@@ -201,50 +202,28 @@ foreach ($id_values as $id ) {
         // Open the modal
         $('#pdfModal').modal('show');
     }
-    <script>
-    function acceptfile(button) {
-        // Get the value of the fileid input field
-        var fileid = document.getElementById("fileid").value;
-        // Set the value of the hidden input field
-        document.getElementById("fileid").value = fileid;
-        // Optionally, you can also submit the form programmatically
-        // document.getElementById("statusForm").submit();
-    }
-
-    function rejectfile(button) {
-        // Get the value of the fileid input field
-        var fileid = document.getElementById("fileid").value;
-        // Set the value of the hidden input field
-        document.getElementById("fileid").value = fileid;
-        // Optionally, you can also submit the form programmatically
-        // document.getElementById("statusForm").submit();
-    }
-</script>
 
 </script>
 
 </body>
 </html>
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if the fileid is set in the POST data
-    if (isset($_POST["fileid"])) {
-        $fileid = $_POST["fileid"];        
-        // Run your queries using $fileid
-        // For example:
-        $status = $_POST["status"];
-        $query = "UPDATE files SET status = '$status' WHERE id = '$fileid'";
-        if (! mysqli_query($con, $query)) {
-            echo "Query executed successfully.";
-        }
-        //  else {
-        //     echo "Error executing query: " . mysqli_error($con);
-        // }
-        
-        // Close database connection
-        // mysqli_close($con);
+// Assuming you have already established a database connection
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Check if fileid and status are set in the POST request
+    if (isset($_POST['fileid'], $_POST['status'])) {
+        // Retrieve fileid and status from the POST request
+        $fileid = $_POST['fileid'];
+        $status = $_POST['status'];
+
+        // Update the status in the 'files' table
+        $sqlf = "UPDATE files SET status = '$status' WHERE id = '$fileid'";
+        $stmt = $con->prepare($sqlf);
+        mysqli_query($con,$sqlf);
         echo '<script>window.location.reload();</script>';
 
-    } 
+    }
 }
+
 ?>
