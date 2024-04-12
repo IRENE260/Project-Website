@@ -1,4 +1,7 @@
 <?php
+$userid=$_GET["userid"];
+$studentid=$_GET["studentid"];
+
 // session_start();
 // if (!isset($_SESSION['user_id'])) {
 //     header('Location:/Project_S8/certificateview.php');
@@ -12,21 +15,21 @@ $con=mysqli_connect("localhost","root","","apoint");
 if($con)
 {
  
-        $sql1="select * from files where status='accepted'";
+        $sql1="select * from files where status='accepted' and sid='$studentid'";
         $result =$con->query($sql1);
-        $sql3="select * from files where status='rejected'";
+        $sql3="select * from files where status='rejected' and sid='$studentid'";
         $result3 =$con->query($sql3);
 
-        $studentid=$_GET["studentid"];
+        // $studentid=$_GET["studentid"];
         // $name=$_POST['name']
         $sql2="select * from student where id=$studentid";
         //$sql2="select * from student where name='Anna'";
         $result1 =$con->query($sql2);
         // print_r($result1);die;
-        $userid=$_GET['userid'];
-		$sql1="select * from spoint where sid='$userid'";
-		$res=mysqli_query($con,$sql1);
-        $value=mysqli_fetch_array($res);
+        // $id=$_GET['userid'];
+		// $sql1="select * from spoint where sid='$id'";
+		// $res=mysqli_query($con,$sql1);
+        // $value=mysqli_fetch_array($res);
     }
 ?>
 <!DOCTYPE html>
@@ -37,7 +40,7 @@ if($con)
     <link rel="stylesheet" href="viewcertificate.css">
     <style>
         body {
-            background-image: url("img/i3.jpg"); 
+            background-image: url("images/i4.jpg"); 
             background-size: cover;
             background-position: center; 
             font-family: 'Source Sans Pro', sans-serif; 
@@ -112,7 +115,7 @@ if($con)
                             <td><?php echo $row['name'];?></td>
                         </tr>
                         <tr>
-                            <td><button><a href="pointsview.php?userid=<?php echo $userid; ?>&studentid=<?php echo $studentid; ?>">View Points Achieved..</a> </button></td>
+                            <td><button>    <a href="pointsview.php?userid=<?php echo $userid; ?>&studentid=<?php echo $studentid; ?>">View Points Achieved..</a> </button></td>
                             <!-- <td><button onclick="downloadExcel()">Download Excel</button></td> -->
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>                        
                         </tr>
