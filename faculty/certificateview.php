@@ -23,8 +23,8 @@ if($con)
         //$sql2="select * from student where name='Anna'";
         $result1 =$con->query($sql2);
         // print_r($result1);die;
-        $id=$_GET['userid'];
-		$sql1="select * from spoint where sid='$id'";
+        $userid=$_GET['userid'];
+		$sql1="select * from spoint where sid='$userid'";
 		$res=mysqli_query($con,$sql1);
         $value=mysqli_fetch_array($res);
     }
@@ -37,7 +37,7 @@ if($con)
     <link rel="stylesheet" href="viewcertificate.css">
     <style>
         body {
-            background-image: url("images/i4.jpg"); 
+            background-image: url("img/i3.jpg"); 
             background-size: cover;
             background-position: center; 
             font-family: 'Source Sans Pro', sans-serif; 
@@ -112,7 +112,7 @@ if($con)
                             <td><?php echo $row['name'];?></td>
                         </tr>
                         <tr>
-                            <td><button>    <a href="pointsview.php?userid=<?php echo $userid; ?>&studentid=<?php echo $studentid; ?>">View Points Achieved..</a> </button></td>
+                            <td><button><a href="pointsview.php?userid=<?php echo $userid; ?>&studentid=<?php echo $studentid; ?>">View Points Achieved..</a> </button></td>
                             <!-- <td><button onclick="downloadExcel()">Download Excel</button></td> -->
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>                        
                         </tr>
