@@ -5,7 +5,7 @@ $con=mysqli_connect("localhost","root","","apoint");
 // $result = mysqli_query($con,$sql);
 // $data = mysqli_fetch_array($result);
 
-$sql = "SELECT DISTINCT sid FROM files WHERE status = 'notvisited'";
+$sql = "SELECT DISTINCT sid FROM files WHERE status = 'notverified'";
 $result = mysqli_query($con, $sql);
 ?>
 <!DOCTYPE html>
@@ -134,8 +134,8 @@ while ($row = mysqli_fetch_array($result)) {
 
     <div class="student-info">
         <p><strong>Name:</strong> <?php echo $student_name; ?></p>
-        <p><strong>Register Number:</strong> 123456</p>
-        <p><strong>Current Total Points:</strong> 85</p>
+        <p><strong>Register Number:</strong>  <?php echo $student_details['regno']; ?></p>
+        <!-- <p><strong>Current Total Points:</strong>  <?php //echo $student_details['name']; ?></p> -->
     </div>
 
     <?php
@@ -146,10 +146,12 @@ foreach ($id_values as $id ) {
     $pdfPathResult = mysqli_query($con, $pdfPathQuery);
     $pdfPathRow = mysqli_fetch_array($pdfPathResult);
     $pathlink = $pdfPathRow['filelink'];
+    $points = $pdfPathRow['point'];
+    $event = $pdfPathRow['event'];
     $fileid=$id;
     // var_dump($pdfPath);die;
-    echo '<div class="pdf-icon" onclick="openPdfModal(\'' . $pathlink . '\', ' . $fileid . ')">';
-        echo '<i class="fas fa-file-pdf"></i>'; // Font Awesome icon wrapped in anchor tag
+    echo '<div class="pdf-icon" onclick="openPdfModal(\'' . $pathlink . '\', ' . $fileid . ', \'' . $event . '\', \'' . $points . '\')">';
+    echo '<i class="fas fa-file-pdf"></i>'; // Font Awesome icon wrapped in anchor tag
         echo '</div>';
     }
     ?>
@@ -182,8 +184,8 @@ foreach ($id_values as $id ) {
 </div>
 
                 <div class="details-container">
-                    <p><strong>Allowable Points:</strong> 100</p>
-                    <p><strong>Category:</strong> Category A</p>
+                    <p><strong>Allowable Points:</strong><span id="points"></p>
+                    <p><strong>Category:</strong>  <span id="event"></p>
                 </div>
             </div>
 
@@ -195,10 +197,13 @@ foreach ($id_values as $id ) {
 }
  ?>
 <script>
-    function openPdfModal(path,fileid) {
+    function openPdfModal(path,fileid,event,points) {
         // Set the src attribute of the iframe to the PDF path
         document.getElementById("pdfFrame").src = path;
         document.getElementById("fileid").value = fileid;
+        // Set the event and points in the modal
+    document.getElementById("event").innerText = event;
+    document.getElementById("points").innerText = points;
         // Open the modal
         $('#pdfModal').modal('show');
     }
@@ -221,7 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sqlf = "UPDATE files SET status = '$status' WHERE id = '$fileid'";
         $stmt = $con->prepare($sqlf);
         mysqli_query($con,$sqlf);
-        echo '<script>window.location.reload();</script>';
+        //echo '<script>window.location.reload();</script>';
 
     }
 }
