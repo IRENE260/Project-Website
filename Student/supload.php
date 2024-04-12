@@ -1,4 +1,26 @@
 <?php
+function isArrayInSameOrder($array1, $array2) {
+    $array1 = array_map('strtolower', $array1);
+    $array2 = array_map('strtolower', $array2);
+    $index1 = 0;
+    $index2 = 0;
+    $len1 = count($array1);
+    $len2 = count($array2);
+
+    while ($index1 < $len1 && $index2 < $len2) {
+        if ($array1[$index1] === $array2[$index2]) {
+            $index1++;
+            $index2++;
+        }
+        else{
+            $index2++;
+            $index1=0;
+        }
+    }
+
+    return $index1 === $len1;
+}
+
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header('Location:/amcs/Student/homepage.php');
@@ -9,15 +31,34 @@ if($con)
 {
 	if(isset($_POST['upload']))
 	{
+        
+
         $pdfName = $_FILES['file']['name'];
         $pdfTmp = $_FILES['file']['tmp_name'];
         $targetDir = 'uploads/';
         $targetFile = $targetDir . basename($pdfName);
         move_uploaded_file($pdfTmp, $targetFile);
-		$sql="insert into files(sid,filelink) values('".$_POST['userid']."','$pdfName')";
-		mysqli_query($con,$sql);
-		header("Location:/amcs/Student/scertificate.php");
-		exit();
+        $name=escapeshellarg($pdfName);
+        $command=escapeshellcmd("py ./ocr2.py $name");
+        exec($command,$output,$resultCode);
+        $sql1="select name from student where id=".$_SESSION['user_id'];
+        $result=mysqli_query($con,$sql1);
+        $value=mysqli_fetch_array($result);
+        $arr = explode(" ", $value[0]);
+        // print_r($output);
+        // var_dump(explode("', '",$output[0]));die;
+        $_SESSION['details']=explode("', '",$output[0]);
+        if(isArrayInSameOrder($arr, $_SESSION['details']))
+        {
+            $_SESSION['file']=$pdfName;
+            header("Location:/amcs/Student/findpoint.php");
+            exit();
+        }
+        else
+        {
+            header("Location:/amcs/Student/srequest.php");
+            exit();
+        }
 	}
 }
 ?>
@@ -96,35 +137,7 @@ if($con)
             <input type="hidden" name="userid" value="<?php echo $_SESSION['user_id']?>">
             <input type="submit" value="Upload File" name="upload">
         </form>
-        <!-- <script>
-            $(document).bind('dragover', function (e) {
-                var dropZone = $('.zone'),
-                    timeout = window.dropZoneTimeout;
-                if (!timeout) {
-                    dropZone.addClass('in');
-                } else {
-                    clearTimeout(timeout);
-                }
-                var found = false,
-                    node = e.target;
-                do {
-                    if (node === dropZone[0]) {
-                        found = true;
-                        break;
-                    }
-                    node = node.parentNode;
-                } while (node != null);
-                if (found) {
-                    dropZone.addClass('hover');
-                } else {
-                    dropZone.removeClass('hover');
-                }
-                window.dropZoneTimeout = setTimeout(function () {
-                    window.dropZoneTimeout = null;
-                    dropZone.removeClass('in hover');
-                }, 100);
-            });
-        </script> -->
+                    
     </div>
     <!-- Upload End -->
 

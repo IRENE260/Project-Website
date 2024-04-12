@@ -19,7 +19,7 @@ if($con)
 		$sql2="select id from student where regno='$reg'";
 		$res=mysqli_query($con,$sql2);
 		$value=mysqli_fetch_array($res);
-		$sql3="insert into spoint values('$value[0]',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)";
+		$sql3="insert into spoint values('$value[0]',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)";
 		mysqli_query($con,$sql3);
 		header("Location:/amcs/Student/sls.php");
 		exit();
@@ -102,7 +102,7 @@ if($con)
 					<input class="ip" type="email" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required="">
 					<input class="ip" type="password" name="pswd" placeholder="Password" required="">
 					<button type="submit" name="login">Login</button><br>
-					<a href="forgot.php" ><p style="text-align:center">Forgot Password</p></a>
+					<a href="" ><p style="text-align:center">Forgot Password</p></a>
 				</form>
 			</div>
 	</div>

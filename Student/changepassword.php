@@ -59,6 +59,8 @@ if(isset($_POST['noreset'])){
             <input type="password" id="password2" name="password2" required>
             <p id="errorMessage" class="errorMessage" style="color: red;"></p>
             <input type="submit" name="reset" value="Reset Password" onclick="return checkPassword()">
+        </form>
+        <form action="changepassword.php" method="post">
             <input type="submit" name="noreset" value="Back To Profile">
         </form>
     </div>

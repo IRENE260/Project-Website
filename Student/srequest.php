@@ -43,7 +43,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Points</title>
+    <title>Request</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -141,6 +141,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <footer><p style="color:red;font-size: 20px;">**Event not found / Name mismatch occured...please upload file to request for concerned Faculty...Point will be shown only after approval from Faculty</p></footer>
 </body>
 
 </html>

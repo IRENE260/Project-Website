@@ -81,9 +81,7 @@ if($con)
     <button class="upload" role="button" onclick="location.href = 'supload.php';">
     <span class="text">Upload</span>
     </button>
-    <button class="upload" role="button" onclick="location.href = 'srequest.php';">
-    <span class="text">Request</span>
-    </button>
+   
     <!-- Tables Start -->
     <div class="table-container"> 
         <div class="t">
@@ -124,8 +122,8 @@ if($con)
             <?php
             foreach($value2 as $approved){?>
             <tr>
-                <td><a href="view_pdf.php?file_id=<?php echo$data[0];?>" class="pdfa"><?php echo $approved[2];?></a></td>
-                <td><?php echo $data[3];?></td>
+                <td><a href="view_pdf.php?file_id=<?php echo $approved[0];?>" class="pdfa"><?php echo $approved[2];?></a></td>
+                <td><?php echo $approved[3];?></td>
             </tr>
             <?php }} ?>
         </table>
