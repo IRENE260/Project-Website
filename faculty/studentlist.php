@@ -37,8 +37,8 @@ $currentYear = (int)(new DateTime())->format('Y');
     <link rel="stylesheet" href="css/tooplate-simply-amazed.css" type="text/css" />
 <style>
      .filter-container {
-            background-color: rgba(65, 55, 111, 0.9); / White container with transparency /
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); / Shadow effect /
+            background-color: rgba(65, 55, 111, 0.9); /* White container with transparency */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
             padding: 20px;
             margin-bottom: 20px;
             border-radius: 10px;
@@ -88,8 +88,8 @@ $currentYear = (int)(new DateTime())->format('Y');
     }
 
     .item:hover .tm-work-item-inner {
-        transform: translateY(-5px); / Adjust the value to control the lift height /
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); / Adjust the shadow as needed /
+        transform: translateY(-5px); /* Adjust the value to control the lift height */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adjust the shadow as needed */
     }
 
     .item:not(:hover) .tm-work-item-inner {
@@ -102,7 +102,7 @@ $currentYear = (int)(new DateTime())->format('Y');
     margin-left: 120px;
     width: 80%;
     border-collapse: collapse;
-    background-color: rgba(255, 255, 255, 0.8); / Set the background color to white with 80% opacity /
+    background-color: rgba(255, 255, 255, 0.8); /* Set the background color to white with 80% opacity */
 }
 
 table th, table td {
@@ -407,12 +407,10 @@ https://www.tooplate.com/view/2123-simply-amazed
     // Create a download link and trigger the download
     var link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = 'Student_List.xlsx'; // Specify the filename for the downloaded file
-    document.body.appendChild(link)
-;
+    link.download = 'table_data.xlsx'; // Specify the filename for the downloaded file
+    document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link)
-;
+    document.body.removeChild(link);
     }
 
 </script>
