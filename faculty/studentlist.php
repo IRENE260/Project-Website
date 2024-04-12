@@ -169,6 +169,17 @@ https://www.tooplate.com/view/2123-simply-amazed
                         <div class="filter-bar">
                         <!-- <form  method="post" action="<?php //$_SERVER['PHP_SELF']?>" enctype="multipart/form-data"> -->
                         <form action="" method="POST" class="filter-bar">
+                            
+                            <select id="yearInput" name="yearInput">
+                                <option value="" disabled selected>Select Year of Admission</option>
+                                <?php
+                                for ($year = 1986; $year <= $currentYear; $year++) {
+                                    echo '<option value="' . $year . '">' . $year . '</option>';
+                                }
+                                ?>
+                                <!-- Add more options as needed -->
+                            </select>
+
                             <select id="branchInput"  name="branchInput">
                                 <option value="" disabled selected>Select Branch</option>
                                 <option value="CSE">CSE</option>
@@ -180,16 +191,19 @@ https://www.tooplate.com/view/2123-simply-amazed
                                 <option value="MCA">MCA</option>
                                 <!-- Add more options as needed -->
                             </select>
-                            
-                            <select id="yearInput" name="yearInput">
-                                <option value="" disabled selected>Select Year of Admission</option>
-                                <?php
-                                for ($year = 1986; $year <= $currentYear; $year++) {
-                                    echo '<option value="' . $year . '">' . $year . '</option>';
-                                }
-                                ?>
+
+                            <select id="batchInput"  name="batchInput">
+                                <option value="" disabled selected>Select Batch</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                                <option value="F">F</option>
+                                <option value="G">G</option>
                                 <!-- Add more options as needed -->
                             </select>
+
                             <button type="submit" name="filter" >Apply Filter</button>
                         </form>
                     </div>
@@ -205,8 +219,9 @@ https://www.tooplate.com/view/2123-simply-amazed
                     <?php
                     if (isset($_POST['filter'])) {
                         $branch = $_POST['branchInput'];
+                        $batch = $_POST['batchInput'];
                         $yearj = $_POST['yearInput'];
-                        if(empty($branch) && empty($yearj)) {
+                        if(empty($branch) && empty($yearj) && empty($batch)) {
                             $showAlert = true; // Set flag to true
                         } else {
                             echo '<button onclick="downloadExcel()">Download Data-sheet</button>';
@@ -217,7 +232,7 @@ https://www.tooplate.com/view/2123-simply-amazed
                             $valuee=mysqli_fetch_all($rese);
 
                             // Query to retrieve matching students
-                        $queryf = "SELECT * FROM student WHERE branch = '$branch' AND yearj = '$yearj'";
+                        $queryf = "SELECT * FROM student WHERE branch = '$branch' AND yearj = '$yearj' AND batch = '$batch'";
                         $resultf = $con->query($queryf);
 ?>
 <table class="etable" id="demo" > 
