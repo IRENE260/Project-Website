@@ -1,27 +1,14 @@
 <?php
-$userid=$_GET["userid"];
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location:/amcs/faculty/flogin.php');
+    exit;
+}
+$userid=$_SESSION['user_id'];
 $con=mysqli_connect("localhost","root","","apoint");
 
-// $sql="SELECT * from faculty where id='$userid'";
-// $result = mysqli_query($con,$sql);
-// $data = mysqli_fetch_array($result);
-
-$today = new DateTime('now'); 
-$today = $today->format('Y-m-d');
 $currentYear = (int)(new DateTime())->format('Y');
 
-// $sqle="select student.name,student.regno,spoint.ncc,spoint.nss,spoint.sports,spoint.games,spoint.music,spoint.part,spoint.lart,spoint.techf_q,spoint.mooc,spoint.competition,spoint.sew_iit,spoint.pp_iit,spoint.pop_iit,spoint.internship,spoint.iv,spoint.fls,spoint.company,spoint.patentf,spoint.patentp,spoint.patenta,spoint.patentl,spoint.prototype,spoint.award,spoint.innovative_t,spoint.innovative_c,spoint.employment,spoint.societal_innovation,spoint.ieee,spoint.cac,spoint.tech_fest,spoint.club,spoint.initiatives,spoint.rep,spoint.tpoint from student RIGHT JOIN spoint ON student.id=spoint.sid;";
-// $rese=mysqli_query($con,$sqle);
-// $valuee=mysqli_fetch_all($rese);
-// $currentYear = (int)$today->format('Y');
-// if(isset($_POST["applyfilter"])){
-//     $branch = $_POST['branchInput'];
-//     $year = $_POST['yearInput'];
-//     $sql2="SELECT * from student where branch='$branch' and yearj='$year'";
-//     $result2 = mysqli_query($con, $sql2);
-//     $data2 = mysqli_fetch_all($result2, MYSQLI_ASSOC);
-
-// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -121,37 +108,9 @@ table th {
             border-spacing: 10px;
             *border-collapse: expression('separate', cellSpacing='10px');
         }
-/* .sl{
-    margin: 10px 70px 70px;
-    box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
-}
-table{
-    border-radius: 5px;
-    font-size: 20px;
-    font-weight: normal;
-    border: none;
-    border-collapse: collapse;
-    width: 100%;
-    max-width: 100%;
-    white-space: nowrap;
-    background-color: white;
-}
-table td, table th {
-    text-align: center;
-    padding: 8px;
-}
-table td {
-    border-right: 1px solid #f8f8f8;
-    font-size: 12px;
-}  */
+
 </style>
-    <!--
 
-Tooplate 2123 Simply Amazed
-
-https://www.tooplate.com/view/2123-simply-amazed
-
--->
 </head>
 
 <body>
@@ -227,7 +186,7 @@ https://www.tooplate.com/view/2123-simply-amazed
                             echo '<button onclick="downloadExcel()">Download Data-sheet</button>';
                             echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>';
                         
-                            $sqle = "SELECT student.name, student.regno, spoint.ncc, spoint.nss, spoint.sports, spoint.games, spoint.music, spoint.part, spoint.lart, spoint.techf_q, spoint.mooc, spoint.competition, spoint.sew_iit, spoint.pp_iit, spoint.pop_iit, spoint.internship, spoint.iv, spoint.fls, spoint.company, spoint.patentf, spoint.patentp, spoint.patenta, spoint.patentl, spoint.prototype, spoint.award, spoint.innovative_t, spoint.innovative_c, spoint.employment, spoint.societal_innovation, spoint.ieee, spoint.cac, spoint.tech_fest, spoint.club, spoint.initiatives, spoint.rep, spoint.tpoint FROM student RIGHT JOIN spoint ON student.id = spoint.sid WHERE student.branch = '$branch' AND student.yearj = '$yearj'";
+                            $sqle = "SELECT student.name, student.regno, spoint.* FROM student RIGHT JOIN spoint ON student.id = spoint.sid WHERE student.branch = '$branch' AND student.yearj = '$yearj'";
                             $rese=mysqli_query($con,$sqle);
                             $valuee=mysqli_fetch_all($rese);
 

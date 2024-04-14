@@ -1,5 +1,10 @@
 <?php
-$userid=$_GET["userid"];
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location:/amcs/faculty/flogin.php');
+    exit;
+}
+$userid=$_SESSION['user_id'];
 $con=mysqli_connect("localhost","root","","apoint");
 // $sql="SELECT * from faculty where id='$userid'";
 // $result = mysqli_query($con,$sql);
@@ -107,7 +112,7 @@ $result = mysqli_query($con, $sql);
 <div class="header">
     <h1>Verify Certificate</h1>
     <div>
-        <a href="fhome.php?userid=<?php echo $userid; ?>">Home</a>
+        <a href="fhome.php>Home</a>
         <a href="flogin.php">Logout</a>
     </div>
 </div>
@@ -145,12 +150,13 @@ foreach ($id_values as $id ) {
     $pdfPathQuery = "SELECT * FROM files WHERE id = $id";
     $pdfPathResult = mysqli_query($con, $pdfPathQuery);
     $pdfPathRow = mysqli_fetch_array($pdfPathResult);
+    $link='../Student/uploads/';
     $pathlink = $pdfPathRow['filelink'];
     $points = $pdfPathRow['point'];
     $event = $pdfPathRow['event'];
     $fileid=$id;
     // var_dump($pdfPath);die;
-    echo '<div class="pdf-icon" onclick="openPdfModal(\'' . $pathlink . '\', ' . $fileid . ', \'' . $event . '\', \'' . $points . '\')">';
+    echo '<div class="pdf-icon" onclick="openPdfModal(\''. $link . $pathlink . '\', ' . $fileid . ', \'' . $event . '\', \'' . $points . '\')">';
     echo '<i class="fas fa-file-pdf"></i>'; // Font Awesome icon wrapped in anchor tag
         echo '</div>';
     }
@@ -221,7 +227,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Retrieve fileid and status from the POST request
         $fileid = $_POST['fileid'];
         $status = $_POST['status'];
-
         // Update the status in the 'files' table
         $sqlf = "UPDATE files SET status = '$status' WHERE id = '$fileid'";
         $stmt = $con->prepare($sqlf);

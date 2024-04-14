@@ -1,11 +1,16 @@
 <?php
-$userid=$_GET["userid"];
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location:/amcs/faculty/flogin.php');
+    exit;
+}
+$userid=$_SESSION['user_id'];
 $con=mysqli_connect("localhost","root","","apoint");
 $sql2="SELECT * from faculty where id='$userid'";
 $result = mysqli_query($con,$sql2);
 $data = mysqli_fetch_array($result);
 if(isset($_POST["editprofile"])){
-    header("Location:/activity_monitor/editprofile.php?userid=".$userid);
+    header("Location:/amcs/faculty/editprofile.php");
     echo mysqli_error($con);
 }
 ?>
@@ -21,13 +26,7 @@ if(isset($_POST["editprofile"])){
     <link rel="stylesheet" href="fontawesome/css/all.min.css" type="text/css" /> 
     <link rel="stylesheet" href="css/slick.css" type="text/css" />   
     <link rel="stylesheet" href="css/tooplate-simply-amazed.css" type="text/css" />
-<!--
 
-Tooplate 2123 Simply Amazed
-
-https://www.tooplate.com/view/2123-simply-amazed
-
--->
 </head>
 
 <body>
@@ -85,7 +84,7 @@ https://www.tooplate.com/view/2123-simply-amazed
                                            
                                         </figcaption>
                                     </figure> -->
-                                <a style="text-decoration:none;" href="#"><div class="icn"><i class="fas fa-2x fa-icons"></i></div>
+                                <a style="text-decoration:none;" href="verifycertificates.php"><div class="icn"><i class="fas fa-2x fa-icons"></i></div>
                                     <h4>Verify Certificates</h4>
                                     <p>View and verify the certificates uploaded by students</p></a>
 										<!-- <a href="#"><i class="fa fa-long-arrow-right"></i></a> -->
@@ -93,7 +92,7 @@ https://www.tooplate.com/view/2123-simply-amazed
                         </div>
                         <div class="item col-md-4 one">
                             <div class="tm-work-item-inner">
-                                <a style="text-decoration:none;" href="request.php?userid=".$userid> <div class="icn"><i class="fas fa-2x fa-tools"></i></div>
+                                <a style="text-decoration:none;" href="frequest.php"> <div class="icn"><i class="fas fa-2x fa-tools"></i></div>
                                     <h4>Requests</h4>
                                     <p>Verify requests of unpopular events</p></a>
                                 <!-- <a href="#"><i class="fa fa-long-arrow-right"></i></a> -->
@@ -101,7 +100,7 @@ https://www.tooplate.com/view/2123-simply-amazed
                         </div>
                         <div class="item col-md-4 two">
                             <div class="tm-work-item-inner">
-                                <a style="text-decoration:none;" href="studentlist.php?userid=".$userid> <div class="icn"><i class="fab fa-2x fa-phoenix-framework"></i></div>
+                                <a style="text-decoration:none;" href="studentlist.php"> <div class="icn"><i class="fab fa-2x fa-phoenix-framework"></i></div>
                                     <h4>Students List</h4>
                                     <p>view detailed list of students with their current activity points</p></a>
 										
@@ -148,36 +147,15 @@ https://www.tooplate.com/view/2123-simply-amazed
                                         <tr>
                                             <th>University Id:</th><th><?php echo $data["uid"] ?></th>
                                         </tr>
-                                        <tr><th></th><th></th></tr>
+                                        <tr><th>Department</th><th><?php echo $data["department"] ?></th></tr>
                                         <tr><th></th><th></th></tr>
                                     </table>
                                     <!-- HTML !-->
       <form method="post" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data">
 <button class="button-91" role="button" name="editprofile">Edit Profile</button>  </form>
-                                    <!-- <a style="text-decoration:none"; href="#">edit profile</a> -->
-
-										<!-- <a href="#"><i class="fa fa-long-arrow-right"></i></a> -->
 									</div>
                         </div>
-                        <!-- <figure class="effect-julia item">
-                            <img src="img/gallery-img-02.jpg" alt="Image">
-                            <figcaption>
-                                <div>
-                                    <p>Identify requests for unpopular event</p>
-                                </div>
-                                <a href="#">Go now -></a>
-                            </figcaption>
-                        </figure>
-                        <figure class="effect-julia item">
-                            <img src="img/gallery-img-03.jpg" alt="Image">
-                            <figcaption>
-                                <div>
-                                    <p>View student list</p>
-                                </div>
-                                <a href="#">Go now -></a>
-                            </figcaption>
-                        </figure>
-                      -->
+                      
                     </div>
                 </div>
             </section>
@@ -192,8 +170,7 @@ https://www.tooplate.com/view/2123-simply-amazed
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
-                                <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-                                <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
+                                <li><a href="fhome.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
                          
                                 </ul>
                             </div>
@@ -203,35 +180,6 @@ https://www.tooplate.com/view/2123-simply-amazed
                 </div>
             </div>
         </section>
-            <!-- <section class="contact-section section" id="section-4" >
-                <div class="container">
-                    <div class="title">
-                        <h2>Quick Links</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-12">
-                            <ul>
-                                <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-                                <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
-                                 <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li> 
-                                 <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Our Cases</a></li> 
-                                 <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Other Links</a></li>	 
-                            </ul>
-                        </div>
-                        
-                        <div class="col-lg-3 col-md-12 map">
-                            <div class="map-outer tm-mb-40">
-                                <div class="gmap-canvas">
-                                    <iframe width="100%" height="400" id="gmap-canvas"
-                                    src="img/section-1-bg.jpg"
-                                                                            frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
-                                </div>
-                            </div>
-                        </div>
-                    </div>                
-                </div>
-                
-            </section> -->
         </main>
     </div>
     <script src="js/jquery-3.3.1.min.js"></script>

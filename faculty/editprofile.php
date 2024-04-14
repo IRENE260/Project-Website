@@ -1,6 +1,10 @@
 <?php
-$userid=$_GET["userid"];
-//$id=$_GET["id"];
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location:/amcs/faculty/flogin.php');
+    exit;
+}
+$userid=$_SESSION['user_id'];
 $today = new DateTime('now'); 
 $today = $today->format('Y-m-d');
 $con=mysqli_connect("localhost","root","","apoint");
@@ -92,12 +96,16 @@ echo mysqli_error($con);
             <input type="email" id="email" name="email" value="<?php echo $result["email"] ?>">
 
             <label for="phone">College:</label>
-            <input type="tel" id="phone" name="phone" value="<?php echo $result["college"] ?>">
+            <input type="tel"  name="college" value="<?php echo $result["college"] ?>">
 
             <label for="designation">University Id:</label>
-            <input type="text" id="designation" name="designation" value="<?php echo $result["uid"] ?>">
+            <input type="text" name="uid" value="<?php echo $result["uid"] ?>">
+
+            <label for="designation">Department:</label>
+            <input type="text" name="dept" value="<?php echo $result["department"] ?>">
 
             <button class="button-91" role="button" name="save">Save</button>
+            <button class="button-91" role="button" name="save" onclick="location.href = 'fhome.php';">Back To Home</button>
         </form>
     </main>
 
@@ -113,10 +121,10 @@ echo mysqli_error($con);
         $college=$_POST['college'];
         $uid=$_POST['uid'];
         $email=$_POST['email'];
-        $password=$_POST['password']; 
-        $sql="update faculty set name='$name',college='$college',uid='$uid',email='$email',password='$password' where id=$userid ";
+        $dept=$_POST['dept'];
+        $sql="update faculty set name='$name',college='$college',uid='$uid',email='$email',department='$dept' where id=$userid ";
         mysqli_query($con,$sql);
-        header("Location:/activity_monitor/fhome.php?userid=".$userid);
+        header("Location:/amcs/faculty/fhome.php");
         echo mysqli_error($con);
         }
 ?>

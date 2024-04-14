@@ -1,5 +1,10 @@
-   <?php
-   // Connect to the database (replace with your credentials)
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location:/amcs/faculty/flogin.php');
+    exit;
+}
+
    $dbHost = 'localhost';
    $dbUser = 'root';
    $dbPass = '';
@@ -20,28 +25,27 @@
     // die;
 
 //    $conn->close();
-//    if(isset($_POST['accept'])){
-//     $category=$_POST['category'];
-//     $point=$_POST['point'];
-//     $sql1="UPDATE spoint SET ";
-//    }
+   if(isset($_POST['accept'])){
+    $sid=$_POST['sid'];
+    $category=$_POST['category'];
+    $point=$_POST['point'];
+    $np=0;
+    $ntp=0;
+    $sql1="SELECT $category,tpoint FROM spoint WHERE sid=$sid";
+    $result1 = $conn->query($sql1);
+    $row1=mysqli_fetch_array($result1);
+        $np=strval($row1[0]+$point);
+        // var_dump($np);die;
+        $ntp=strval($row1[1]+$point);
+    $sql2="update spoint set $category=:np where sid='1'";
+    $result2 = mysqli_query($conn,$sql2);
+    var_dump($result2);die;
+    // mysqli_query($conn,"update spoint set $category='$np' and tpoint='$ntp' where sid='1'");
+    // mysqli_query($con,"insert into faculty(name,uid,college,email,password) values('$name','$uid','$college','$email','$password')");
+   }
    ?>
-<!-- <!DOCTYPE html>
-   <html lang="en">
-   <head>
-       <meta charset="UTF-8">
-       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <title>Faculty Requests</title>
-       <link rel="stylesheet" href="fstyles.css">
-   </head>
-   <body>
-       <h1>Faculty Requests</h1>
-       <div class="notifications">
-           <!-- Display student requests here -->
-           <!-- You can fetch data from the database using PHP -->
-       </div>
-   </body>
-   </html> -->
+
+   
 
 
 
@@ -56,21 +60,21 @@
     <title>Request Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="fstyles.css">
+    <link rel="stylesheet" href="css/fstyles.css">
 </head>
 
 <body>
     <header>
         <h1>Notification</h1>
         <div class="header-links">
-            <a href="fhome.php?userid=".$userid>Home</a> |
+            <a href="fhome.php">Home</a> |
             <a href="flogin.php">Logout</a>
         </div>
     </header>
     <?php
                                 foreach ($row as $data ) {
                             ?>
-    <form action="">
+    <form action="frequest.php" method="post">
     <div class="container">
         <div class="request-container">
             <div class="icon" onclick="openModal('pdf-content-1')"><i class="far fa-file-pdf"></i></div>
@@ -115,6 +119,7 @@
                     <option value="rep">Elected student representatives</option>
                 </select></p>
                 <p><input type="number" class="point" id="point" name="point" placeholder="Point"></p>
+                <p><input type="hidden" class="sid" id="sid" name="sid" value="<?php echo $data[0] ?>"></p>
             </div>
             <div class="student-details">
                 <h3>Student Details</h3>
@@ -123,7 +128,7 @@
                 <p>Branch: <?php echo $data[12] ?></p>
             </div>
             <div class="buttons">
-                <button class="accept-button" name="accept">Accept</button>
+                <button class="accept-button" name="accept" value="accept">Accept</button>
                 <button class="reject-button" name="reject">Reject</button>
             </div>
         </div>
