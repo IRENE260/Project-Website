@@ -230,19 +230,16 @@ table th {
                 <th>Registeration Number</th>
                 <th>N C C </th>
                 <th>N S S </th>
-                <th>Sports</th>
                 <th>Games</th>
-                <th>Music</th>
-                <th>Performing arts</th>
-                <th>Literary arts</th>
+                <th>Arts</th>
                 <th>Tech Fest, Tech Quiz</th>
                 <th>MOOC</th>
                 <th>Competitions conducted by Professional Societies - (IEEE, IET, ASME, SAE, NASA etc.) </th>
                 <th>Attending Full time Conference/Seminars/Exhibitions/Workshop/STTP conducted at IITs/NITs </th>
                 <th>Paper presentation/publication at IITs/NITs </th>
                 <th>Poster Presentation at IITs /NITs </th>
+                <th>Industrial Visits/Exhibition  </th>
                 <th>Industrial Training/ Internship</th>
-                <th>Industrial/Exhibition visits </th>
                 <th>Foreign Language Skill (TOFEL/IELTS/BEC exams etc.) </th>
                 <th>Start-up Company Registered legally </th>
                 <th>Patent-Filed </th>
@@ -255,12 +252,12 @@ table th {
                 <th>Got venture capital funding for innovative ideas/products. </th>
                 <th>Startup Employment </th>
                 <th>Societal innovations</th>
-                <th>Student Professional Societies (IEEE,IET,ASME,SAE,NASA etc.) </th>
-                <th>College Association Chapters </th>
-                <th>Festival & Technical Events (College approved) </th>
-                <th>Hobby Clubs </th>
-                <th>Special Initiatives (Approval from College and University is mandatory) </th>
-                <th>Elected student representatives </th>
+                <th>CORE COORDINATOR</th>
+                <th>SUB COORDINATOR	</th>
+                <th>CHAIRMAN</th>
+                <th>SECRETARY</th>
+                <th>COUNCIL MEMBERS	</th>
+                <th>VOLUNTEER</th>
                 <th>Total Points</th>
             </tr>
             <?php
@@ -303,9 +300,7 @@ table th {
                     <td><?php echo $data[30] ?></td>
                     <td><?php echo $data[31] ?></td>
                     <td><?php echo $data[32] ?></td>
-                    <td><?php echo $data[33] ?></td>
-                    <td><?php echo $data[34] ?></td>
-                    <td><?php echo $data[35] ?></td>
+                   
                 </tr>
             <?php
             $i++;
