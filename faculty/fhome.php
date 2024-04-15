@@ -45,15 +45,15 @@ if(isset($_POST["editprofile"])){
                             <a class="nav-link" href="#section-3"><span class="icn"><i class="fas fa-2x fa-air-freshener"></i></span> Quick Links</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><span class="icn"><i class="fas fa-2x fa-sign-out-alt"></i></span> Logout</a>
+                            <a class="nav-link" href="logout.html"><span class="icn"><i class="fas fa-2x fa-sign-out-alt"></i></span>Logout</a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
-        
         <button class="navbar-button collapsed" type="button">
             <span class="menu_icon">
+                <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -70,24 +70,14 @@ if(isset($_POST["editprofile"])){
                     </div>
                 
         
-                <!-- <section class="work-section section" id="section-2"> -->
+
                     <div class="container">
                     <div class="row">                        
                         <div class="item col-md-4">
                             <div class="tm-work-item-inner">
-                                    <!-- <figure class="effect-julia item">
-                                        <img src="img/gallery-img-02.jpg" alt="Image" style="width: 200px; height: 200px;">
-                                        <figcaption>
-                                            <div>
-                                                <p>Verification of certificates</p>
-                                            </div>
-                                           
-                                        </figcaption>
-                                    </figure> -->
                                 <a style="text-decoration:none;" href="verifycertificates.php"><div class="icn"><i class="fas fa-2x fa-icons"></i></div>
                                     <h4>Verify Certificates</h4>
                                     <p>View and verify the certificates uploaded by students</p></a>
-										<!-- <a href="#"><i class="fa fa-long-arrow-right"></i></a> -->
                             </div>                        
                         </div>
                         <div class="item col-md-4 one">
@@ -95,7 +85,6 @@ if(isset($_POST["editprofile"])){
                                 <a style="text-decoration:none;" href="frequest.php"> <div class="icn"><i class="fas fa-2x fa-tools"></i></div>
                                     <h4>Requests</h4>
                                     <p>Verify requests of unpopular events</p></a>
-                                <!-- <a href="#"><i class="fa fa-long-arrow-right"></i></a> -->
                             </div>
                         </div>
                         <div class="item col-md-4 two">
@@ -103,18 +92,13 @@ if(isset($_POST["editprofile"])){
                                 <a style="text-decoration:none;" href="studentlist.php"> <div class="icn"><i class="fab fa-2x fa-phoenix-framework"></i></div>
                                     <h4>Students List</h4>
                                     <p>view detailed list of students with their current activity points</p></a>
-										
-										<!-- <a href="#"><i class="fa fa-long-arrow-right"></i></a> -->
 									</div>
                         </div>
                     </div>
-                    <!-- <div class="title">
-                        <h2>Our Work</h2>
-                    </div> -->
                     </div>
                 </div>
             </div>
-            <!-- </section> -->
+
 
             <section class="gallery-section section parallax-window" data-parallax="scroll" data-image-src="img/section-3-bg.jpg" id="section-2">
                 <div class="container">
@@ -151,8 +135,9 @@ if(isset($_POST["editprofile"])){
                                         <tr><th></th><th></th></tr>
                                     </table>
                                     <!-- HTML !-->
-      <form method="post" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data">
-<button class="button-91" role="button" name="editprofile">Edit Profile</button>  </form>
+                                   <form method="post" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data">
+                                        <button class="button-91" role="button" name="editprofile">Edit Profile</button> 
+                                    </form>
 									</div>
                         </div>
                       
@@ -171,7 +156,7 @@ if(isset($_POST["editprofile"])){
                             <div class="col-lg-6 col-md-6 col-12">
                                 <ul>
                                 <li><a href="fhome.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-                         
+                                
                                 </ul>
                             </div>
    
@@ -179,7 +164,7 @@ if(isset($_POST["editprofile"])){
                     </div>
                 </div>
             </div>
-        </section>
+            </section>
         </main>
     </div>
     <script src="js/jquery-3.3.1.min.js"></script>

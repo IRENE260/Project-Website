@@ -298,7 +298,8 @@ table th {
                                 $res3=mysqli_query($con,$sql3);
                                 $value3=mysqli_fetch_array($res3);                                
                                 // echo "<tr><td>" . $rowf["name"] . "</td><td>" . $value2[0] . "</td><td><button>View Details</button></td></tr>";
-                                echo "<tr><td>" . $rowf["name"] . "</td><td>" . $value3[0] . "</td><td><a href='certificateview.php?userid=" . $userid . "&studentid=" . $rowf["id"] . "'>View Details</a></td></tr>";
+                                $_SESSION['student_id']=$rowf["id"];
+                                echo "<tr><td>" . $rowf["name"] . "</td><td>" . $value3[0] . "</td><td><a href='certificateview.php'>View Details</a></td></tr>";
 
                             }
 
@@ -327,8 +328,9 @@ table th {
                             while ($rows = $results->fetch_assoc()) {
                                 $sql4="select tpoint from spoint where sid=".$rows["id"];
                                 $res4=mysqli_query($con,$sql4);
-                                $value4=mysqli_fetch_array($res4);                                
-                                echo "<tr><td>" . $rowf["name"] . "</td><td>" . $value4[0] . "</td><td><a href='certificateview.php?userid=" . $userid . "&studentid=" . $rowf["id"] . "'>View Details</a></td></tr>";
+                                $value4=mysqli_fetch_array($res4);   
+                                $_SESSION['student_id']=$rowf["id"];                             
+                                echo "<tr><td>" . $rowf["name"] . "</td><td>" . $value4[0] . "</td><td><a href='certificateview.php'>View Details</a></td></tr>";
 
                                 // echo "<tr><td>" . $rows["name"] . "</td><td>" . $rows["yearj"] . "</td><td><button>View Details</button></td></tr>";
                             }

@@ -4,10 +4,15 @@ $con = mysqli_connect("localhost", "root", "", "apoint");
 if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
-
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location:/amcs/faculty/flogin.php');
+    exit;
+}
+$userid=$_SESSION['user_id'];
 // Fetch accepted certificates
 $acceptedCertificates = [];
-$studentid=$_GET['studentid'];
+$studentid= $_SESSION['student_id'];
 $query = "SELECT * FROM files WHERE status = 'accepted' and sid='$studentid'";
 $result = mysqli_query($con, $query);
 while ($row = mysqli_fetch_assoc($result)) {
@@ -24,8 +29,8 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 // Fetch student data if ID is set
 $studentData = null;
-if (isset($_GET['studentid'])) {
-    $studentId = mysqli_real_escape_string($con, $_GET['studentid']);
+if (isset( $_SESSION['student_id'])) {
+    $studentId = mysqli_real_escape_string($con,  $_SESSION['student_id']);
     $query = "SELECT * FROM student WHERE id = ?";
     $stmt = mysqli_prepare($con, $query);
     mysqli_stmt_bind_param($stmt, "i", $studentId);
@@ -44,7 +49,6 @@ mysqli_close($con);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Certificates</title>
-    <!-- <link rel="stylesheet" href="viewcertificate.css"> -->
 </head>
 <body>
     <style>
@@ -140,7 +144,8 @@ mysqli_close($con);
         <div class="pdf-grid">
             <?php foreach ($acceptedCertificates as $file): ?>
             <div class="pdf-item">
-                <a href="http://localhost/amcs/faculty/img/<?= htmlspecialchars($file['filelink']); ?>" target="_blank">
+                <?phpecho($file['filelink']);die?>
+                <a href="amcs/Student/uploads/<?= htmlspecialchars($file['filelink']); ?>" target="_blank">
                     <img src="img/pdf_icon.png" alt="<?= htmlspecialchars($file['filelink']); ?>">
                 </a>
                 <p><?= htmlspecialchars($file['filelink']); ?></p>
@@ -151,7 +156,7 @@ mysqli_close($con);
         <div class="pdf-grid">
             <?php foreach ($rejectedCertificates as $file): ?>
             <div class="pdf-item">
-                <a href="http://localhost/amcs/faculty/img/<?= htmlspecialchars($file['filelink']); ?>" target="_blank">
+                <a href=amcs/Student/uploads/<?= htmlspecialchars($file['filelink']); ?>" target="_blank">
                     <img src="img/pdf_icon.png" alt="<?= htmlspecialchars($file['filelink']); ?>">
                 </a>
                 <p><?= htmlspecialchars($file['filelink']); ?></p>

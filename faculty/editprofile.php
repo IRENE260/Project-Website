@@ -95,15 +95,26 @@ echo mysqli_error($con);
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" value="<?php echo $result["email"] ?>">
 
-            <label for="phone">College:</label>
-            <input type="tel"  name="college" value="<?php echo $result["college"] ?>">
-
+            <label for="college">College:</label>
+            <select name="college" id="college">
+                <option value="CEA" <?php echo ($result["college"] === 'CEA') ? 'selected' : ''; ?>>College Of Engineering Adoor</option>
+                <option value="AEC" <?php echo ($result["college"] === 'AEC') ? 'selected' : ''; ?>>College Of Engineering Aranmula</option>
+                <option value="CEC" <?php echo ($result["college"] === 'CEC') ? 'selected' : ''; ?>>College Of Engineering Chengannur</option>
+                <option value="CEK" <?php echo ($result["college"] === 'CEK') ? 'selected' : ''; ?>>College Of Engineering Kallooppara</option>
+                <option value="CET" <?php echo ($result["college"] === 'CET') ? 'selected' : ''; ?>>College Of Engineering Trivandrum</option>
+            </select>
+            <br>
             <label for="designation">University Id:</label>
             <input type="text" name="uid" value="<?php echo $result["uid"] ?>">
 
-            <label for="designation">Department:</label>
-            <input type="text" name="dept" value="<?php echo $result["department"] ?>">
-
+            <label for="dept">Department:</label>
+            <select name="dept" id="dept">
+                <option value="EC" <?php echo ($result["department"] === 'EC') ? 'selected' : ''; ?>>EC</option>
+                <option value="CSE" <?php echo ($result["department"] === 'CSE') ? 'selected' : ''; ?>>CSE</option>
+                <option value="EEE" <?php echo ($result["department"] === 'EEE') ? 'selected' : ''; ?>>EEE</option>
+                <option value="EI" <?php echo ($result["department"] === 'EI') ? 'selected' : ''; ?>>EI</option>
+            </select>
+            <br><br>
             <button class="button-91" role="button" name="save">Save</button>
             <button class="button-91" role="button" name="save" onclick="location.href = 'fhome.php';">Back To Home</button>
         </form>

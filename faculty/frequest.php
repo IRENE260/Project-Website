@@ -24,7 +24,6 @@ if (!isset($_SESSION['user_id'])) {
     // var_dump($row);
     // die;
 
-//    $conn->close();
    if(isset($_POST['accept'])){
     $sid=$_POST['sid'];
     $category=$_POST['category'];
@@ -40,8 +39,6 @@ if (!isset($_SESSION['user_id'])) {
     $sql2="update spoint set $category=:np where sid='1'";
     $result2 = mysqli_query($conn,$sql2);
     var_dump($result2);die;
-    // mysqli_query($conn,"update spoint set $category='$np' and tpoint='$ntp' where sid='1'");
-    // mysqli_query($con,"insert into faculty(name,uid,college,email,password) values('$name','$uid','$college','$email','$password')");
    }
    ?>
 
@@ -64,11 +61,10 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 
 <body>
-    <header>
+    <header class="header">
         <h1>Notification</h1>
-        <div class="header-links">
-            <a href="fhome.php">Home</a> |
-            <a href="flogin.php">Logout</a>
+        <div >
+            <a class="navh" href="fhome.php">Home</a>
         </div>
     </header>
     <?php
@@ -124,8 +120,9 @@ if (!isset($_SESSION['user_id'])) {
             <div class="student-details">
                 <h3>Student Details</h3>
                 <p>Name: <?php echo $data[2] ?></p>
-                <p>Register No: <?php echo $data[11] ?></p>
+                <p>Register No: <?php echo $data[10] ?></p>
                 <p>Branch: <?php echo $data[12] ?></p>
+                <p>Batch: <?php echo $data[11] ?></p>
             </div>
             <div class="buttons">
                 <button class="accept-button" name="accept" value="accept">Accept</button>
@@ -140,7 +137,7 @@ if (!isset($_SESSION['user_id'])) {
 <div id="pdf-content-1" class="modal" onclick="closeModal('pdf-content-1')">
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal('pdf-content-1')">&times;</span>
-        <iframe src="<?php echo $data[4] ?>" width="100%" height="100%"></iframe>
+        <iframe src="../Student/uploads/<?php echo $data[3] ?>" width="100%" height="100%"></iframe>
     </div>
 </div>
 <?php
