@@ -108,6 +108,34 @@ table th {
             border-spacing: 10px;
             *border-collapse: expression('separate', cellSpacing='10px');
         }
+        body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+#outer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.banner-section {
+    position: relative;
+    flex: 0 0 auto;
+    height: 200px; /* Adjust height as needed */
+    /* background-image: url('img/banner.jpg'); */
+    background-size: cover;
+    background-position: center;
+}
+
+#content-boxl {
+    overflow-y: auto;
+    flex: 1;
+    padding-bottom: 50px;
+}
+
+/* Other styles remain unchanged */
 
 </style>
 
@@ -117,7 +145,7 @@ table th {
     <div id="outer">   
         <main id="content-boxl" class="order-first">
             <div class="banner-section section parallax-window" style="padding-top: 85px;" data-parallax="scroll" data-image-src="img/banner.jpg" id="section-1">
-                <div class="container">
+                <div class="container" style="padding-bottom: 50px">
                     <div class="item">
                         <div class="bg-blue-transparent logo-fa"> Student List Management
                             <p text-indent: 26px;>View list of students along with their activity-point details...</p>
@@ -298,8 +326,7 @@ table th {
                                 $res3=mysqli_query($con,$sql3);
                                 $value3=mysqli_fetch_array($res3);                                
                                 // echo "<tr><td>" . $rowf["name"] . "</td><td>" . $value2[0] . "</td><td><button>View Details</button></td></tr>";
-                                $_SESSION['student_id']=$rowf["id"];
-                                echo "<tr><td>" . $rowf["name"] . "</td><td>" . $value3[0] . "</td><td><a href='certificateview.php'>View Details</a></td></tr>";
+                                echo "<tr><td>" . $rowf["name"] . "</td><td>" . $value3[0] . "</td><td><a href='certificateview.php?userid=" . $userid . "&studentid=" . $rowf["id"] . "'>View Details</a></td></tr>";
 
                             }
 
@@ -328,9 +355,8 @@ table th {
                             while ($rows = $results->fetch_assoc()) {
                                 $sql4="select tpoint from spoint where sid=".$rows["id"];
                                 $res4=mysqli_query($con,$sql4);
-                                $value4=mysqli_fetch_array($res4);   
-                                $_SESSION['student_id']=$rowf["id"];                             
-                                echo "<tr><td>" . $rowf["name"] . "</td><td>" . $value4[0] . "</td><td><a href='certificateview.php'>View Details</a></td></tr>";
+                                $value4=mysqli_fetch_array($res4);                                
+                                echo "<tr><td>" . $rowf["name"] . "</td><td>" . $value4[0] . "</td><td><a href='certificateview.php?userid=" . $userid . "&studentid=" . $rowf["id"] . "'>View Details</a></td></tr>";
 
                                 // echo "<tr><td>" . $rows["name"] . "</td><td>" . $rows["yearj"] . "</td><td><button>View Details</button></td></tr>";
                             }
