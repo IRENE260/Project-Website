@@ -6,16 +6,11 @@ if (!isset($_SESSION['user_id'])) {
 }
 $batch =$_SESSION['batch'];
 $yearj = $_SESSION['yearj'];
-// print($batch);
-// print($yearj);die;
 
 $userid=$_SESSION['user_id'];
 $con=mysqli_connect("localhost","root","","apoint");
-// $sql="SELECT * from faculty where id='$userid'";
-// $result = mysqli_query($con,$sql);
-// $data = mysqli_fetch_array($result);
 
-$sql = "SELECT DISTINCT sid FROM files WHERE status = 'notverified' AND sid IN (SELECT id FROM student WHERE yearj = '$yearj' AND batch = '$batch')";
+$sql = "SELECT DISTINCT sid FROM files WHERE status = 'notverified' AND point!='0' AND sid IN (SELECT id FROM student WHERE yearj = '$yearj' AND batch = '$batch')";
 $result = mysqli_query($con, $sql);
 ?>
 <!DOCTYPE html>
@@ -37,9 +32,9 @@ $result = mysqli_query($con, $sql);
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('img/bimg.jpg'); /* Replace 'your_background_image.jpg' with the path to your image */
-    background-size: cover; /* Cover the entire background */
-    background-repeat: no-repeat; /* Prevent background image from repeating */
+            background-image: url('img/bimg.jpg'); / Replace 'your_background_image.jpg' with the path to your image /
+    background-size: cover; / Cover the entire background /
+    background-repeat: no-repeat; / Prevent background image from repeating /
         }
 
         .header {
@@ -57,7 +52,7 @@ $result = mysqli_query($con, $sql);
             margin-left: 20px;
         }
         .modal-header {
-    padding: 10px 20px; /* Adjust padding as needed */
+    padding: 10px 20px; / Adjust padding as needed /
 }
 
         .container {
@@ -66,7 +61,7 @@ $result = mysqli_query($con, $sql);
             padding: 20px;
             border-radius: 8px;
             transition: box-shadow 0.3s ease-in-out;
-            background-color: #fff; /* White background color for container */
+            background-color: #fff; / White background color for container /
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -74,18 +69,18 @@ $result = mysqli_query($con, $sql);
 
         .pdf-icon {
             margin: 10px;
-            flex: 0 0 calc(25% - 20px); /* Adjust width and margin between icons */
+            flex: 0 0 calc(25% - 20px); / Adjust width and margin between icons /
             text-align: center;
             cursor: pointer;
         }
 
         .pdf-icon i {
-            font-size: 50px; /* Adjust icon size as needed */
-            color: #333; /* Adjust icon color */
+            font-size: 50px; / Adjust icon size as needed /
+            color: #333; / Adjust icon color /
         }
 
         .pdf-icon i:hover {
-            color: blue; /* Change color on hover */
+            color: blue; / Change color on hover /
         }
 
         .student-info {
@@ -99,12 +94,12 @@ $result = mysqli_query($con, $sql);
         }
 
         .button-container {
-    text-align: right; /* Align buttons to the left */
+    text-align: right; / Align buttons to the left /
 }
 .details-container {
             position: absolute;
             bottom: 5px;
-            left: 20px; /* Adjust the left position */
+            left: 20px; / Adjust the left position /
         }
 
         .details-container p {
@@ -117,30 +112,32 @@ $result = mysqli_query($con, $sql);
 <div class="header">
     <h1>Verify Certificate</h1>
     <div>
-        <a href="fhome.php">Home</a>
-        <a href="flogin.php">Logout</a>
+        <a href="fhome.php">HOME</a>
     </div>
 </div>
 <?php
 while ($row = mysqli_fetch_array($result)) {
     $sid = $row['sid'];
-    // $student_details_query = "SELECT * FROM student WHERE batch=".$_SESSION['batch']." and id= $sid and yearj=".$_SESSION['yearj'];
     
-$student_details_query = "SELECT * FROM student WHERE id= $sid";
+    $student_details_query = "SELECT * FROM student WHERE id= $sid";
 
     $student_details_result = mysqli_query($con, $student_details_query);
     $student_details = mysqli_fetch_array($student_details_result, MYSQLI_ASSOC);
 
     $student_name = $student_details['name'];
-    // $current_points = $student_details['tpoints'];
     
     // Retrieve all id values for the current sid where status is 0
-    $sql2 = "SELECT * FROM files WHERE sid = $sid AND status = 0";
+    $sql2 = "SELECT * FROM files WHERE sid = $sid AND status = 'notverified' AND point !='0'";
     $result2 = mysqli_query($con, $sql2);
-    $id_values = [];
-
-    while ($row2 = mysqli_fetch_array($result2)) {
-        $id_values[] = $row2['id'];
+    if (!$result2) {
+        // Handle the error, you can echo the error message for debugging
+        echo "Error: " . mysqli_error($con);
+    } else {
+        // Proceed with fetching data
+        $id_values = [];
+        while ($row2 = mysqli_fetch_array($result2)) {
+            $id_values[] = $row2['id'];
+        }
     }
     ?>
 <div class="container">
@@ -148,13 +145,12 @@ $student_details_query = "SELECT * FROM student WHERE id= $sid";
     <div class="student-info">
         <p><strong>Name:</strong> <?php echo $student_name; ?></p>
         <p><strong>Register Number:</strong>  <?php echo $student_details['regno']; ?></p>
-        <!-- <p><strong>Current Total Points:</strong>  <?php //echo $student_details['name']; ?></p> -->
     </div>
 
     <?php
 
 foreach ($id_values as $id ) {
-             // Fetch filelink for the current ID
+    // Fetch filelink for the current ID
     $pdfPathQuery = "SELECT * FROM files WHERE id = $id";
     $pdfPathResult = mysqli_query($con, $pdfPathQuery);
     $pdfPathRow = mysqli_fetch_array($pdfPathResult);
@@ -163,10 +159,9 @@ foreach ($id_values as $id ) {
     $points = $pdfPathRow['point'];
     $event = $pdfPathRow['event'];
     $fileid=$id;
-    // var_dump($pdfPath);die;
     echo '<div class="pdf-icon" onclick="openPdfModal(\''. $link . $pathlink . '\', ' . $fileid . ', \'' . $event . '\', \'' . $points . '\')">';
-    echo '<i class="fas fa-file-pdf"></i>'; // Font Awesome icon wrapped in anchor tag
-        echo '</div>';
+    echo '<i class="fas fa-file-pdf"></i>'; 
+    echo '</div>';
     }
     ?>
 
@@ -189,9 +184,9 @@ foreach ($id_values as $id ) {
                 <!-- Buttons container -->
                 <!-- Buttons container -->
 <div class="button-container mt-3">
-<form id="statusForm" method="post">
-    <button type="submit" name="status" value="accepted" class="btn btn-success">Accept</button>
-    <button type="submit" name="status" value="rejected" class="btn btn-danger" data-dismiss="modal">Reject</button>
+<form id="statusForm" method="post" >
+    <button type="submit" name="accepted" value="accepted" class="btn btn-success">Accept</button>
+    <button type="submit" name="rejected" value="rejected" class="btn btn-danger" data-dismiss="modal">Reject</button>
     <input type="hidden" id="fileid" name="fileid" value="">
 </form>
 
@@ -207,7 +202,6 @@ foreach ($id_values as $id ) {
     </div>
 </div>
 <?php
-//  }
 }
  ?>
 <script>
@@ -227,14 +221,13 @@ foreach ($id_values as $id ) {
 </body>
 </html>
 <?php
-// Assuming you have already established a database connection
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if fileid and status are set in the POST request
-    if (isset($_POST['fileid'], $_POST['status'])) {
+    if (isset($_POST['fileid'], $_POST['rejected'])) {
         // Retrieve fileid and status from the POST request
         $fileid = $_POST['fileid'];
-        $status = $_POST['status'];
+        $status = $_POST['rejected'];
         // Update the status in the 'files' table
         $sqlf = "UPDATE files SET status = '$status' WHERE id = '$fileid'";
         $stmt = $con->prepare($sqlf);
@@ -242,6 +235,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //echo '<script>window.location.reload();</script>';
 
     }
+    if (isset($_POST['fileid'], $_POST['accepted'])) {
+        // Retrieve fileid and status from the POST request
+        $fileid = $_POST['fileid'];
+        $status = $_POST['accepted'];
+        // Update the status in the 'files' table
+        $sqlf = "UPDATE files SET status = '$status' WHERE id = '$fileid'";
+        $stmt = $con->prepare($sqlf);
+        mysqli_query($con,$sqlf);
+
+        $sqls="SELECT sid,event,point from files where id='$fileid'";
+        $result3 = mysqli_query($con,$sqls);
+        $value3=mysqli_fetch_array($result3);
+
+        $sqls1="SELECT ".$value3[1].",tpoint from spoint where sid=".$value3[0];
+        $result4 = mysqli_query($con,$sqls1);
+        $value4=mysqli_fetch_array($result4);
+        $newpoint=$value4[0]+$value3[2];
+        // var_dump($value4);die;
+        $sqls2="SELECT maxpoint from points where events='$value3[1]'";
+        $result5 = mysqli_query($con,$sqls2);
+        // var_dump($result5);die;
+        $value5=mysqli_fetch_array($result5);
+        if($newpoint>=$value5[0]){
+            $total=$value4[1]+($value5[0]-$value4[0]);
+            $newpoint=$value5[0];    
+        }
+        else{
+            $total=$value4[1]+$value3[2];
+        }
+        $sqlu="update spoint set ".$value3[1]."=".$value3[2].",tpoint=".$total." where sid=".$value3[0];
+        $result6=mysqli_query($con,$sqlu);
+        echo '<script>window.location.reload();</script>';
+        var_dump($result6);die;
+        header('Location:/amcs/faculty/verifycertificates.php');
+        exit;
+    }
 }
 
 ?>
+
+

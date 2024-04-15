@@ -1,6 +1,7 @@
 <?php
-$userid=$_GET["userid"];
-$studentid=$_GET["studentid"];
+session_start();
+$userid=$_SESSION["user_id"];
+$studentid=$_SESSION["studentid"];
 $con=mysqli_connect("localhost","root","","apoint");
 		$sql1="select * from spoint where sid='$studentid'";
 		$res=mysqli_query($con,$sql1);
@@ -12,6 +13,8 @@ $con=mysqli_connect("localhost","root","","apoint");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>Points Distribution</title>
     <style>
     body {
@@ -77,17 +80,32 @@ $con=mysqli_connect("localhost","root","","apoint");
         .table tr:nth-child(odd) td:first-child {
             background-color: #adc9e6; /* Lighter shade */
         }
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        
     </style>
 </head>
 <body>
-
-<div class="header">
-    <h2>Points Distribution</h2>
-    <div>
-        <a href="fhome.php?userid=<?php echo $userid; ?>" class="nav-item nav-link active">Home</a>
-        <a href="flogin.php" class="nav-item nav-link">Logout</a>
-    </div>
-</div>
+        <div class="header">
+            <h1>Points Distribution</h1>
+            <div class="navbar">
+                <a href="fhome.php">HOME</a>
+            </div>
+        </div>
 
 <div class="container">
     
@@ -115,157 +133,142 @@ $con=mysqli_connect("localhost","root","","apoint");
             </tr>
             <tr>
                 <td>4</td>
-                <td>Games</td>
+                <td>ARTS</td>
                 <td><?php echo $value[4];?></td>
             </tr>
             <tr>
                 <td>5</td>
-                <td>Music</td>
+                <td>TECH FEST,TECH QUIZ</td>
                 <td><?php echo $value[5];?></td>
             </tr>
             <tr>
                 <td>6</td>
-                <td>Performing arts</td>
+                <td>MOOC</td>
                 <td><?php echo $value[6];?></td>
             </tr>
             <tr>
                 <td>7</td>
-                <td>Literary arts</td>
+                <td>COMPETITIONS</td>
                 <td><?php echo $value[7];?></td>
             </tr>
             <tr>
                 <td>8</td>
-                <td>Tech Fest, Tech Quiz</td>
+                <td>WORKSHOP</td>
                 <td><?php echo $value[8];?></td>
             </tr>
             <tr>
                 <td>9</td>
-                <td>MOOC</td>
+                <td>PAPER PRESENTATION/PUBLICATION</td>
                 <td><?php echo $value[9];?></td>
             </tr>
             <tr>
                 <td>10</td>
-                <td>Competitions conducted by Professional Societies - (IEEE, IET, ASME, SAE, NASA etc.) </td>
+                <td>POSTER PRESENTATION</td>
                 <td><?php echo $value[10];?></td>
             </tr>
             <tr>
                 <td>11</td>
-                <td>Attending Full time Conference/Seminars/Exhibitions/Workshop/STTP conducted at IITs/NITs </td>
+                <td>IV/EXHIBITION</td>
                 <td><?php echo $value[11];?></td>
             </tr>
             <tr>
                 <td>12</td>
-                <td>Paper presentation/publication at IITs/NITs </td>
+                <td>INTERNSHIP</td>
                 <td><?php echo $value[12];?></td>
             </tr>
             <tr>
                 <td>13</td>
-                <td>Poster Presentation at IITs /NITs </td>
+                <td>FOREIGN LANGUAGE SKILL</td>
                 <td><?php echo $value[13];?></td>
             </tr>
             <tr>
                 <td>14</td>
-                <td>Industrial Training/ Internship</td>
+                <td>START UP</td>
                 <td><?php echo $value[14];?></td>
             </tr>
             <tr>
                 <td>15</td>
-                <td>Industrial/Exhibition visits </td>
+                <td>PATENT FILED</td>
                 <td><?php echo $value[15];?></td>
             </tr>
             <tr>
                 <td>16</td>
-                <td>Foreign Language Skill (TOFEL/IELTS/BEC exams etc.) </td>
+                <td>PATENT PUBLISHED</td>
                 <td><?php echo $value[16];?></td>
             </tr>
             <tr>
                 <td>17</td>
-                <td>Start-up Company Registered legally </td>
+                <td>PATENT APPROVED</td>
                 <td><?php echo $value[17];?></td>
             </tr>
             <tr>
                 <td>18</td>
-                <td>Patent-Filed </td>
+                <td>PATENT LICENSED</td>
                 <td><?php echo $value[18];?></td>
             </tr>
             <tr>
                 <td>19</td>
-                <td>Patent - Published </td>
+                <td>PROTOTYPE DEVELOPED AND TESTED</td>
                 <td><?php echo $value[19];?></td>
             </tr>
             <tr>
                 <td>20</td>
-                <td>Patent- Approved </td>
+                <td>AWARDS FOR PRODUCTS DEVELOPED</td>
                 <td><?php echo $value[20];?></td>
             </tr>
             <tr>
                 <td>21</td>
-                <td>Patent- Licensed</td>
+                <td>INNOVATIVE TECHNOLOGIES</td>
                 <td><?php echo $value[21];?></td>
             </tr>
             <tr>
                 <td>22</td>
-                <td>Prototype developed and tested </td>
+                <td>INNOVATIVE IDEAS/PRODUCTS</td>
                 <td><?php echo $value[22];?></td>
             </tr>
             <tr>
                 <td>23</td>
-                <td>Awards for Products developed</td>
+                <td>STARTUP EMPLOYEMENT</td>
                 <td><?php echo $value[23];?></td>
             </tr>
             <tr>
                 <td>24</td>
-                <td>Innovative technologies developed and used by industries/users</td>
+                <td>SOCIETAL INNOVATIONS</td>
                 <td><?php echo $value[24];?></td>
             </tr>
             <tr>
                 <td>25</td>
-                <td>Got venture capital funding for innovative ideas/products. </td>
+                <td>CORE COORDINATOR</td>
                 <td><?php echo $value[25];?></td>
             </tr>
             <tr>
                 <td>26</td>
-                <td>Startup Employment </td>
+                <td>SUB COORDINATOR</td>
                 <td><?php echo $value[26];?></td>
             </tr>
             <tr>
                 <td>27</td>
-                <td>Societal innovations</td>
+                <td>CHAIRMAN</td>
                 <td><?php echo $value[27];?></td>
             </tr>
             <tr>
                 <td>28</td>
-                <td>Student Professional Societies (IEEE,IET,ASME,SAE,NASA etc.) </td>
+                <td>SECRETARY</td>
                 <td><?php echo $value[28];?></td>
             </tr>
             <tr>
                 <td>29</td>
-                <td>College Association Chapters </td>
+                <td>COUNCIL MEMBERS</td>
                 <td><?php echo $value[29];?></td>
             </tr>
             <tr>
                 <td>30</td>
-                <td>Festival & Technical Events (College approved) </td>
+                <td>VOLUNTEER</td>
                 <td><?php echo $value[30];?></td>
             </tr>
             <tr>
-                <td>31</td>
-                <td>Hobby Clubs </td>
-                <td><?php echo $value[31];?></td>
-            </tr>
-            <tr>
-                <td>32</td>
-                <td>Special Initiatives (Approval from College and University is mandatory) </td>
-                <td><?php echo $value[32];?></td>
-            </tr>
-            <tr>
-                <td>33</td>
-                <td>Elected student representatives </td>
-                <td><?php echo $value[33];?></td>
-            </tr>
-            <tr>
                 <th colspan="2">Total Points</th>
-                <th><?php echo $value[34];?></th>
+                <th><?php echo $value[31];?></th>
             </tr>
     </table>
     

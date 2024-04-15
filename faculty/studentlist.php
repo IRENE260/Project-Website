@@ -9,6 +9,22 @@ $con=mysqli_connect("localhost","root","","apoint");
 
 $currentYear = (int)(new DateTime())->format('Y');
 
+if (isset($_POST["submitsearch"])) {
+    // Retrieve dropdown values from POST data
+    $_SESSION['studentid']  = $_POST['studentid'];
+
+    // Redirect to verifycertificates.php
+    header("Location: certificateview.php");
+    exit;
+}
+if (isset($_POST["submitfilter"])) {
+    // Retrieve dropdown values from POST data
+    $_SESSION['studentid']  = $_POST['studentid'];
+
+    // Redirect to verifycertificates.php
+    header("Location: certificateview.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,6 +53,25 @@ $currentYear = (int)(new DateTime())->format('Y');
     margin-bottom: 20px;
 }
 
+.header1 {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: flex-end; /* Aligns the navigation to the right */
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+}
 .filter-bar input {
     width: 42%;
     padding: 10px;
@@ -135,14 +170,19 @@ table th {
     padding-bottom: 50px;
 }
 
-/* Other styles remain unchanged */
 
 </style>
 
 </head>
 
 <body>
+    <header class="header1" id="tm-header">
+            <nav class="navbar">
+                            <a  href="fhome.php">Home</a>
+            </nav>
+        </header>
     <div id="outer">   
+        
         <main id="content-boxl" class="order-first">
             <div class="banner-section section parallax-window" style="padding-top: 85px;" data-parallax="scroll" data-image-src="img/banner.jpg" id="section-1">
                 <div class="container" style="padding-bottom: 50px">
@@ -321,7 +361,15 @@ table th {
                                 $res3=mysqli_query($con,$sql3);
                                 $value3=mysqli_fetch_array($res3);                                
                                 // echo "<tr><td>" . $rowf["name"] . "</td><td>" . $value2[0] . "</td><td><button>View Details</button></td></tr>";
-                                echo "<tr><td>" . $rowf["name"] . "</td><td>" . $value3[0] . "</td><td><a href='certificateview.php?userid=" . $userid . "&studentid=" . $rowf["id"] . "'>View Details</a></td></tr>";
+                                echo "<tr><td>" . $rowf["name"] . "</td><td>" . $value3[0] . "</td><td>";
+                                ?>
+                                <form id="tempforml" method="post" action="<?php $_SERVER['PHP_SELF']?>">
+                                <input type="hidden" id="studentid" name="studentid" value="<?php echo $rowf["id"]; ?>">
+                                <button type="submit" name="submitfilter" style='background-color: transparent; border: none; outline: none; cursor: pointer;'>View Certificates</button>
+                                
+                                </form>
+                                <?php
+                                echo "</td></tr>";
 
                             }
 
@@ -351,7 +399,15 @@ table th {
                                 $sql4="select tpoint from spoint where sid=".$rows["id"];
                                 $res4=mysqli_query($con,$sql4);
                                 $value4=mysqli_fetch_array($res4);                                
-                                echo "<tr><td>" . $rowf["name"] . "</td><td>" . $value4[0] . "</td><td><a href='certificateview.php?userid=" . $userid . "&studentid=" . $rowf["id"] . "'>View Details</a></td></tr>";
+                                echo "<tr><td>" . $rowf["name"] . "</td><td>" . $value4[0] . "</td><td>" ;
+                                ?>
+                                <form id="tempform" method="post" action="<?php $_SERVER['PHP_SELF']?>">
+                                <input type="hidden" id="studentid" name="studentid" value="<?php echo $rowf["id"]; ?>">
+                                <button type="submit" name="submitsearch" style='background-color: transparent; border: none; outline: none; cursor: pointer;'>View Certificates</button>
+                                
+                                </form>
+                                <?php
+                                echo "</td></tr>";
 
                                 // echo "<tr><td>" . $rows["name"] . "</td><td>" . $rows["yearj"] . "</td><td><button>View Details</button></td></tr>";
                             }

@@ -20,10 +20,6 @@ if (isset($_POST["submit"])) {
     $_SESSION['yearj']  = $_POST['yearj'];
     $_SESSION['batch'] = $_POST['batch'];
 
-    // Store dropdown values in session variables
-    // $_SESSION['yearj'] = $dropdown1Value;
-    // $_SESSION['batch'] = $dropdown2Value;
-
     // Redirect to verifycertificates.php
     header("Location: verifycertificates.php");
     exit;
@@ -50,9 +46,9 @@ if (isset($_POST["submit"])) {
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.8); /* White with transparency */
+            background-color: rgba(255, 255, 255, 0.8); / White with transparency /
             overflow: auto;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow effect */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); / Shadow effect /
         }
         .modal-content {
             background-color: white;
@@ -86,8 +82,7 @@ if (isset($_POST["submit"])) {
                             <a class="nav-link" href="#section-3"><span class="icn"><i class="fas fa-2x fa-air-freshener"></i></span> Quick Links</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="flogin.php"><span class="icn"><i class="fas fa-2x fa-sign-out-alt"></i></span> Logout</a>
-                            
+                            <a class="nav-link" href="#"><span class="icn"><i class="fas fa-2x fa-sign-out-alt"></i></span> Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -108,33 +103,18 @@ if (isset($_POST["submit"])) {
                     <div class="item">
                         <div class="bg-blue-transparent logo-fa"><span><i class="fas fa-2x fa-atom"></i></span> Automated Activity Computation Metric System
                             <p text-indent: 26px;>Makes it easy for activity points management...</p></div>
-                        <!-- <div class="bg-blue-transparent simple"><p>Makes it easy for activity points management...</p></div> -->
                     </div>
                 
         
-                <!-- <section class="work-section section" id="section-2"> -->
                     <div class="container">
                     <div class="row">                        
                         <div class="item col-md-4">
                             <div class="tm-work-item-inner">
-                                    <!-- <figure class="effect-julia item">
-                                        <img src="img/gallery-img-02.jpg" alt="Image" style="width: 200px; height: 200px;">
-                                        <figcaption>
-                                            <div>
-                                                <p>Verification of certificates</p>
-                                            </div>
-                                           
-                                        </figcaption>
-                                    </figure> -->
                                     <a href="#" style="text-decoration:none;" onclick="showModal(); return false;">
-    <div class="icn"><i class="fas fa-2x fa-icons"></i></div>
-    <h4>Verify Certificates</h4>
-    <p>View and verify the certificates uploaded by students</p>
-</a>
-                                <!-- <a style="text-decoration:none;" href="verifycertificates.php"><div class="icn"><i class="fas fa-2x fa-icons"></i></div>
-                                    <h4>Verify Certificates</h4>
-                                    <p>View and verify the certificates uploaded by students</p></a> -->
-										<!-- <a href="#"><i class="fa fa-long-arrow-right"></i></a> -->
+                                        <div class="icn"><i class="fas fa-2x fa-icons"></i></div>
+                                        <h4>Verify Certificates</h4>
+                                        <p>View and verify the certificates uploaded by students</p>
+                                    </a>
                             </div>                        
                         </div>
                         <div class="item col-md-4 one">
@@ -142,7 +122,6 @@ if (isset($_POST["submit"])) {
                                 <a style="text-decoration:none;" href="frequest.php"> <div class="icn"><i class="fas fa-2x fa-tools"></i></div>
                                     <h4>Requests</h4>
                                     <p>Verify requests of unpopular events</p></a>
-                                <!-- <a href="#"><i class="fa fa-long-arrow-right"></i></a> -->
                             </div>
                         </div>
                         <div class="item col-md-4 two">
@@ -150,18 +129,12 @@ if (isset($_POST["submit"])) {
                                 <a style="text-decoration:none;" href="studentlist.php"> <div class="icn"><i class="fab fa-2x fa-phoenix-framework"></i></div>
                                     <h4>Students List</h4>
                                     <p>view detailed list of students with their current activity points</p></a>
-										
-										<!-- <a href="#"><i class="fa fa-long-arrow-right"></i></a> -->
 									</div>
                         </div>
                     </div>
-                    <!-- <div class="title">
-                        <h2>Our Work</h2>
-                    </div> -->
                     </div>
                 </div>
             </div>
-            <!-- </section> -->
 
             <section class="gallery-section section parallax-window" data-parallax="scroll" data-image-src="img/section-3-bg.jpg" id="section-2">
                 <div class="container">
@@ -234,7 +207,7 @@ if (isset($_POST["submit"])) {
 
         <form id="dropdownForm" method="post" action="<?php $_SERVER['PHP_SELF']?>">
     <!-- Dropdowns -->
-    <select class="modal-dropdown" id="dropdown1" name="yearj">
+    <select class="modal-dropdown" id="dropdown1" name="yearj" required>
         <option value="" disabled selected>Select Year of Admission</option>
         <?php
         // Populate dropdown with years
@@ -243,7 +216,7 @@ if (isset($_POST["submit"])) {
         }
         ?>
     </select>
-    <select class="modal-dropdown" id="dropdown2" name="batch">
+    <select class="modal-dropdown" id="dropdown2" name="batch" required>
         <option value="" disabled selected>Select Batch</option>
         <option value="A">A</option>
         <option value="B">B</option>
@@ -254,10 +227,12 @@ if (isset($_POST["submit"])) {
         <option value="G">G</option>
         <!-- Add more options as needed -->
     </select>
-    <!-- Submit Button -->
+    <!-- Submit Button --><br>
     <button type="submit" name="submit">View</button>
+</form><br>
+<form id="dropdownForm" method="post" action="">
+    <button type="submit" name="back" onclick="loaction.href='fhome.php';">Back</button>
 </form>
-
 <?php
 // Check if form is submitted
 
@@ -278,6 +253,7 @@ if (isset($_POST["submit"])) {
     function showModal() {
         document.getElementById('modalOverlay').style.display = 'block';
     }
+    
     document.addEventListener("DOMContentLoaded", function() {
         // Get the Logout link element
         var logoutLink = document.querySelector('.navbar-nav .nav-item:last-child .nav-link');
@@ -288,8 +264,6 @@ if (isset($_POST["submit"])) {
             window.location.href = "logout.html"; // Replace "login.html" with the actual URL of your login page
         });
     });
-
-
     // JavaScript to submit dropdown values and redirect
    
 </script>

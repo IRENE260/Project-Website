@@ -1,4 +1,12 @@
 <?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location:/amcs/faculty/flogin.php');
+    exit;
+}
+$userid=$_SESSION['user_id'];
+$studentid=$_SESSION['studentid'];
+
 // Establish database connection
 $con = mysqli_connect("localhost", "root", "", "apoint");
 if (!$con) {
@@ -7,7 +15,8 @@ if (!$con) {
 
 // Fetch accepted certificates
 $acceptedCertificates = [];
-$query = "SELECT * FROM files WHERE status = 'accepted'";
+// $studentid=$_GET['studentid'];
+$query = "SELECT * FROM files WHERE status = 'accepted' and sid='$studentid'";
 $result = mysqli_query($con, $query);
 while ($row = mysqli_fetch_assoc($result)) {
     $acceptedCertificates[] = $row;
@@ -15,24 +24,28 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 // Fetch rejected certificates
 $rejectedCertificates = [];
-$query = "SELECT * FROM files WHERE status = 'rejected'";
+$query = "SELECT * FROM files WHERE status = 'rejected' and sid='$studentid'";
 $result = mysqli_query($con, $query);
 while ($row = mysqli_fetch_assoc($result)) {
     $rejectedCertificates[] = $row;
 }
+$sql="select * from student where id='$studentid'";
+$result2 = mysqli_query($con, $sql);
+$value=mysqli_fetch_array($result2);
+
 
 // Fetch student data if ID is set
-$studentData = null;
-if (isset($_GET['studentid'])) {
-    $studentId = mysqli_real_escape_string($con, $_GET['studentid']);
-    $query = "SELECT * FROM student WHERE id = ?";
-    $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, "i", $studentId);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $studentData = mysqli_fetch_assoc($result);
-    mysqli_stmt_close($stmt);
-}
+// $studentData = null;
+// if (isset($_GET['studentid'])) {
+//     $studentId = mysqli_real_escape_string($con, $_GET['studentid']);
+//     $query = "SELECT * FROM student WHERE id = ?";
+//     $stmt = mysqli_prepare($con, $query);
+//     mysqli_stmt_bind_param($stmt, "i", $studentId);
+//     mysqli_stmt_execute($stmt);
+//     $result = mysqli_stmt_get_result($stmt);
+//     $studentData = mysqli_fetch_assoc($result);
+//     mysqli_stmt_close($stmt);
+// }
 
 // Close database connection
 mysqli_close($con);
@@ -42,13 +55,11 @@ mysqli_close($con);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>View Certificates</title>
-    <link rel="stylesheet" href="viewcertificate.css">
-</head>
-<body>
     <style>
-
-body {
+        body {
             font-family: Arial, sans-serif;
             background-color: #ca1717;
             background-image: url(img/course-1.jpg);
@@ -73,15 +84,6 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    height: auto; /* You can adjust height as needed */
-}
-
-
-.header {
-    text-align: center;
-    border-bottom: 2px solid #000;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
 }
 
 h1, h2 {
@@ -121,7 +123,7 @@ h3 {
     margin-top: 30px;
 }
 .header {
-    background-color: #343a40;
+    background-color: #333;
     color: white;
     padding: 10px 20px;
 }
@@ -132,34 +134,6 @@ h3 {
     align-items: center;
     height: 100%;
     width: 100%;
-}
-
-.navbar-nav {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-}
-
-.nav-item {
-    margin-left: 20px; /* Spacing between items */
-}
-
-.nav-link {
-    display: flex;
-    align-items: center;
-    
-    text-decoration: none;
-    font-size: 16px;
-}
-
-.nav-link i {
-    margin-right: 10px;
-}
-
-.nav-link:hover, .nav-link:focus {
-    background-color: #495057;
-    border-radius: 5px; /* Optional: adds rounded corners to the hover/focus state */
 }
 
 .certificate-actions {
@@ -179,12 +153,11 @@ h3 {
 
 a {
     text-decoration: none;
-    color: #007bff;
+    color: #fff;
+    text-transform: uppercase;
 }
 
-a:hover {
-    text-decoration: underline;
-}
+
 
 
 
@@ -204,55 +177,41 @@ a:hover {
         font-size: 1.5rem;
     }
 }
-</style>
+
+    </style>
+</head>
 <body>
 <div id="outer">
-        <header class="header order-last" id="tm-header">
+        <header class="header" >
             <nav class="navbar">
-                <div class="collapse navbar-collapse single-page-nav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#section-1"><span class="icn"><i class="fab fa-2x fa-battle-net"></i></span>Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#section-2"><span class="icn"><i class="fas fa-2x fa-id-card"></i></span> Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#section-3"><span class="icn"><i class="fas fa-2x fa-air-freshener"></i></span> Quick Links</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="logout.html"><span class="icn"><i class="fas fa-2x fa-sign-out-alt"></i></span>Logout</a>
-                        </li>
-                    </ul>
-                </div>
+                <a  href="fhome.php">Home</a>
             </nav>
         </header>
     <div class="container">
-        
-            <h2 class="heading-left">S_NAME</h2>
-            <div class="certificate-actions">
-            <button class="action-button"><i class="fas fa-eye"></i> View Points</button>
-</div>
-        
-        <h3 class="heading-left">Accepted</h3>
+           
+    <h2 class="heading-left"><?php echo($value[1]);?></h2>
+        <div class="certificate-actions">
+            <button class="action-button" onclick="location.href='pointsview.php';"><i class="fas fa-eye"></i> View Points</button>
+        </div>
+        <h2 class="heading-left">Accepted</h2>
         <div class="pdf-grid">
             <?php foreach ($acceptedCertificates as $file): ?>
             <div class="pdf-item">
-                <a href="http://localhost/activity_monitor/img/<?= htmlspecialchars($file['filelink']); ?>" target="_blank">
-                    <img src="img/pdf_icon.png" alt="<?= htmlspecialchars($file['filename']); ?>">
+                <a href="http://localhost/amcs/Student/uploads/<?= htmlspecialchars($file['filelink']); ?>" target="_blank">
+                    <img src="img/pdf_icon.png" height=50 width=50 alt="<?= htmlspecialchars($file['filelink']); ?>">
                 </a>
-                <p><?= htmlspecialchars($file['filename']); ?></p>
+                <p><?= htmlspecialchars($file['filelink']); ?></p>
             </div>
             <?php endforeach; ?>
         </div>
-        <h3 class="heading-left">Rejected</h3>
+        <h2 class="heading-left">Rejected</h2>
         <div class="pdf-grid">
             <?php foreach ($rejectedCertificates as $file): ?>
             <div class="pdf-item">
-                <a href="http://localhost/activity_monitor/img/<?= htmlspecialchars($file['filelink']); ?>" target="_blank">
-                    <img src="img/pdf_icon.png" alt="<?= htmlspecialchars($file['filename']); ?>">
+                <a href="http://localhost/amcs/Student/uploads/<?= htmlspecialchars($file['filelink']); ?>" target="_blank">
+                    <img src="img/pdf_icon.png" height=50 width=50 alt="<?= htmlspecialchars($file['filelink']); ?>">
                 </a>
-                <p><?= htmlspecialchars($file['filename']); ?></p>
+                <p><?= htmlspecialchars($file['filelink']); ?></p>
             </div>
             <?php endforeach; ?>
         </div>
