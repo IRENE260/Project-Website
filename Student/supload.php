@@ -125,7 +125,7 @@ if($con)
 
     <!-- Upload Start -->
     <div class="zone">
-        <form action="supload.php" method="post" enctype="multipart/form-data">
+        <form action="<?php $_SERVER['PHP_SELF']?>" method="post" enctype="multipart/form-data">
             <div id="dropZ">
                 <i class="fa fa-cloud-upload"></i>
                 <div>Drag and drop your file here</div>                    

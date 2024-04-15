@@ -51,7 +51,7 @@ if (isset($_POST["email"])) {
     //Content
     $mail->isHTML(true);               //Set email format to HTML
     $mail->Subject = 'Password Reset'; // Example subject
-    $mail->Body    = 'Please use the below link to reset you password <br> <b>http://localhost/amcs/reset-password?id='.$id.'</b>'; // Example body    
+    $mail->Body    = 'Please use the below link to reset you password <br> <b>http://localhost/amcs/Student/reset-password?id='.$id.'</b>'; // Example body    
 
     // Success sent message alert
     try {

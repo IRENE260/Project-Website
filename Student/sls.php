@@ -9,12 +9,13 @@ if($con)
 		$name=$_POST['name'];
 		$dob=$_POST['dob'];
 		$reg=$_POST['regno'];
+		$batch=$_POST['batch'];
 		$branch=$_POST['branch'];
 		$college=$_POST['college'];
 		$year=$_POST['year'];
 		$email=$_POST['email'];
 		$password=$_POST['pswd'];
-		$sql="insert into student(name,dob,regno,branch,college,yearj,email,password) values('$name','$dob','$reg','$branch','$college','$year','$email','$password')";
+		$sql="insert into student(name,dob,regno,batch,branch,college,yearj,email,password) values('$name','$dob','$reg','$batch','$branch','$college','$year','$email','$password')";
 		mysqli_query($con,$sql);
 		$sql2="select id from student where regno='$reg'";
 		$res=mysqli_query($con,$sql2);
@@ -64,8 +65,20 @@ if($con)
 					<label for="chk" aria-hidden="true">Sign up</label>
 					<div class="user-details">
 						<div class="input-box"><input type="text" name="name"  placeholder="Name" pattern="[a-zA-Z ]{1,32}" required=""></div>
-						<div class="input-box"><input type="date" name="dob" max=<?php echo $today;?> required=""></div>
+						<div class="input-box"><input type="date" name="dob"  max=<?php echo $today;?> required=""></div>
 						<div class="input-box"><input type="text" name="regno" placeholder="Register Number" pattern="[a-zA-Z0-9 ]{1,}" required=""></div>
+						<div class="input-box">
+							<select name="batch" id="batch" class="selectclass"  required>
+								<option value="" disabled selected>Batch</option>
+								<option value="A">A</option>
+								<option value="B">B</option>
+								<option value="C">C</option>
+								<option value="D">D</option>
+								<option value="E">E</option>
+								<option value="F">F</option>
+								<option value="G">G</option>
+							</select>
+						</div>
 						<div class="input-box">
 							<select name="branch" id="branch" class="selectclass"  required>
 								<option value="" disabled selected>Branch</option>
@@ -102,13 +115,13 @@ if($con)
 					<input class="ip" type="email" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required="">
 					<input class="ip" type="password" name="pswd" placeholder="Password" required="">
 					<button type="submit" name="login">Login</button><br>
-					<a href="" ><p style="text-align:center">Forgot Password</p></a>
+					<a href="forgot.php" ><p style="text-align:center">Forgot Password</p></a>
 				</form>
 			</div>
 	</div>
 </body>
 <script>
-	function checkPassword(form){
+function checkPassword(form){
   var pass1=document.getElementById("pswd");
   var pass2=document.getElementById("cpswd");
   var errorMessage = document.getElementById("errorMessage");

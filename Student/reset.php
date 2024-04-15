@@ -6,7 +6,7 @@ if (isset($_POST["pswd"])) {
     $sql="UPDATE student SET Password='".$_POST['pswd']."' WHERE id = '$id'";
     mysqli_query($con,$sql);
     echo mysqli_error($con);
-    header("Location: /amcs/sls.php");  
+    header("Location: /amcs/Student/sls.php");  
     exit();
 }
 ?>

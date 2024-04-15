@@ -8,10 +8,10 @@ $con=mysqli_connect("localhost","root","","apoint");
 if($con)
 {
         $id=$_SESSION['user_id'];
-		$sql1="select * from files where sid='$id' and status='Not Verified'";
+		$sql1="select * from files where sid='$id' and status='notverified'";
 		$res=mysqli_query($con,$sql1);
         $value=mysqli_fetch_all($res);
-        $sql2="select * from files where sid='$id' and status='Verified'";	
+        $sql2="select * from files where sid='$id' and status='accepted'";	
         $res2=mysqli_query($con,$sql2);
         $value2=mysqli_fetch_all($res2);
 }

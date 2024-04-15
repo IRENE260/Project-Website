@@ -28,10 +28,12 @@
         $targetFile = $targetDir . basename($pdfName);
         move_uploaded_file($pdfTmp, $targetFile);
         // Insert request into the database
-        $sql = "insert into request (sid,fid,sname,file,request) VALUES ('$studentId','$fId','$studentName','$pdfName','$requestText')";
-        mysqli_query($conn,$sql);
         $sql2="insert into files(sid,filelink) values('$studentId','$pdfName')";
 		mysqli_query($conn,$sql2);
+        $new_id = mysqli_insert_id($conn);
+        // var_dump($new_id);die;
+        $sql = "insert into request (sid,fid,sname,fileid,request) VALUES ('$studentId','$fId','$studentName','$new_id','$requestText')";
+        mysqli_query($conn,$sql);
 		header("Location:/amcs/Student/scertificate.php");
 		exit();
    }
