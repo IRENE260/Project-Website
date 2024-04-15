@@ -6,39 +6,36 @@ body {
     background-color: #f4f4f4;
 }
 
-header {
-    background-color: rgba(52, 152, 219, 0.8);
+.header {
+    background-color: #333;
     color: #fff;
-    padding: 10px;
-    text-align: center;
-    position: relative;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-header:hover {
-    background-color: rgba(52, 152, 219, 1);
-}
-
-.header-links {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+.header a {
     color: #fff;
     text-decoration: none;
-    font-size: 16px;
-    transition: all 0.3s ease;
+    margin-left: 20px;
 }
 
-.header-links:hover {
-    color: #ecf0f1;
-    transform: scale(1.1);
-}
 
 .container {
     width: 80%;
     margin: 20px auto;
     overflow: hidden;
+}
+
+.navh{
+    margin-right: 30px;
+    padding: 25px 0;
+    color: #FFFFFF;
+    font-size: 15px;
+    text-transform: uppercase;
+    outline: none;
+    text-decoration: none;
 }
 
 .request-container {
@@ -61,7 +58,7 @@ header:hover {
 }
 
 .icon {
-    background-color: rgba(52, 152, 219, 0.8);
+    background-color: #333;
     color: #fff;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
