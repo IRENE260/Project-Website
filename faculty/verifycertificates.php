@@ -4,13 +4,18 @@ if (!isset($_SESSION['user_id'])) {
     header('Location:/amcs/faculty/flogin.php');
     exit;
 }
+$batch =$_SESSION['batch'];
+$yearj = $_SESSION['yearj'];
+// print($batch);
+// print($yearj);die;
+
 $userid=$_SESSION['user_id'];
 $con=mysqli_connect("localhost","root","","apoint");
 // $sql="SELECT * from faculty where id='$userid'";
 // $result = mysqli_query($con,$sql);
 // $data = mysqli_fetch_array($result);
 
-$sql = "SELECT DISTINCT sid FROM files WHERE status = 'notverified'";
+$sql = "SELECT DISTINCT sid FROM files WHERE status = 'notverified' AND sid IN (SELECT id FROM student WHERE yearj = '$yearj' AND batch = '$batch')";
 $result = mysqli_query($con, $sql);
 ?>
 <!DOCTYPE html>
@@ -113,12 +118,16 @@ $result = mysqli_query($con, $sql);
     <h1>Verify Certificate</h1>
     <div>
         <a href="fhome.php">Home</a>
+        <a href="flogin.php">Logout</a>
     </div>
 </div>
 <?php
 while ($row = mysqli_fetch_array($result)) {
     $sid = $row['sid'];
-    $student_details_query = "SELECT * FROM student WHERE id = $sid";
+    // $student_details_query = "SELECT * FROM student WHERE batch=".$_SESSION['batch']." and id= $sid and yearj=".$_SESSION['yearj'];
+    
+$student_details_query = "SELECT * FROM student WHERE id= $sid";
+
     $student_details_result = mysqli_query($con, $student_details_query);
     $student_details = mysqli_fetch_array($student_details_result, MYSQLI_ASSOC);
 
@@ -126,7 +135,7 @@ while ($row = mysqli_fetch_array($result)) {
     // $current_points = $student_details['tpoints'];
     
     // Retrieve all id values for the current sid where status is 0
-    $sql2 = "SELECT * FROM files WHERE sid = $sid AND status = 'notverified'";
+    $sql2 = "SELECT * FROM files WHERE sid = $sid AND status = 0";
     $result2 = mysqli_query($con, $sql2);
     $id_values = [];
 
@@ -181,8 +190,8 @@ foreach ($id_values as $id ) {
                 <!-- Buttons container -->
 <div class="button-container mt-3">
 <form id="statusForm" method="post">
-    <button type="submit" name="accepted" value="accepted" class="btn btn-success">Accept</button>
-    <button type="submit" name="rejected" value="rejected" class="btn btn-danger" data-dismiss="modal">Reject</button>
+    <button type="submit" name="status" value="accepted" class="btn btn-success">Accept</button>
+    <button type="submit" name="status" value="rejected" class="btn btn-danger" data-dismiss="modal">Reject</button>
     <input type="hidden" id="fileid" name="fileid" value="">
 </form>
 
@@ -222,74 +231,15 @@ foreach ($id_values as $id ) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if fileid and status are set in the POST request
-    if (isset($_POST['fileid'], $_POST['rejected'])) {
+    if (isset($_POST['fileid'], $_POST['status'])) {
         // Retrieve fileid and status from the POST request
         $fileid = $_POST['fileid'];
-        $status = $_POST['rejected'];
+        $status = $_POST['status'];
         // Update the status in the 'files' table
         $sqlf = "UPDATE files SET status = '$status' WHERE id = '$fileid'";
         $stmt = $con->prepare($sqlf);
         mysqli_query($con,$sqlf);
         //echo '<script>window.location.reload();</script>';
-
-    }
-    if (isset($_POST['fileid'], $_POST['accepted'])) {
-        // Retrieve fileid and status from the POST request
-        $fileid = $_POST['fileid'];
-        $status = $_POST['accepted'];
-        // Update the status in the 'files' table
-        $sqlf = "UPDATE files SET status = '$status' WHERE id = '$fileid'";
-        $stmt = $con->prepare($sqlf);
-        mysqli_query($con,$sqlf);
-
-        $sqls="SELECT sid,event,point from files where id='$fileid'";
-        $result3 = mysqli_query($con,$sqls);
-        $value3=mysqli_fetch_array($result3);
-
-        $sqls1="SELECT ".$value3[2]." from spoint where sid=".$value3[0];
-        $result4 = mysqli_query($con,$sqls1);
-        $value4=mysqli_fetch_array($result4);
-        $newpoint=$value4[0]+$value3[2];
-
-        $sqls2="SELECT maxpoint from points where events=".$value3[1];
-        $result5 = mysqli_query($con,$sqls2);
-        $value5=mysqli_fetch_array($result5);
-        if($newpoint>=$value5[0]){
-            $newpoint=$value5[0];
-        }
-        $sqlu="update spoint set ".$value3[1]."=".$value3[2]." where sid=".$value3[0];
-        $result6=mysqli_query($con,$sqlu);
-        //echo '<script>window.location.reload();</script>';
-
-
-        $tableName = "spoint";
-
-
-$query = "SELECT COLUMN_NAME
-          FROM INFORMATION_SCHEMA.COLUMNS
-          WHERE TABLE_NAME = '$tableName' AND COLUMN_NAME <> 'sid' AND COLUMN_NAME <> 'tpoint'";
-
-
-$tp = mysqli_query($con, $query);
-
-
-if ($tp) {
-    $tpu = "UPDATE $tableName SET total_point = ";
-    
-    
-    while ($rowu = mysqli_fetch_assoc($tp)) {
-        $columnName = $rowu['COLUMN_NAME'];
-        $tpu .= "COALESCE($columnName, 0) + ";
-    }
-    
-    
-    $tpu = rtrim($tpu, " + ");
-    
-    
-    $tpu .= ";";
-    $tp1=mysqli_query($con, $tpu);
-    
-} 
 
     }
 }
