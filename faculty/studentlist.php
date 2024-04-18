@@ -25,6 +25,7 @@ if (isset($_POST["submitfilter"])) {
     header("Location: certificateview.php");
     exit;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,124 +52,124 @@ if (isset($_POST["submitfilter"])) {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
-}
-
-.header1 {
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
-}
-
-.navbar {
-    display: flex;
-    justify-content: flex-end; /* Aligns the navigation to the right */
-    align-items: center;
-    height: 100%;
-    width: 100%;
-}
-
-a {
-    text-decoration: none;
-    color: #fff;
-    text-transform: uppercase;
-}
-.filter-bar input {
-    width: 42%;
-    padding: 10px;
-    margin-right: 10px;
-}
-
-.filter-bar button {
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
-.search-form {
-            display: flex;
-            align-items: center;
-        }
-
-        .search-form input {
-            width: 70%;
-            margin-left: 80px;
-            padding: 8px;
-            margin-right: 10px;
-        }
-
-        .search-form button {
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-
-        .tm-work-item-inner {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .item:hover .tm-work-item-inner {
-        transform: translateY(-5px); /* Adjust the value to control the lift height */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adjust the shadow as needed */
+    .header1 {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
     }
 
-    .item:not(:hover) .tm-work-item-inner {
-        transform: translateY(0);
-        box-shadow: none;
+    .navbar {
+        display: flex;
+        justify-content: flex-end; /* Aligns the navigation to the right */
+        align-items: center;
+        height: 100%;
+        width: 100%;
     }
 
-   table {
-    margin-top: 20px auto;
-    margin-left: 120px;
-    width: 80%;
-    border-collapse: collapse;
-    background-color: rgba(255, 255, 255, 0.8); /* Set the background color to white with 80% opacity */
-}
+    a {
+        text-decoration: none;
+        color: #fff;
+        text-transform: uppercase;
+    }
+    .filter-bar input {
+        width: 42%;
+        padding: 10px;
+        margin-right: 10px;
+    }
 
-table th, table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
+    .filter-bar button {
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+    .search-form {
+                display: flex;
+                align-items: center;
+            }
 
-table th {
-    background-color: #f2f2f2;
-}
+            .search-form input {
+                width: 70%;
+                margin-left: 80px;
+                padding: 8px;
+                margin-right: 10px;
+            }
 
-.etable{
-            display:none;
-            border-collapse: separate;
-            border-spacing: 10px;
-            *border-collapse: expression('separate', cellSpacing='10px');
+            .search-form button {
+                padding: 8px 16px;
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                cursor: pointer;
+            }
+
+            .tm-work-item-inner {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Source Sans Pro', sans-serif;
-}
 
-#outer {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
+        .item:hover .tm-work-item-inner {
+            transform: translateY(-5px); /* Adjust the value to control the lift height */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adjust the shadow as needed */
+        }
 
-.banner-section {
-    position: relative;
-    flex: 0 0 auto;
-    height: 200px; /* Adjust height as needed */
-    /* background-image: url('img/banner.jpg'); */
-    background-size: cover;
-    background-position: center;
-}
+        .item:not(:hover) .tm-work-item-inner {
+            transform: translateY(0);
+            box-shadow: none;
+        }
 
-#content-boxl {
-    overflow-y: auto;
-    flex: 1;
-    padding-bottom: 50px;
-}
+    table {
+        margin-top: 20px auto;
+        margin-left: 120px;
+        width: 80%;
+        border-collapse: collapse;
+        background-color: rgba(255, 255, 255, 0.8); /* Set the background color to white with 80% opacity */
+    }
+
+    table th, table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    table th {
+        background-color: #f2f2f2;
+    }
+
+    .etable{
+                display:none;
+                border-collapse: separate;
+                border-spacing: 10px;
+                *border-collapse: expression('separate', cellSpacing='10px');
+            }
+            body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Source Sans Pro', sans-serif;
+    }
+
+    #outer {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+
+    .banner-section {
+        position: relative;
+        flex: 0 0 auto;
+        height: 200px; /* Adjust height as needed */
+        /* background-image: url('img/banner.jpg'); */
+        background-size: cover;
+        background-position: center;
+    }
+
+    #content-boxl {
+        overflow-y: auto;
+        flex: 1;
+        padding-bottom: 50px;
+    }
 
 
 </style>
@@ -306,10 +307,9 @@ table th {
             {
                 ?>
                 <tr>
-                    <td><?php echo $i; ?></td>
+                <td><?php echo $i; ?></td>
                     <td><?php echo $data[0] ?></td>
                     <td><?php echo $data[1] ?></td>
-                    <td><?php echo $data[2] ?></td>
                     <td><?php echo $data[3] ?></td>
                     <td><?php echo $data[4] ?></td>
                     <td><?php echo $data[5] ?></td>
@@ -340,6 +340,7 @@ table th {
                     <td><?php echo $data[30] ?></td>
                     <td><?php echo $data[31] ?></td>
                     <td><?php echo $data[32] ?></td>
+                    <td><?php echo $data[33] ?></td>
                    
                 </tr>
             <?php

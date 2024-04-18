@@ -46,7 +46,7 @@ if (!isset($_SESSION['user_id'])) {
     $result3 = mysqli_query($conn,$sql3);
     $sql4="update files set event='$category',point='$point',status='accepted' where id='$fileid'";
     $result4 = mysqli_query($conn,$sql4);
-    var_dump($result4);
+    // var_dump($result4);
     // mysqli_error($conn);die;
    }
    ?>

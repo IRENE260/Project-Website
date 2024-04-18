@@ -10,6 +10,61 @@ $yearj = $_SESSION['yearj'];
 $userid=$_SESSION['user_id'];
 $con=mysqli_connect("localhost","root","","apoint");
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Check if fileid and status are set in the POST request
+    if (isset($_POST['fileid'], $_POST['rejected'])) {
+        // Retrieve fileid and status from the POST request
+        $fileid = $_POST['fileid'];
+        $status = $_POST['rejected'];
+        // Update the status in the 'files' table
+        $sqlf = "UPDATE files SET status = '$status' WHERE id = '$fileid'";
+        $stmt = $con->prepare($sqlf);
+        mysqli_query($con,$sqlf);
+        //echo '<script>window.location.reload();</script>';
+        header('Location: ' . $_SERVER['PHP_SELF']);
+        exit();
+    }
+    if (isset($_POST['fileid'], $_POST['accepted'])) {
+        // Retrieve fileid and status from the POST request
+        $fileid = $_POST['fileid'];
+        $status = $_POST['accepted'];
+        // Update the status in the 'files' table
+        $sqlf = "UPDATE files SET status = '$status' WHERE id = '$fileid'";
+        $stmt = $con->prepare($sqlf);
+        mysqli_query($con,$sqlf);
+
+        $sqls="SELECT sid,event,point from files where id='$fileid'";
+        $result3 = mysqli_query($con,$sqls);
+        $value3=mysqli_fetch_array($result3);
+
+        $sqls1="SELECT ".$value3[1].",tpoint from spoint where sid=".$value3[0];
+        $result4 = mysqli_query($con,$sqls1);
+        $value4=mysqli_fetch_array($result4);
+        $newpoint=$value4[0]+$value3[2];
+        // var_dump($value4);die;
+        $sqls2="SELECT maxpoint from points where events='$value3[1]'";
+        $result5 = mysqli_query($con,$sqls2);
+        // var_dump($result5);die;
+        $value5=mysqli_fetch_array($result5);
+        if($newpoint>=$value5[0]){
+            $total=$value4[1]+($value5[0]-$value4[0]);
+            $newpoint=$value5[0];    
+        }
+        else{
+            $total=$value4[1]+$value3[2];
+        }
+        $sqlu="update spoint set ".$value3[1]."=".$value3[2].",tpoint=".$total." where sid=".$value3[0];
+        $result6=mysqli_query($con,$sqlu);
+        // echo '<script>window.location.reload(); </script>';
+        // exit();
+        // var_dump($result6);die;
+        // header('Location:/amcs/faculty/verifycertificates.php');
+        // exit();
+        header('Location: ' . $_SERVER['PHP_SELF']);
+        exit();
+    }
+}
+
 $sql = "SELECT DISTINCT sid FROM files WHERE status = 'notverified' AND point!='0' AND sid IN (SELECT id FROM student WHERE yearj = '$yearj' AND batch = '$batch')";
 $result = mysqli_query($con, $sql);
 ?>
@@ -53,7 +108,7 @@ $result = mysqli_query($con, $sql);
         }
         .modal-header {
     padding: 10px 20px; / Adjust padding as needed /
-}
+    }
 
         .container {
             width: 80%;
@@ -94,21 +149,20 @@ $result = mysqli_query($con, $sql);
         }
 
         .button-container {
-    text-align: right; / Align buttons to the left /
-}
-.details-container {
-            position: absolute;
-            bottom: 5px;
-            left: 20px; / Adjust the left position /
+            text-align: right; / Align buttons to the left /
         }
+        .details-container {
+                    position: absolute;
+                    bottom: 5px;
+                    left: 20px; / Adjust the left position /
+                }
 
-        .details-container p {
-            margin: 5px 0;
-        }
+                .details-container p {
+                    margin: 5px 0;
+                }
     </style>
 </head>
 <body>
-
 <div class="header">
     <h1>Verify Certificate</h1>
     <div>
@@ -135,21 +189,18 @@ while ($row = mysqli_fetch_array($result)) {
     } else {
         // Proceed with fetching data
         $id_values = [];
-        while ($row2 = mysqli_fetch_array($result2)) {
+        while ($row2=  mysqli_fetch_array($result2)) {
             $id_values[] = $row2['id'];
         }
     }
     ?>
 <div class="container">
-
     <div class="student-info">
         <p><strong>Name:</strong> <?php echo $student_name; ?></p>
         <p><strong>Register Number:</strong>  <?php echo $student_details['regno']; ?></p>
     </div>
-
     <?php
-
-foreach ($id_values as $id ) {
+    foreach ($id_values as $id ) {
     // Fetch filelink for the current ID
     $pdfPathQuery = "SELECT * FROM files WHERE id = $id";
     $pdfPathResult = mysqli_query($con, $pdfPathQuery);
@@ -164,46 +215,40 @@ foreach ($id_values as $id ) {
     echo '</div>';
     }
     ?>
-
 </div>
-
-<!-- PDF Modal -->
 <div class="modal" id="pdfModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">PDF Viewer</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-
             <!-- Modal body -->
             <div class="modal-body">
                 <iframe id="pdfFrame" src="" width="100%" height="500px" frameborder="0"></iframe>
                 <!-- Buttons container -->
                 <!-- Buttons container -->
-<div class="button-container mt-3">
-<form id="statusForm" method="post" >
-    <button type="submit" name="accepted" value="accepted" class="btn btn-success">Accept</button>
-    <button type="submit" name="rejected" value="rejected" class="btn btn-danger" data-dismiss="modal">Reject</button>
-    <input type="hidden" id="fileid" name="fileid" value="">
-</form>
-
-</div>
-
+                <div class="button-container mt-3">
+                    <form id="statusForm" method="post" >
+                        <button type="submit" name="accepted" value="accepted" class="btn btn-success">Accept</button>
+                        <button type="submit" name="rejected" value="rejected" class="btn btn-danger" data-dismiss="modal">Reject</button>
+                        <input type="hidden" id="fileid" name="fileid" value="">
+                    </form>
+                </div>
                 <div class="details-container">
-                    <p><strong>Allowable Points:</strong><span id="points"></p>
-                    <p><strong>Category:</strong>  <span id="event"></p>
+                    <p><strong>Allowable Points:</strong><span id="points"></span></p>
+                    <p><strong>Category:</strong>  <span id="event"></span></p>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
+</body>
+</html>
 <?php
 }
- ?>
+?>
 <script>
     function openPdfModal(path,fileid,event,points) {
         // Set the src attribute of the iframe to the PDF path
@@ -215,64 +260,8 @@ foreach ($id_values as $id ) {
         // Open the modal
         $('#pdfModal').modal('show');
     }
-
 </script>
 
-</body>
-</html>
-<?php
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if fileid and status are set in the POST request
-    if (isset($_POST['fileid'], $_POST['rejected'])) {
-        // Retrieve fileid and status from the POST request
-        $fileid = $_POST['fileid'];
-        $status = $_POST['rejected'];
-        // Update the status in the 'files' table
-        $sqlf = "UPDATE files SET status = '$status' WHERE id = '$fileid'";
-        $stmt = $con->prepare($sqlf);
-        mysqli_query($con,$sqlf);
-        //echo '<script>window.location.reload();</script>';
-
-    }
-    if (isset($_POST['fileid'], $_POST['accepted'])) {
-        // Retrieve fileid and status from the POST request
-        $fileid = $_POST['fileid'];
-        $status = $_POST['accepted'];
-        // Update the status in the 'files' table
-        $sqlf = "UPDATE files SET status = '$status' WHERE id = '$fileid'";
-        $stmt = $con->prepare($sqlf);
-        mysqli_query($con,$sqlf);
-
-        $sqls="SELECT sid,event,point from files where id='$fileid'";
-        $result3 = mysqli_query($con,$sqls);
-        $value3=mysqli_fetch_array($result3);
-
-        $sqls1="SELECT ".$value3[1].",tpoint from spoint where sid=".$value3[0];
-        $result4 = mysqli_query($con,$sqls1);
-        $value4=mysqli_fetch_array($result4);
-        $newpoint=$value4[0]+$value3[2];
-        // var_dump($value4);die;
-        $sqls2="SELECT maxpoint from points where events='$value3[1]'";
-        $result5 = mysqli_query($con,$sqls2);
-        // var_dump($result5);die;
-        $value5=mysqli_fetch_array($result5);
-        if($newpoint>=$value5[0]){
-            $total=$value4[1]+($value5[0]-$value4[0]);
-            $newpoint=$value5[0];    
-        }
-        else{
-            $total=$value4[1]+$value3[2];
-        }
-        $sqlu="update spoint set ".$value3[1]."=".$value3[2].",tpoint=".$total." where sid=".$value3[0];
-        $result6=mysqli_query($con,$sqlu);
-        echo '<script>window.location.reload();</script>';
-        var_dump($result6);die;
-        header('Location:/amcs/faculty/verifycertificates.php');
-        exit;
-    }
-}
-
-?>
 
 

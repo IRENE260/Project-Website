@@ -84,99 +84,99 @@ mysqli_close($con);
     flex-direction: column;
     align-items: center;
     text-align: center;
-}
+        }
 
-h1, h2 {
-   
-   
+        h1, h2 {
+        
+        
 
-    font-size: 2em; 
-    color: #333;
-    width: 100%; 
-    padding: 10px 0;
-}
-
-
-.heading-right {
-    text-align: right;
-    margin-right: 20px; ng */
-}
+            font-size: 2em; 
+            color: #333;
+            width: 100%; 
+            padding: 10px 0;
+        }
 
 
-.heading-left {
-    text-align: left;
-    margin-left: 20px; /
-}
+        .heading-right {
+            text-align: right;
+            margin-right: 20px; ng */
+        }
 
 
+        .heading-left {
+            text-align: left;
+            margin-left: 20px; /
+        }
 
 
 
 
-h2 {
-    font-size: 2.5rem;
-    margin: 0.5em 0;
-}
 
-h3 {
-    font-size: 0.5emrem;
-    margin-top: 30px;
-}
-.header {
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
-}
 
-.navbar {
-    display: flex;
-    justify-content: flex-end; /* Aligns the navigation to the right */
-    align-items: center;
-    height: 100%;
-    width: 100%;
-}
+        h2 {
+            font-size: 2.5rem;
+            margin: 0.5em 0;
+        }
 
-.certificate-actions {
+        h3 {
+            font-size: 0.5emrem;
+            margin-top: 30px;
+        }
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .navbar {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end; /* Aligns the navigation to the right */
             align-items: center;
-            padding: 10px;
-        }
-        .action-button {
-            background-color: black;
-            color:white;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            height: 100%;
+            width: 100%;
         }
 
-a {
-    text-decoration: none;
-    color: #fff;
-    text-transform: uppercase;
-}
+        .certificate-actions {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 10px;
+                }
+                .action-button {
+                    background-color: black;
+                    color:white;
+                    padding: 8px 12px;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+            text-transform: uppercase;
+        }
 
 
 
 
 
 
-@media (max-width: 768px) {
-    .header, .pdf-grid {
-        padding: 10px;
-    }
-}
+        @media (max-width: 768px) {
+            .header, .pdf-grid {
+                padding: 10px;
+            }
+        }
 
-/* Adding responsiveness to font sizes and layout */
-@media (max-width: 480px) {
-    h1 {
-        font-size: 1.8rem;
-    }
-    h2 {
-        font-size: 1.5rem;
-    }
-}
+        /* Adding responsiveness to font sizes and layout */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
 
     </style>
 </head>
@@ -184,7 +184,8 @@ a {
 <div id="outer">
         <header class="header" >
             <nav class="navbar">
-                <a  href="fhome.php">Home</a>
+                <a  href="fhome.php">Home</a>&nbsp;|&nbsp;
+                <a href="studentlist.php">BACK</a>
             </nav>
         </header>
     <div class="container">
