@@ -274,7 +274,8 @@ def string_to_word_array(input_string):
 
 def main():
     
-    fname='uploads/'+sys.argv[1]
+    # fname='uploads/'+sys.argv[1]
+    fname='uploads/Anna Ann Mathew.pdf'
     dpi = 300  # choose desired dpi here
     zoom = dpi / 72  # zoom factor, standard: 72 dpi
     magnify = fitz.Matrix(zoom, zoom)  # magnifies in x, resp. y direction

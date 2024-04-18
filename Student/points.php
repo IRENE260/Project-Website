@@ -10,7 +10,7 @@ if($con)
         $id=$_SESSION['user_id'];
 		$sql1="select * from spoint where sid='$id'";
 		$res=mysqli_query($con,$sql1);
-        $value=mysqli_fetch_array($res);
+        $value=mysqli_fetch_assoc($res);
 }
 ?>
 <!DOCTYPE html>
@@ -76,164 +76,19 @@ if($con)
     <div class="table-container"> 
         <table class="table" > 
             <caption>CERTIFICATES AND POINTS</caption>
-            <tr>
-                <th>Sl. No</th>
-                <th>Category</th>
-                <th>Points</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>N C C </td>
-                <td><?php echo $value[1];?></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>N S S </td>
-                <td><?php echo $value[2];?></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Sports</td>
-                <td><?php echo $value[3];?></td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>ARTS</td>
-                <td><?php echo $value[4];?></td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>TECH FEST,TECH QUIZ</td>
-                <td><?php echo $value[5];?></td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>MOOC</td>
-                <td><?php echo $value[6];?></td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td>COMPETITIONS</td>
-                <td><?php echo $value[7];?></td>
-            </tr>
-            <tr>
-                <td>8</td>
-                <td>WORKSHOP</td>
-                <td><?php echo $value[8];?></td>
-            </tr>
-            <tr>
-                <td>9</td>
-                <td>PAPER PRESENTATION/PUBLICATION</td>
-                <td><?php echo $value[9];?></td>
-            </tr>
-            <tr>
-                <td>10</td>
-                <td>POSTER PRESENTATION</td>
-                <td><?php echo $value[10];?></td>
-            </tr>
-            <tr>
-                <td>11</td>
-                <td>IV/EXHIBITION</td>
-                <td><?php echo $value[11];?></td>
-            </tr>
-            <tr>
-                <td>12</td>
-                <td>INTERNSHIP</td>
-                <td><?php echo $value[12];?></td>
-            </tr>
-            <tr>
-                <td>13</td>
-                <td>FOREIGN LANGUAGE SKILL</td>
-                <td><?php echo $value[13];?></td>
-            </tr>
-            <tr>
-                <td>14</td>
-                <td>START UP</td>
-                <td><?php echo $value[14];?></td>
-            </tr>
-            <tr>
-                <td>15</td>
-                <td>PATENT FILED</td>
-                <td><?php echo $value[15];?></td>
-            </tr>
-            <tr>
-                <td>16</td>
-                <td>PATENT PUBLISHED</td>
-                <td><?php echo $value[16];?></td>
-            </tr>
-            <tr>
-                <td>17</td>
-                <td>PATENT APPROVED</td>
-                <td><?php echo $value[17];?></td>
-            </tr>
-            <tr>
-                <td>18</td>
-                <td>PATENT LICENSED</td>
-                <td><?php echo $value[18];?></td>
-            </tr>
-            <tr>
-                <td>19</td>
-                <td>PROTOTYPE DEVELOPED AND TESTED</td>
-                <td><?php echo $value[19];?></td>
-            </tr>
-            <tr>
-                <td>20</td>
-                <td>AWARDS FOR PRODUCTS DEVELOPED</td>
-                <td><?php echo $value[20];?></td>
-            </tr>
-            <tr>
-                <td>21</td>
-                <td>INNOVATIVE TECHNOLOGIES</td>
-                <td><?php echo $value[21];?></td>
-            </tr>
-            <tr>
-                <td>22</td>
-                <td>INNOVATIVE IDEAS/PRODUCTS</td>
-                <td><?php echo $value[22];?></td>
-            </tr>
-            <tr>
-                <td>23</td>
-                <td>STARTUP EMPLOYEMENT</td>
-                <td><?php echo $value[23];?></td>
-            </tr>
-            <tr>
-                <td>24</td>
-                <td>SOCIETAL INNOVATIONS</td>
-                <td><?php echo $value[24];?></td>
-            </tr>
-            <tr>
-                <td>25</td>
-                <td>CORE COORDINATOR</td>
-                <td><?php echo $value[25];?></td>
-            </tr>
-            <tr>
-                <td>26</td>
-                <td>SUB COORDINATOR</td>
-                <td><?php echo $value[26];?></td>
-            </tr>
-            <tr>
-                <td>27</td>
-                <td>CHAIRMAN</td>
-                <td><?php echo $value[27];?></td>
-            </tr>
-            <tr>
-                <td>28</td>
-                <td>SECRETARY</td>
-                <td><?php echo $value[28];?></td>
-            </tr>
-            <tr>
-                <td>29</td>
-                <td>COUNCIL MEMBERS</td>
-                <td><?php echo $value[29];?></td>
-            </tr>
-            <tr>
-                <td>30</td>
-                <td>VOLUNTEER</td>
-                <td><?php echo $value[30];?></td>
-            </tr>
+            <?php 
+            $count=1;
+            foreach ($value as $key=>$data){
+                if ($data !=0 and $key!='tpoint' and $key!='sid'){
+                   echo('<tr><td>'.$count.'</td>');
+                   echo('<td>'.$key.'</td>');
+                   echo('<td>'.$data.'</td></tr>');
+                   $count+=1;
+                }
+            }?>
             <tr>
                 <th colspan="2">Total Points</th>
-                <th><?php echo $value[31];?></th>
+                <th><?php echo $value['tpoint'];?></th>
             </tr>
         </table>
     </div>

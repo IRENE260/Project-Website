@@ -20,7 +20,7 @@ if($con)
 		$sql2="select id from student where regno='$reg'";
 		$res=mysqli_query($con,$sql2);
 		$value=mysqli_fetch_array($res);
-		$sql3="insert into spoint values('$value[0]',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)";
+		$sql3="insert into spoint values('$value[0]',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)";
 		mysqli_query($con,$sql3);
 		header("Location:/amcs/Student/sls.php");
 		exit();

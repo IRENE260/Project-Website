@@ -48,9 +48,11 @@ if($con)
         // print_r($output);
         // var_dump(explode("', '",$output[0]));die;
         $_SESSION['details']=explode("', '",$output[0]);
+        // var_dump( $_SESSION['details']);die;
         if(isArrayInSameOrder($arr, $_SESSION['details']))
         {
             $_SESSION['file']=$pdfName;
+            // var_dump($arr);die;
             header("Location:/amcs/Student/findpoint.php");
             exit();
         }
