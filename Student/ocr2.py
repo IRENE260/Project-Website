@@ -274,17 +274,22 @@ def string_to_word_array(input_string):
 
 def main():
     
-    # fname='uploads/'+sys.argv[1]
-    fname='uploads/Anna Ann Mathew.pdf'
-    dpi = 300  # choose desired dpi here
-    zoom = dpi / 72  # zoom factor, standard: 72 dpi
-    magnify = fitz.Matrix(zoom, zoom)  # magnifies in x, resp. y direction
-    doc = fitz.open(fname)  # open document
-    for page in doc:
-        pix = page.get_pixmap(matrix=magnify)  # render page to an image
-        pix.save(f"page-{page.number}.png")
+    fname='uploads/'+sys.argv[1]
+    # fname='uploads/Anna Ann Mathew.pdf'
+    file_extension = os.path.splitext(fname)[1]
+    # print(file_extension)
+    if(file_extension=='.pdf'):
+        dpi = 500  # choose desired dpi here
+        zoom = dpi / 72  # zoom factor, standard: 72 dpi
+        magnify = fitz.Matrix(zoom, zoom)  # magnifies in x, resp. y direction
+        doc = fitz.open(fname)  # open document
+        for page in doc:
+            pix = page.get_pixmap(matrix=magnify)  # render page to an image
+            pix.save(f"page-{page.number}.png")
 
-    filename='page-0.png'
+        filename="page-0.png"
+    else:
+        filename=fname
     lang=None
 
     try:
